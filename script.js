@@ -46,6 +46,7 @@ async function getJSON(hymnBook) {
 
         if (e.target.value == "")
             try { searchResults.innerHTML = "".style.display = "none" } catch {};
+
         e.preventDefault();
     });
 };
@@ -53,16 +54,16 @@ async function getJSON(hymnBook) {
 // podmienienie polskich znaków diakrytycznych
 
 function polishReplace(napis) {
-    napis = napis.replace("ę", "e");
-    napis = napis.replace("ó", "o");
-    napis = napis.replace("ą", "a");
-    napis = napis.replace("ś", "s");
-    napis = napis.replace("ł", "l");
-    napis = napis.replace("ż", "z");
-    napis = napis.replace("ź", "z");
-    napis = napis.replace("ć", "c");
-    napis = napis.replace("ń", "n");
-    return napis;
+    return napis
+        .replace("ę", "e")
+        .replace("ó", "o")
+        .replace("ą", "a")
+        .replace("ś", "s")
+        .replace("ł", "l")
+        .replace("ż", "z")
+        .replace("ź", "z")
+        .replace("ć", "c")
+        .replace("ń", "n")
 };
 
 // wyświetlanie pieśni w .lyrics
@@ -74,11 +75,11 @@ function reqListener() {
 
     title.innerHTML = xml.querySelector("title").innerHTML;
 
-    let tekst = xml.querySelector("lyrics").innerHTML;
-    tekst = tekst
+    const tekst = xml.querySelector("lyrics").innerHTML
         .replace(/\s*(\[V\d*\]|\[C\d*\])\s*/, '')
         .replace(/\s*(\[V\d*\]|\[C\d*\])\s*/g, '<br/><br/>')
         .replace(/\n/g, '<br/>')
+
     document.querySelector(".loader").style.display = "none";
     lyrics.innerHTML = tekst;
 };
