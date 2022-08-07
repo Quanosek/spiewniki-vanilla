@@ -151,7 +151,7 @@ footer {
 
 .lyrics {
     padding: 1rem 3rem;
-    min-width: 30rem;
+    width: 30rem;
     background-color: #242424;
     font-size: 1.25rem;
     border-radius: .35rem;
@@ -210,10 +210,9 @@ footer {
         padding: 6% 0;
     }
     .lyrics {
-        padding: .8rem 1.5rem;
+        padding: 1rem 6%;
         font-size: 1.05rem;
         border-radius: 0;
-        min-width: 0;
-        width: 87.55vw;
+        width: 88vw;
     }
 }
