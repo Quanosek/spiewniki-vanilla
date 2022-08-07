@@ -66,6 +66,11 @@ abbr {
     text-decoration: underline;
 }
 
+.indented {
+    text-indent: 3.5%;
+    margin-top: -.5rem;
+}
+
 .lyrics {
     padding: 1rem 3rem;
     min-width: 30rem;
