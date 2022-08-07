@@ -58,7 +58,6 @@ footer {
     margin: 0;
     font-size: .6rem;
     text-align: center;
-    border-top: 1.5px solid #ffffff;
 }
 
 
@@ -162,10 +161,21 @@ footer {
     margin: 1.2rem 0;
 }
 
+#piesni {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
 #lyrics {
     margin-bottom: 1.2rem;
 }
 
+#hymnBook {
+    margin: auto;
+}
+
+#hymnBook,
 #searchBox {
     padding: 5px 10px;
     border-radius: .35rem;

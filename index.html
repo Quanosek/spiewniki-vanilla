@@ -10,8 +10,8 @@
     <meta name="description" content=''>
     <meta name="keywords" content=''>
 
-    <link rel="stylesheet" href="/style.css?version=8" type="text/css" />
-    <script src="/script.js?version=4"></script>
+    <link rel="stylesheet" href="/style.css?version=9" type="text/css" />
+    <script src="/script.js?version=5"></script>
 </head>
 
 <body>
@@ -23,6 +23,11 @@
         </a></abbr>
 
         <form id="piesni" onsubmit="return false">
+            <select id="hymnBook">
+                <option value="brzask">Pieśni Brzasku Tysiąclecia</option>
+                <option value="cegielki">Uwielbiajmy Pana (Cegiełki)</option>
+                <option value="nowe">Śpiewajmy Panu Pieśń Nową (Nowe Pieśni)</option>
+            </select>
             <input type="text" id="searchBox" name="searchBox" placeholder="Wpisz tytuł lub numer pieśni">
         </form>
 
@@ -32,13 +37,15 @@
             <div class="loader"></div>
             <h1 id="title"></h1>
             <div id="lyrics">
-                <h2>Oznaczenia numeracji pieśni:</h2>
-                <p><b>bez litery</b> - Śpiewnik "Pieśni Brzasku Tysiąclecia" <a href='/files/Śpiewnik "Pieśni Brzasku Tysiąclecia" (z funkcjami gitarowymi).pdf' target="_blank" class="download_link">(pobierz PDF)</a></p>
-                <p><b>C</b> - "Cegiełki" - śpiewnik "Uwielbiajmy Pana"</p>
-                <p><b>N</b> - "Nowe Pieśni" - śpiewnik "Śpiewajcie Panu Pieśń Nową" <a href='/files/Śpiewnik "Śpiewajcie Panu Pieśń Nową".pdf' target="_blank" class="download_link">(pobierz PDF)</a></p>
-                <p class="indented"><b>K</b> - śpiewnik Koziański</p>
-                <p class="indented"><b>P</b> - śpiewnik Poznański</p>
-                <p><b>E</b> - Epifania, "Śpiewnik Młodzieżowy"</p>
+                <div id="guide">
+                    <h2>Oznaczenia numeracji pieśni:</h2>
+                    <p><b>bez litery</b> - Śpiewnik "Pieśni Brzasku Tysiąclecia" <a href='/files/Śpiewnik "Pieśni Brzasku Tysiąclecia" (z funkcjami gitarowymi).pdf' target="_blank" class="download_link">(pobierz PDF)</a></p>
+                    <p><b>C</b> - "Cegiełki" - śpiewnik "Uwielbiajmy Pana"</p>
+                    <p><b>N</b> - "Nowe Pieśni" - śpiewnik "Śpiewajcie Panu Pieśń Nową" <a href='/files/Śpiewnik "Śpiewajcie Panu Pieśń Nową".pdf' target="_blank" class="download_link">(pobierz PDF)</a></p>
+                    <p class="indented"><b>K</b> - śpiewnik Koziański</p>
+                    <p class="indented"><b>P</b> - śpiewnik Poznański</p>
+                    <p><b>E</b> - Epifania, "Śpiewnik Młodzieżowy"</p>
+                </div>
             </div>
         </div>
 

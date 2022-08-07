@@ -1,36 +1,68 @@
 const parser = new DOMParser();
 
-async function getJSON(hymnBook) {
-    let list = await fetch(`./generate json/${hymnBook}.json`)
+async function getJSON() {
+
+    brzask = await fetch(`./generate json/brzask.json`)
+        .then(response => {
+            return response.json();
+        });
+    cegielki = await fetch(`./generate json/cegielki.json`)
+        .then(response => {
+            return response.json();
+        });
+    nowe = await fetch(`./generate json/nowe.json`)
         .then(response => {
             return response.json();
         });
 
-    let searchBox = document.querySelector("#searchBox");
+    const guide = document.querySelector("#guide").innerHTML;
 
+    let list = brzask;
+
+    let hymnBook = document.querySelector('#hymnBook');
+    hymnBook.addEventListener('change', () => {
+        if (hymnBook.value === "brzask") list = brzask
+        else if (hymnBook.value === "cegielki") list = cegielki
+        else if (hymnBook.value === "nowe") list = nowe
+
+        searchBox.value = "";
+        searchResults.innerHTML = "";
+        searchResults.style.display = "none";
+        document.querySelector("#title").innerHTML = "";
+        document.querySelector("#lyrics").innerHTML = guide;
+    });
+
+    let searchBox = document.querySelector("#searchBox");
     searchBox.addEventListener("keyup", (e) => {
+
         let searchResults = document.querySelector("#searchResults");
         searchResults.innerHTML = "";
         searchResults.style.display = "block";
 
         list.forEach((hymn) => {
-            if (polishReplace(hymn.title).toLowerCase().search(polishReplace(e.target.value).toLowerCase()) != -1) {
+            if (
+                textFormat(hymn.title).toLowerCase()
+                .search(textFormat(e.target.value).toLowerCase()) != -1
+            ) {
                 div = document.createElement("div");
-                div.innerHTML = `<div style="margin:1rem">${hymn.title}</div><hr>`;
+                div.innerHTML = `<div style="margin: 1rem">${hymn.title}</div><hr>`;
                 searchResults.appendChild(div);
 
                 div.addEventListener("click", (e) => {
-                    searchBox.value = '';
+                    searchBox.value = "";
                     let pos = e.target.innerHTML.indexOf(".");
                     let number = parseInt(e.target.innerHTML.substr(0, pos));
 
                     searchResults.innerHTML = "";
                     searchResults.style.display = "none";
-                    let link = list[number - 1].link;
+
+                    let found;
+                    if (hymn.a) found = list.find(hymn => hymn.number === number && hymn.a);
+                    else found = list.find(hymn => hymn.number === number);
 
                     const oReq = new XMLHttpRequest();
                     oReq.addEventListener("load", reqListener);
-                    oReq.open("GET", link);
+                    oReq.open("GET", found.link);
                     oReq.send();
 
                     document.querySelector("#title").innerHTML = "";
@@ -53,7 +85,7 @@ async function getJSON(hymnBook) {
 
 // podmienienie polskich znaków diakrytycznych
 
-function polishReplace(napis) {
+function textFormat(napis) {
     return napis
         .replace("ę", "e")
         .replace("ó", "o")
@@ -70,22 +102,18 @@ function polishReplace(napis) {
 
 function reqListener() {
     let xml = parser.parseFromString(this.responseText, "text/xml");
-    let title = document.querySelector('#title');
-    let lyrics = document.querySelector('#lyrics');
+    let title = document.querySelector("#title");
+    let lyrics = document.querySelector("#lyrics");
 
     title.innerHTML = xml.querySelector("title").innerHTML;
 
     const tekst = xml.querySelector("lyrics").innerHTML
-        .replace(/\s*(\[V\d*\]|\[C\d*\])\s*/, '')
-        .replace(/\s*(\[V\d*\]|\[C\d*\])\s*/g, '<br/><br/>')
-        .replace(/\n/g, '<br/>')
+        .replace(/\s*(\[V\d*\]|\[C\d*\])\s*/, "")
+        .replace(/\s*(\[V\d*\]|\[C\d*\])\s*/g, "<br/><br/>")
+        .replace(/\n/g, "<br/>")
 
     document.querySelector(".loader").style.display = "none";
     lyrics.innerHTML = tekst;
 };
 
-getJSON("hymns");
-
-// getJSON("brzask");
-// getJSON("cegielki");
-// getJSON("nowe");
+getJSON();
