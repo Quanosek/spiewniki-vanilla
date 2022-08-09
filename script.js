@@ -37,12 +37,13 @@ function changeHymnBook(e) {
   searchBox.value = "";
   searchResults.innerHTML = "";
   searchResults.style.display = "none";
+
   document.querySelector("#title").innerHTML = "";
   document.querySelector("#guide").style.display = "block";
   document.querySelector("#lyrics").innerHTML = "";
+
   e.preventDefault();
 }
-
 //szukanie
 function search(e) {
   searchResults.innerHTML = "";

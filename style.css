@@ -16,6 +16,7 @@
   background: #585858;
 }
 
+
 /* main style */
 
 html,
@@ -58,6 +59,7 @@ footer {
   font-size: 0.6rem;
   text-align: center;
 }
+
 
 /* loader */
 
@@ -126,6 +128,7 @@ footer {
   }
 }
 
+
 /* elements */
 
 .download_link {
@@ -174,6 +177,7 @@ footer {
 
 #hymnBook {
   margin: auto;
+  cursor: pointer;
 }
 
 #hymnBook,
@@ -199,9 +203,10 @@ footer {
   background-color: #ffffff;
 }
 
-#searchResults div div {
+#searchResults div {
   cursor: pointer;
 }
+
 
 /* mobile version */
 

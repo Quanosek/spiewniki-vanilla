@@ -27,17 +27,17 @@ def generuj(main_url, github_url, name, regex):
             href = href[pos:]
             pos = regex.search(title).start()
 
-            if(href[pos+1]=="a"):
-                aAttribute = True
-            else:
-                aAttribute = False
+            # if(href[pos+1]=="a"):
+            #     aAttribute = True
+            # else:
+            #     aAttribute = False
 
             number = int(title[:pos])
             x = {
                 "number": number,
                 "title": title,
                 "link": github_url+href,
-                "a": aAttribute
+                # "a": aAttribute
             }
             hymns.append(x)
 
