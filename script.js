@@ -10,14 +10,15 @@ async function getJSON() {
   });
 
   addEventListeners();
-}
+};
 
 function addEventListeners() {
   document
     .querySelector("#hymnBook")
-    .addEventListener("change", changeHymnBook);
+    .addEventListener("change", changeHymnBook)
 
   let searchBox = document.querySelector("#searchBox");
+
   searchBox.addEventListener("keyup", (e) => {
     let searchResults = document.querySelector("#searchResults");
     searchResults.innerHTML = "";
@@ -25,11 +26,11 @@ function addEventListeners() {
     if (hymnBook.value === "brzask") list = brzask;
     else if (hymnBook.value === "cegielki") list = cegielki;
     else if (hymnBook.value === "nowe") list = nowe;
+
     list.forEach((hymn, index) => {
       if (
-        textFormat(hymn.title)
-          .toLowerCase()
-          .search(textFormat(e.target.value).toLowerCase()) != -1
+        textFormat(hymn.title).toLowerCase()
+        .search(textFormat(e.target.value).toLowerCase()) != -1
       ) {
         div = document.createElement("div");
         div.setAttribute("id", index);
@@ -55,21 +56,23 @@ function addEventListeners() {
           document.querySelector("#guide").style.display = "none";
           e.preventDefault();
         });
-      }
+
+      };
     });
 
     try {
       searchResults.lastChild.lastChild.remove();
     } catch {}
 
-    if (e.target.value == "")
+    if (e.target.value == "") {
       try {
         searchResults.innerHTML = "".style.display = "none";
       } catch {}
+    };
 
     e.preventDefault();
   });
-}
+};
 
 function changeHymnBook(e) {
   searchBox.value = "";
@@ -79,7 +82,7 @@ function changeHymnBook(e) {
   document.querySelector("#guide").style.display = "block";
   document.querySelector("#lyrics").innerHTML = "";
   e.preventDefault();
-}
+};
 
 // podmienienie polskich znaków diakrytycznych
 
@@ -93,8 +96,8 @@ function textFormat(napis) {
     .replace("ż", "z")
     .replace("ź", "z")
     .replace("ć", "c")
-    .replace("ń", "n");
-}
+    .replace("ń", "n")
+};
 
 // wyświetlanie pieśni w .lyrics
 
@@ -115,6 +118,6 @@ function reqListener() {
   document.querySelector(".loader").style.display = "none";
   document.querySelector("#guide").style.display = "none";
   lyrics.innerHTML = tekst;
-}
+};
 
 getJSON();
