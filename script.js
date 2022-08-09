@@ -83,7 +83,7 @@ function search(e) {
   e.preventDefault();
 }
 
-//wyświetlanie pieśńi
+//wyświetlanie pieśni
 async function selectHymn(e) {
   const parser = new DOMParser();
   let title = document.querySelector("#title");
