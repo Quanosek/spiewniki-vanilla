@@ -1,3 +1,5 @@
+/* async function (główna funkcja skryptu) */
+
 async function getJSON() {
   brzask = await fetch(`./generate json/brzask.json`).then((response) => {
     return response.json();
@@ -12,17 +14,21 @@ async function getJSON() {
   addEventListeners();
 };
 
+/* main function */
+
 function addEventListeners() {
   document
     .querySelector("#hymnBook")
     .addEventListener("change", changeHymnBook)
 
   let searchBox = document.querySelector("#searchBox");
-
   searchBox.addEventListener("keyup", (e) => {
+
     let searchResults = document.querySelector("#searchResults");
     searchResults.innerHTML = "";
     searchResults.style.display = "block";
+
+    // change fetched files
     if (hymnBook.value === "brzask") list = brzask;
     else if (hymnBook.value === "cegielki") list = cegielki;
     else if (hymnBook.value === "nowe") list = nowe;
@@ -50,6 +56,7 @@ function addEventListeners() {
           oReq.open("GET", list[index].link);
           oReq.send();
 
+          // HTML format
           document.querySelector("#title").innerHTML = "";
           document.querySelector("#lyrics").innerHTML = "";
           document.querySelector(".loader").style.display = "block";
@@ -60,31 +67,35 @@ function addEventListeners() {
       };
     });
 
-    try {
-      searchResults.lastChild.lastChild.remove();
-    } catch {}
+    try { searchResults.lastChild.lastChild.remove() } catch {}
 
     if (e.target.value == "") {
       try {
-        searchResults.innerHTML = "".style.display = "none";
+        searchResults.innerHTML = "";
+        searchResults.style.display = "none";
       } catch {}
     };
 
     e.preventDefault();
+
   });
 };
+
+/* formatowanie przy zmianie śpiewnika */
 
 function changeHymnBook(e) {
   searchBox.value = "";
   searchResults.innerHTML = "";
   searchResults.style.display = "none";
+
   document.querySelector("#title").innerHTML = "";
   document.querySelector("#guide").style.display = "block";
   document.querySelector("#lyrics").innerHTML = "";
+
   e.preventDefault();
 };
 
-// podmienienie polskich znaków diakrytycznych
+/* podmienienie polskich znaków diakrytycznych */
 
 function textFormat(napis) {
   return napis
@@ -99,7 +110,7 @@ function textFormat(napis) {
     .replace("ń", "n")
 };
 
-// wyświetlanie pieśni w .lyrics
+/* wyświetlanie pieśni w .lyrics */
 
 function reqListener() {
   const parser = new DOMParser();
@@ -120,4 +131,4 @@ function reqListener() {
   lyrics.innerHTML = tekst;
 };
 
-getJSON();
+getJSON(); // uruchomienie skryptu

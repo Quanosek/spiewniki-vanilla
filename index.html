@@ -2,33 +2,35 @@
 <html lang="pl">
 
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Pieśni ZWBPŚ</title>
     <link rel="icon" type="image/x-icon" href="/files/favicon.svg" />
-    <meta name="description" content="" />
-    <meta name="keywords" content="" />
+    <meta name="description" content="Wszystkie śpiewniki Zrzeszenia Wolnych Badaczy Pisma Świętego i nie tylko... | Krzysztof Olszewski & Jakub Kłało, Wszelkie prawa zastrzeżone ©&nbsp;2022">
+    <meta name="keywords" content="Dabhar, dabhar.org, ZWBPŚ, BPSW, Badacze, Zrzeszenie Wolnych Badaczy Pisma Świętego, Zrzeszenie, Kraków, Warszawa, Białogard, Biłgoraj, nastrazy.org, Na Straży, Wędrówka, Wędrowniczek, Zbawienie.pl, 52Prawdy, śpiewniki, śpiewnik, śpiewnik młodzieżowy, Brzask, Śpiewnik Brzasku Tysiąclecia, Cegiełki, Uwielbiajmy Pana, Nowe Pieśni, Koziańskie, Kozy, Poznańskie, Poznań, Śpiewajmy Panu Pieśń Nową, tekst, wszystkie, pieśni, piosenki, obóz, piosenki obozowe, kursy biblijne, konwencja, konwencje">
 
-    <link rel="stylesheet" href="/style.css?version=10" type="text/css" />
-    <script src="/script.js?version=5"></script>
+    <link rel="stylesheet" href="/style.css?version=11" type="text/css" />
+    <script src="/script.js?version=6"></script>
   </head>
 
   <body>
 
     <main>
-
       <abbr title="Wróć do strony głównej"><a href="http://piesni.klalo.pl">
     		<h1>Śpiewnik</h1>
   		</a></abbr>
 
       <form id="piesni" onsubmit="return false">
+
         <select id="hymnBook">
       		<option value="brzask">Pieśni Brzasku Tysiąclecia</option>
       		<option value="cegielki">Uwielbiajmy Pana (Cegiełki)</option>
       		<option value="nowe">Śpiewajmy Panu Pieśń Nową (Nowe Pieśni)</option>
     		</select>
+
         <input type="text" id="searchBox" name="searchBox" placeholder="Wpisz tytuł lub numer pieśni" />
+
       </form>
 
       <div id="searchResults"></div>
@@ -37,34 +39,36 @@
         <div class="loader"></div>
         <h1 id="title"></h1>
         <div>
+
           <div id="guide">
             <h2>Oznaczenia numeracji pieśni:</h2>
             <p>
               <b>bez litery</b> - Śpiewnik "Pieśni Brzasku Tysiąclecia"
-              <a href='/files/Piesni Brzasku Tysiaclecia.pdf' target="_blank" class="download_link">(pobierz PDF)</a>
+              <a href='/files/Piesni Brzasku Tysiaclecia.pdf' target="_blank" class="download_link">(pobierz&nbsp;PDF)</a>
             </p>
             <p><b>C</b> - "Cegiełki" - śpiewnik "Uwielbiajmy Pana"</p>
             <p>
               <b>N</b> - "Nowe Pieśni" - śpiewnik "Śpiewajcie Panu Pieśń Nową"
-              <a href='/files/Spiewajcie Panu Piesn Nowa.pdf' target="_blank" class="download_link">(pobierz PDF)</a>
+              <a href='/files/Spiewajcie Panu Piesn Nowa.pdf' target="_blank" class="download_link">(pobierz&nbsp;PDF)</a>
             </p>
             <p class="indented"><b>K</b> - śpiewnik Koziański</p>
             <p class="indented"><b>P</b> - śpiewnik Poznański</p>
           </div>
+
           <div id="lyrics"></div>
+
         </div>
       </div>
-
     </main>
-    <footer>
 
+    <footer>
       <h3>
         Autorzy&nbsp;strony:
         <a href="https://github.com/Krist0f0l0s">Krzysztof&nbsp;Olszewski</a> &
         <a href="https://github.com/Quanosek">Jakub&nbsp;Kłało</a>
       </h3>
-      <p>Wszelkie prawa zastrzeżone ©&nbsp;2022</p>
 
+      <p>Wszelkie prawa zastrzeżone ©&nbsp;2022</p>
     </footer>
 
   </body>
