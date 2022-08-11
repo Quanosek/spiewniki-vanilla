@@ -4,9 +4,10 @@
   "start_url": "index.html",
   "display": "standalone",
   "background_color": "#fdfdfd",
-  "theme_color": "#db4938",
+  "theme_color": "#000000",
   "orientation": "portrait-primary",
-  "icons": [{
+  "icons": [
+    {
       "src": "/files/icons/icon-48x48.png",
       "type": "image/png",
       "sizes": "48x48",
