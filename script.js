@@ -1,17 +1,17 @@
 //główna funkcja
 async function init() {
   if ("serviceWorker" in navigator) {
-    window.addEventListener("load", function() {
+    window.addEventListener("load", function () {
       navigator.serviceWorker
         .register("/serviceWorker.js")
         .then((res) => console.log("service worker registered"))
         .catch((err) => console.log("service worker not registered", err));
     });
-  };
+  }
 
   map = await getJSON();
   addEventListeners();
-};
+}
 
 //fetch spisu pieśni json
 async function getJSON() {
@@ -30,7 +30,7 @@ async function getJSON() {
   map.set("cegielki", cegielki);
   map.set("nowe", nowe);
   return map;
-};
+}
 
 //dodawnie wszytskich eventListenerów
 function addEventListeners() {
@@ -40,7 +40,7 @@ function addEventListeners() {
 
   hymnBook.addEventListener("change", changeHymnBook);
   searchBox.addEventListener("keyup", search);
-};
+}
 
 //na zmiane śpiewnika chowa wyniki wyszukiwania, tekst i pokazuje wskazówki
 function changeHymnBook(e) {
@@ -53,7 +53,7 @@ function changeHymnBook(e) {
   document.querySelector("#lyrics").innerHTML = "";
 
   e.preventDefault();
-};
+}
 
 //szukanie
 function search(e) {
@@ -62,6 +62,7 @@ function search(e) {
   list = map.get(hymnBook.value);
   list.forEach((hymn, index) => {
     if (textFormat(hymn.title).search(textFormat(e.target.value)) != -1) {
+      console.log(hymn.link);
       let div = document.createElement("div");
       div.setAttribute("id", index);
       div.style.margin = "1rem";
@@ -70,19 +71,18 @@ function search(e) {
 
       //dodawanie eventlistenera do wyświetlania pieśni
       div.addEventListener("click", selectHymn);
-    };
+    }
   });
 
-  if (searchResults.hasChildNodes())
-    searchResults.lastChild.lastChild.remove()
+  if (searchResults.hasChildNodes()) searchResults.lastChild.lastChild.remove();
 
   if (e.target.value == "") {
     searchResults.innerHTML = "";
     searchResults.style.display = "none";
-  };
+  }
 
   e.preventDefault();
-};
+}
 
 //wyświetlanie pieśni
 async function selectHymn(e) {
@@ -102,14 +102,14 @@ async function selectHymn(e) {
   let xml = await fetch(list[index].link)
     .then((res) => res.text())
     .then((xml) => parser.parseFromString(xml, "text/xml"))
-    .catch((err) => console.error(err))
+    .catch((err) => console.error(err));
 
   document.querySelector(".loader").style.display = "none";
   title.innerHTML = xml.querySelector("title").innerHTML;
   lyrics.innerHTML = lyricsFormat(xml.querySelector("lyrics").innerHTML);
 
   e.preventDefault();
-};
+}
 
 // podmienienie polskich znaków diakrytycznych
 function textFormat(text) {
@@ -123,15 +123,15 @@ function textFormat(text) {
     .replace("ź", "z")
     .replace("ć", "c")
     .replace("ń", "n")
-    .toLowerCase()
-};
+    .toLowerCase();
+}
 
 //oczyszczenie tekstu z tagów z xml
 function lyricsFormat(lyrics) {
   return lyrics
     .replace(/\s*(\[V\d*\]|\[C\d*\])\s*/, "")
     .replace(/\s*(\[V\d*\]|\[C\d*\])\s*/g, "<br/><br/>")
-    .replace(/\n/g, "<br/>")
-};
+    .replace(/\n/g, "<br/>");
+}
 
 init();
