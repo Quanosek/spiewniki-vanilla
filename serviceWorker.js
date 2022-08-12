@@ -4,9 +4,11 @@ const assets = [
   "/index.html",
   "/style.css",
   "/script.js",
-  "generate json/brzask.json",
-  "generate json/cegielki.json",
-  "generate json/nowe.json",
+  "json/brzask.json",
+  "json/cegielki.json",
+  "json/nowe.json",
+
+  // linki tymczasowe: BRZASK
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Pie%C5%9Bni%20Brzasku%20Tysi%C4%85clecia/1.%20Daj%2C%20Bo%C5%BCe%20%C5%9Awi%C4%99ty",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Pie%C5%9Bni%20Brzasku%20Tysi%C4%85clecia/2.%20Ty%C5%9B%20kaza%C5%82%20nam%2C%20o%20Panie%20m%C3%B3j",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Pie%C5%9Bni%20Brzasku%20Tysi%C4%85clecia/2a.%20Za%20przyk%C5%82ad%20bior%C4%85c%20s%C5%82owa%20Twe",
@@ -513,6 +515,7 @@ const assets = [
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Pie%C5%9Bni%20Brzasku%20Tysi%C4%85clecia/487.%20Albowiem%20tak%20B%C3%B3g",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Pie%C5%9Bni%20Brzasku%20Tysi%C4%85clecia/487a.%20Albowiem%20tak%20B%C3%B3g",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Pie%C5%9Bni%20Brzasku%20Tysi%C4%85clecia/488.%20Chcemy%20do%20%C5%9Bmierci",
+  // CEGIEŁKI
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/1C.%20Czy%20znasz%20ty%20Jezusa",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/2C.%20Pan%20Jezus%20do%20serca%20Twojego%20chce%20wej%C5%9B%C4%87",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/3C.%20Tak%20wiele%20ju%C5%BC%20min%C4%99%C5%82o%20lat",
@@ -800,6 +803,7 @@ const assets = [
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/284C.%20Dotkn%C4%85%C5%82%20mnie%20dzi%C5%9B%20Pan",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/285C.%20B%C3%B3g%20da%C5%82%20mi%20%C5%BCycie%20nowe",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/286C.%20Bez%20Niego",
+  // NOWE PIEŚNI
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/%C5%9Apiewajcie%20Panu%20Pie%C5%9B%C5%84%20Now%C4%85%20(Kozia%C5%84skie%2C%20Pozna%C5%84skie)/1N.%20(2K.)%20Ucz%20mnie%20Twych%20dr%C3%B3g",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/%C5%9Apiewajcie%20Panu%20Pie%C5%9B%C5%84%20Now%C4%85%20(Kozia%C5%84skie%2C%20Pozna%C5%84skie)/2N.%20(1K.)%20Stw%C3%B3rca%20wszystkich%20rzeczy",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/%C5%9Apiewajcie%20Panu%20Pie%C5%9B%C5%84%20Now%C4%85%20(Kozia%C5%84skie%2C%20Pozna%C5%84skie)/3N.%20(4K.)%20Jezus%20odda%C5%82%20za%20nas%20%C5%BCycie%20swe",
@@ -929,6 +933,8 @@ const assets = [
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/%C5%9Apiewajcie%20Panu%20Pie%C5%9B%C5%84%20Now%C4%85%20(Kozia%C5%84skie%2C%20Pozna%C5%84skie)/127N.%20Gdy%20twe%20oczy%20nie%20widz%C4%85",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/%C5%9Apiewajcie%20Panu%20Pie%C5%9B%C5%84%20Now%C4%85%20(Kozia%C5%84skie%2C%20Pozna%C5%84skie)/128N.%20W%20Boga%20wierz",
 ];
+
+// install & fetch elements
 
 self.addEventListener("install", (installEvent) => {
   installEvent.waitUntil(

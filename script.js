@@ -1,4 +1,4 @@
-//główna funkcja
+// główna funkcja
 async function init() {
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", function () {
@@ -13,15 +13,15 @@ async function init() {
   addEventListeners();
 }
 
-//fetch spisu pieśni json
+// fetch spisu pieśni json
 async function getJSON() {
-  brzask = await fetch(`./generate json/brzask.json`).then((response) => {
+  brzask = await fetch(`./json/brzask.json`).then((response) => {
     return response.json();
   });
-  cegielki = await fetch(`./generate json/cegielki.json`).then((response) => {
+  cegielki = await fetch(`./json/cegielki.json`).then((response) => {
     return response.json();
   });
-  nowe = await fetch(`./generate json/nowe.json`).then((response) => {
+  nowe = await fetch(`./json/nowe.json`).then((response) => {
     return response.json();
   });
 
@@ -32,17 +32,17 @@ async function getJSON() {
   return map;
 }
 
-//dodawnie wszytskich eventListenerów
+// dodawanie wszystkich eventListenerów
 function addEventListeners() {
   let hymnBook = document.querySelector("#hymnBook");
   let searchBox = document.querySelector("#searchBox");
-  let searchResults = document.querySelector("#searchResults");
+  let searchResults = document.querySelector("#searchResults"); //? dlaczego wykrywa jako nieużywane
 
   hymnBook.addEventListener("change", changeHymnBook);
   searchBox.addEventListener("keyup", search);
 }
 
-//na zmiane śpiewnika chowa wyniki wyszukiwania, tekst i pokazuje wskazówki
+// chowanie wyników wyszukiwania, tekst i pokazanie wskazówek przy zmianie śpiewnika
 function changeHymnBook(e) {
   searchBox.value = "";
   searchResults.innerHTML = "";
@@ -55,7 +55,7 @@ function changeHymnBook(e) {
   e.preventDefault();
 }
 
-//szukanie
+// mechanizm szukania pieśni
 function search(e) {
   searchResults.innerHTML = "";
   searchResults.style.display = "block";
@@ -69,7 +69,7 @@ function search(e) {
       div.innerHTML = `${hymn.title}<hr>`;
       searchResults.appendChild(div);
 
-      //dodawanie eventlistenera do wyświetlania pieśni
+      // dodawanie eventlistenera do wyświetlania pieśni
       div.addEventListener("click", selectHymn);
     }
   });
@@ -84,7 +84,7 @@ function search(e) {
   e.preventDefault();
 }
 
-//wyświetlanie pieśni
+// mechanizm wyświetlania pieśni
 async function selectHymn(e) {
   const parser = new DOMParser();
   let title = document.querySelector("#title");
@@ -126,7 +126,7 @@ function textFormat(text) {
     .toLowerCase();
 }
 
-//oczyszczenie tekstu z tagów z xml
+// oczyszczenie tekstu z tagów xml (regexy)
 function lyricsFormat(lyrics) {
   return lyrics
     .replace(/\s*(\[V\d*\]|\[C\d*\])\s*/, "")
