@@ -1,4 +1,5 @@
-let currentSong = "test"; // remember current song index number (for arrows)
+let currentSong, // remember current song index number (for arrows)
+  bookLength = ""; // remember current book index length (for arrows)
 
 // główna funkcja
 async function init() {
@@ -6,8 +7,8 @@ async function init() {
     window.addEventListener("load", function () {
       navigator.serviceWorker
         .register("/serviceWorker.js")
-        .then((res) => console.log("service worker registered"))
-        .catch((err) => console.log("service worker not registered", err));
+        .then((res) => console.log("> Service worker: registered"))
+        .catch((err) => console.log("> Service worker: not registered " + err));
     });
   }
 
@@ -39,7 +40,6 @@ async function getJSON() {
 function addEventListeners() {
   let hymnBook = document.querySelector("#hymnBook");
   let searchBox = document.querySelector("#searchBox");
-  let searchResults = document.querySelector("#searchResults"); //? dlaczego wykrywa jako nieużywane
 
   hymnBook.addEventListener("change", changeHymnBook);
   searchBox.addEventListener("keyup", search);
@@ -47,7 +47,7 @@ function addEventListeners() {
 
 // chowanie wyników wyszukiwania, tekst i pokazanie wskazówek przy zmianie śpiewnika
 function changeHymnBook(e) {
-  currentSong = "test";
+  currentSong = "";
 
   searchBox.value = "";
   searchResults.innerHTML = "";
@@ -67,6 +67,7 @@ function search(e) {
   searchResults.style.display = "block";
 
   list = map.get(hymnBook.value);
+  bookLength = list.length;
   list.forEach((hymn, index) => {
     if (textFormat(hymn.title).search(textFormat(e.target.value)) != -1) {
       // console.log(hymn.link); // podgląd wszystkich linków raw_github
@@ -152,11 +153,11 @@ function arrows() {
 
   arrowLeft.addEventListener("click", () => {
     if (currentSong > 0) selectHymn(parseInt(currentSong) - 1);
-    window.scrollTo({top: 0, behavior: 'smooth'});
+    window.scrollTo({ top: 0, behavior: "smooth" });
   });
   arrowRight.addEventListener("click", () => {
-    selectHymn(parseInt(currentSong) + 1);
-    window.scrollTo({top: 0, behavior: 'smooth'});
+    if (currentSong <= bookLength - 2) selectHymn(parseInt(currentSong) + 1);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   });
 }
 
