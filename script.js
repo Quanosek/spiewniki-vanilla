@@ -13,6 +13,7 @@ async function init() {
 
   map = await getJSON();
   addEventListeners();
+  arrows();
 }
 
 // fetch spisu pieśni json
@@ -144,17 +145,19 @@ function lyricsFormat(lyrics) {
     .replace(/\n/g, "<br/>");
 }
 
-init();
-
 // strzałki boczne
-const arrowLeft = document.querySelector("#arrowLeft");
-const arrowRight = document.querySelector("#arrowRight");
+function arrows() {
+  const arrowLeft = document.querySelector("#arrowLeft");
+  const arrowRight = document.querySelector("#arrowRight");
 
-console.log(arrowLeft);
-arrowLeft.addEventListener("click", () => {
-  console.log("TEST");
-  // if (currentSong > 0) selectHymn(parseInt(currentSong) - 1);
-});
-arrowRight.addEventListener("click", () => {
-  selectHymn(parseInt(currentSong) + 1);
-});
+  arrowLeft.addEventListener("click", () => {
+    if (currentSong > 0) selectHymn(parseInt(currentSong) - 1);
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  });
+  arrowRight.addEventListener("click", () => {
+    selectHymn(parseInt(currentSong) + 1);
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  });
+}
+
+init();
