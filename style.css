@@ -163,6 +163,28 @@ footer {
   margin: 1.2rem 0;
 }
 
+.arrows {
+  display: none;
+  justify-content: center;
+  gap: 34rem;
+  width: 100%;
+  margin-top: -5.1rem;
+}
+
+.arrows div {
+  background-color: #2a2a2a;
+  padding: 0 10px;
+  margin: 0 2rem;
+  border-radius: .35rem;
+  cursor: pointer;
+  width: 90px;
+  text-align: center;
+}
+
+.arrows div:hover {
+  background-color: #585858;
+}
+
 #piesni {
   display: flex;
   flex-direction: column;
@@ -216,5 +238,13 @@ footer {
     font-size: 1.05rem;
     border-radius: 0;
     width: 88vw;
+  }
+}
+
+@media (max-width: 1000px) {
+  .arrows {
+    justify-content: space-between;
+    gap: 0;
+    margin-top: 0;
   }
 }

@@ -1,3 +1,5 @@
+let currentSong = "test"; // remember current song index number (for arrows)
+
 // główna funkcja
 async function init() {
   if ("serviceWorker" in navigator) {
@@ -44,6 +46,8 @@ function addEventListeners() {
 
 // chowanie wyników wyszukiwania, tekst i pokazanie wskazówek przy zmianie śpiewnika
 function changeHymnBook(e) {
+  currentSong = "test";
+
   searchBox.value = "";
   searchResults.innerHTML = "";
   searchResults.style.display = "none";
@@ -51,6 +55,7 @@ function changeHymnBook(e) {
   document.querySelector("#title").innerHTML = "";
   document.querySelector("#guide").style.display = "block";
   document.querySelector("#lyrics").innerHTML = "";
+  document.querySelector(".arrows").style.display = "none";
 
   e.preventDefault();
 }
@@ -59,10 +64,11 @@ function changeHymnBook(e) {
 function search(e) {
   searchResults.innerHTML = "";
   searchResults.style.display = "block";
+
   list = map.get(hymnBook.value);
   list.forEach((hymn, index) => {
     if (textFormat(hymn.title).search(textFormat(e.target.value)) != -1) {
-      console.log(hymn.link);
+      // console.log(hymn.link); // podgląd wszystkich linków raw_github
       let div = document.createElement("div");
       div.setAttribute("id", index);
       div.style.margin = "1rem";
@@ -89,7 +95,10 @@ async function selectHymn(e) {
   const parser = new DOMParser();
   let title = document.querySelector("#title");
   let lyrics = document.querySelector("#lyrics");
-  let index = e.target.getAttribute("id");
+
+  let index;
+  if (isNaN(e)) index = currentSong = e.target.getAttribute("id");
+  else index = currentSong = e;
 
   searchBox.value = "";
   searchResults.innerHTML = "";
@@ -98,6 +107,7 @@ async function selectHymn(e) {
   lyrics.innerHTML = "";
   document.querySelector(".loader").style.display = "block";
   document.querySelector("#guide").style.display = "none";
+  document.querySelector(".arrows").style.display = "flex";
 
   let xml = await fetch(list[index].link)
     .then((res) => res.text())
@@ -108,7 +118,7 @@ async function selectHymn(e) {
   title.innerHTML = xml.querySelector("title").innerHTML;
   lyrics.innerHTML = lyricsFormat(xml.querySelector("lyrics").innerHTML);
 
-  e.preventDefault();
+  if (isNaN(e)) e.preventDefault();
 }
 
 // podmienienie polskich znaków diakrytycznych
@@ -135,3 +145,16 @@ function lyricsFormat(lyrics) {
 }
 
 init();
+
+// strzałki boczne
+const arrowLeft = document.querySelector("#arrowLeft");
+const arrowRight = document.querySelector("#arrowRight");
+
+console.log(arrowLeft);
+arrowLeft.addEventListener("click", () => {
+  console.log("TEST");
+  // if (currentSong > 0) selectHymn(parseInt(currentSong) - 1);
+});
+arrowRight.addEventListener("click", () => {
+  selectHymn(parseInt(currentSong) + 1);
+});
