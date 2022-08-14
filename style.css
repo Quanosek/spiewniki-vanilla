@@ -180,10 +180,6 @@ footer {
   text-align: center;
 }
 
-.arrows div:hover {
-  background-color: #585858;
-}
-
 .arrows div p {
   margin: 0;
 }
@@ -228,6 +224,14 @@ footer {
 
 #searchResults div {
   cursor: pointer;
+}
+
+/* desktop only */
+
+@media (min-width: 1000px) {
+  .arrows div:hover {
+    background-color: #585858;
+  }
 }
 
 /* mobile version */

@@ -30,9 +30,11 @@ async function getJSON() {
   });
 
   let map = new Map();
+  let test = map.set("all", brzask.concat(cegielki, nowe));
   map.set("brzask", brzask);
   map.set("cegielki", cegielki);
   map.set("nowe", nowe);
+  console.log(test);
   return map;
 }
 
@@ -107,9 +109,9 @@ async function selectHymn(e) {
   searchResults.style.display = "none";
   title.innerHTML = "";
   lyrics.innerHTML = "";
-  document.querySelector(".loader").style.display = "block";
   document.querySelector("#guide").style.display = "none";
-  document.querySelector(".arrows").style.display = "flex";
+  document.querySelector(".arrows").style.display = "none";
+  document.querySelector(".loader").style.display = "block";
 
   let xml = await fetch(list[index].link)
     .then((res) => res.text())
@@ -119,6 +121,7 @@ async function selectHymn(e) {
   document.querySelector(".loader").style.display = "none";
   title.innerHTML = xml.querySelector("title").innerHTML;
   lyrics.innerHTML = lyricsFormat(xml.querySelector("lyrics").innerHTML);
+  document.querySelector(".arrows").style.display = "flex";
 
   if (isNaN(e)) e.preventDefault();
 }
