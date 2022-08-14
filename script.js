@@ -30,11 +30,10 @@ async function getJSON() {
   });
 
   let map = new Map();
-  let test = map.set("all", brzask.concat(cegielki, nowe));
+  map.set("all", brzask.concat(cegielki, nowe));
   map.set("brzask", brzask);
   map.set("cegielki", cegielki);
   map.set("nowe", nowe);
-  console.log(test);
   return map;
 }
 
