@@ -90,6 +90,10 @@ function search(e) {
     searchResults.style.display = "none";
   }
 
+  if (e.key === "Enter") {
+    selectHymn(searchResults.firstElementChild.id);
+  }
+
   e.preventDefault();
 }
 
