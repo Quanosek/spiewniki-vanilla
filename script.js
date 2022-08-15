@@ -39,11 +39,13 @@ async function getJSON() {
 
 // dodawanie wszystkich eventListenerów
 function addEventListeners() {
-  let hymnBook = document.querySelector("#hymnBook");
-  let searchBox = document.querySelector("#searchBox");
+  const hymnBook = document.querySelector("#hymnBook");
+  const searchBox = document.querySelector("#searchBox");
+  const clearButton = document.querySelector("#clearButton");
 
   hymnBook.addEventListener("change", changeHymnBook);
   searchBox.addEventListener("keyup", search);
+  clearButton.addEventListener("click", clearButtonFunction);
 }
 
 // chowanie wyników wyszukiwania, tekst i pokazanie wskazówek przy zmianie śpiewnika
@@ -53,6 +55,7 @@ function changeHymnBook(e) {
   searchBox.value = "";
   searchResults.innerHTML = "";
   searchResults.style.display = "none";
+  clearButton.style.display = "none";
 
   document.querySelector("#title").innerHTML = "";
   document.querySelector("#guide").style.display = "block";
@@ -66,6 +69,7 @@ function changeHymnBook(e) {
 function search(e) {
   searchResults.innerHTML = "";
   searchResults.style.display = "block";
+  clearButton.style.display = "block";
 
   list = map.get(hymnBook.value);
   bookLength = list.length;
@@ -88,6 +92,7 @@ function search(e) {
   if (e.target.value == "") {
     searchResults.innerHTML = "";
     searchResults.style.display = "none";
+    clearButton.style.display = "none";
   }
 
   if (e.key === "Enter") {
@@ -110,6 +115,8 @@ async function selectHymn(e) {
   searchBox.value = "";
   searchResults.innerHTML = "";
   searchResults.style.display = "none";
+  clearButton.style.display = "none";
+
   title.innerHTML = "";
   lyrics.innerHTML = "";
   document.querySelector("#guide").style.display = "none";
@@ -150,6 +157,14 @@ function lyricsFormat(lyrics) {
     .replace(/\s*(\[V\d*\]|\[C\d*\])\s*/, "")
     .replace(/\s*(\[V\d*\]|\[C\d*\])\s*/g, "<br/><br/>")
     .replace(/\n/g, "<br/>");
+}
+
+// clearButton
+function clearButtonFunction() {
+  searchBox.value = "";
+  searchResults.innerHTML = "";
+  searchResults.style.display = "none";
+  clearButton.style.display = "none";
 }
 
 // strzałki boczne
