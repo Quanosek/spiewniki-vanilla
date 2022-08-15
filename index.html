@@ -39,7 +39,7 @@
       </abbr>
 
       <form id="piesni" onsubmit="return false">
-        <select id="hymnBook">
+        <select id="hymnBook" class="specialButton">
           <option value="all">Wszystkie śpiewniki</option>
           <option value="brzask">Pieśni Brzasku Tysiąclecia</option>
           <option value="cegielki">Uwielbiajmy Pana (Cegiełki)</option>
@@ -48,12 +48,13 @@
 
         <div class="flexBox">
           <input
-            type="text"
             id="searchBox"
+            class="specialButton"
+            type="text"
             name="searchBox"
             placeholder="Wpisz tytuł lub numer pieśni"
           />
-          <div type="button" id="clearButton">X</div>
+          <div id="clearButton" class="specialButton">X</div>
         </div>
       </form>
 

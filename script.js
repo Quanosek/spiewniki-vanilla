@@ -96,7 +96,9 @@ function search(e) {
   }
 
   if (e.key === "Enter") {
-    selectHymn(searchResults.firstElementChild.id);
+    try {
+      selectHymn(searchResults.firstElementChild.id);
+    } catch {}
   }
 
   e.preventDefault();
@@ -174,7 +176,7 @@ function arrows() {
   });
 }
 
-// clearButton
+// wciśnięcie przycisku do czyszczenia inputu
 function clearButtonFunction() {
   searchBox.value = "";
   searchResults.innerHTML = "";
