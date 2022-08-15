@@ -159,14 +159,6 @@ function lyricsFormat(lyrics) {
     .replace(/\n/g, "<br/>");
 }
 
-// clearButton
-function clearButtonFunction() {
-  searchBox.value = "";
-  searchResults.innerHTML = "";
-  searchResults.style.display = "none";
-  clearButton.style.display = "none";
-}
-
 // strzałki boczne
 function arrows() {
   const arrowLeft = document.querySelector("#arrowLeft");
@@ -180,6 +172,14 @@ function arrows() {
     if (currentSong <= bookLength - 2) selectHymn(parseInt(currentSong) + 1);
     window.scrollTo({ top: 0, behavior: "smooth" });
   });
+}
+
+// clearButton
+function clearButtonFunction() {
+  searchBox.value = "";
+  searchResults.innerHTML = "";
+  searchResults.style.display = "none";
+  clearButton.style.display = "none";
 }
 
 init();

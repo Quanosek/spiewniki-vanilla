@@ -27,13 +27,15 @@
     <meta name="apple-mobile-web-app-status-bar" content="#000000" />
     <meta name="theme-color" content="#000000" />
 
-    <link rel="stylesheet" href="/style.css?version=14" type="text/css" />
+    <link rel="stylesheet" href="/style.css?version=15" type="text/css" />
   </head>
 
   <body>
     <main>
       <abbr title="Wróć do strony głównej">
-        <a onclick="window.location.reload()" style="user-select: none"><h1>Śpiewnik</h1></a>
+        <a onclick="window.location.reload()" style="user-select: none">
+          <h1>Śpiewnik</h1>
+        </a>
       </abbr>
 
       <form id="piesni" onsubmit="return false">
@@ -45,14 +47,14 @@
         </select>
 
         <div class="flexBox">
-        <input
-          type="text"
-          id="searchBox"
-          name="searchBox"
-          placeholder="Wpisz tytuł lub numer pieśni"
-        />
-        <button id="clearButton">X</button>
-      </div>
+          <input
+            type="text"
+            id="searchBox"
+            name="searchBox"
+            placeholder="Wpisz tytuł lub numer pieśni"
+          />
+          <div type="button" id="clearButton">X</div>
+        </div>
       </form>
 
       <div id="searchResults"></div>
@@ -113,6 +115,6 @@
       <p>Wszelkie prawa zastrzeżone ©&nbsp;2022</p>
     </footer>
 
-    <script src="/script.js?version=9"></script>
+    <script src="/script.js?version=10"></script>
   </body>
 </html>

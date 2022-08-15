@@ -153,7 +153,8 @@ footer {
 
 .flexBox {
   display: flex;
-  position: relative;
+  position: sticky !important;
+  top: 0.125rem;
 }
 
 .guide {
@@ -204,7 +205,6 @@ footer {
 }
 
 #hymnBook {
-  margin: auto;
   cursor: pointer;
 }
 
@@ -212,20 +212,26 @@ footer {
   display: none;
   position: absolute;
   right: 0;
-  width: 2rem !important;
-}
-
-#searchBox {
-  flex:1;
+  width: 0.7rem !important;
+  color: #000000;
+  cursor: pointer;
+  border: none !important;
+  /* background-image: url('/assets/x-mark.svg');
+  background-size: 100%;
+  height: inherit; */
 }
 
 #hymnBook,
 #clearButton,
 #searchBox {
   padding: 5px 10px;
+  border: solid 2px gray;
   border-radius: 0.35rem;
   width: 20rem;
-  background-color: #ffffff;
+}
+
+#hymnBook {
+  width: 21.5rem;
 }
 
 #searchResults {
