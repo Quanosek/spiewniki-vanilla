@@ -137,6 +137,7 @@ footer {
 
 #hymnBook {
   width: 21.5rem;
+  height: 2rem;
   cursor: pointer;
 }
 
@@ -145,6 +146,7 @@ footer {
   border: solid 2px gray;
   border-radius: 0.35rem;
   width: 20rem;
+  height: 1rem;
 }
 
 .flexBox {
@@ -161,12 +163,9 @@ footer {
   color: #000000;
   cursor: pointer;
   border: none !important;
-  /* background-image: url('/assets/x-mark.svg');
-  background-size: 100%;
-  height: inherit; */
 }
 
-/* seach results */
+/* search results */
 
 #searchResults {
   margin-top: -1.8rem;
@@ -264,6 +263,7 @@ footer {
 @media (max-width: 768px) {
   main {
     padding: 6% 0;
+    min-height: 100vh;
   }
   .lyrics {
     padding: 1rem 6%;

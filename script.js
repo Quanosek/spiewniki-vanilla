@@ -98,7 +98,9 @@ function search(e) {
   if (e.key === "Enter") {
     try {
       selectHymn(searchResults.firstElementChild.id);
-    } catch {}
+    } catch {
+      clearButtonFunction();
+    }
   }
 
   e.preventDefault();
@@ -150,6 +152,7 @@ function textFormat(text) {
     .replace("ź", "z")
     .replace("ć", "c")
     .replace("ń", "n")
+    .replace(/(\(|\))/g, "")
     .toLowerCase();
 }
 
