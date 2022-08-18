@@ -1,3 +1,19 @@
+/* define colors */
+
+:root {
+  /* static colors */
+  --black: #000000;
+  --white: #ffffff;
+  --lightBlue: #68aafa;
+  --darkBlue: #2170d0;
+  /* dynamic colors */
+  --background: var(--black);
+  --text: var(--white);
+  --primary: #242424;
+  --buttons: #2a2a2a;
+  --buttonsHover: #585858;
+}
+
 /* custom scroll-bar */
 
 ::-webkit-scrollbar {
@@ -5,38 +21,38 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #1d1d1d;
+  background: var(--primary);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #2a2a2a;
+  background: var(--buttons);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #585858;
+  background: var(--buttonsHover);
 }
 
 /* default css */
 
 html,
 body {
-  box-sizing: border-box;
   padding: 0;
   margin: 0;
   height: 100%;
   width: 100%;
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
-  background-color: #000000;
-  color: #ffffff;
+  background-color: var(--background);
+  color: var(--text);
+  box-sizing: border-box;
 }
 
 main {
   padding: 3% 5%;
-  gap: 2rem;
+  min-height: 90vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 90vh;
+  gap: 2rem;
 }
 
 h1 {
@@ -44,7 +60,7 @@ h1 {
 }
 
 a {
-  color: #ffffff;
+  color: var(--text);
   text-decoration: none;
   cursor: pointer;
 }
@@ -65,9 +81,9 @@ footer {
 .loader,
 .loader:before,
 .loader:after {
-  border-radius: 50%;
   width: 2.5em;
   height: 2.5em;
+  border-radius: 50%;
   -webkit-animation-fill-mode: both;
   animation-fill-mode: both;
   -webkit-animation: loadAnimation 1.8s infinite ease-in-out;
@@ -75,17 +91,17 @@ footer {
 }
 
 .loader {
-  color: #ffffff;
-  font-size: 10px;
+  display: none;
   margin: 2rem auto 5rem;
   position: relative;
+  color: var(--text);
+  font-size: 10px;
   text-indent: -9999em;
   -webkit-transform: translateZ(0);
   -ms-transform: translateZ(0);
   transform: translateZ(0);
   -webkit-animation-delay: -0.16s;
   animation-delay: -0.16s;
-  display: none;
 }
 
 .loader:before,
@@ -131,28 +147,34 @@ footer {
 
 #piesni {
   display: flex;
+  align-items: center;
   flex-direction: column;
   gap: 1rem;
 }
 
 #hymnBook {
   width: 21.5rem;
-  height: 2rem;
+  height: 2.1rem;
   cursor: pointer;
 }
 
 .specialButton {
   padding: 5px 10px;
-  border: solid 2px gray;
-  border-radius: 0.35rem;
   width: 20rem;
-  height: 1rem;
+  height: 1.2rem;
+  border: solid 2px var(--buttonsHover);
+  border-radius: 0.35rem;
 }
 
-.flexBox {
+.specialButton:focus {
+  outline: none;
+  border-color: var(--lightBlue);
+  box-shadow: 0 0 10px var(--lightBlue);
+}
+
+.searchHolder {
   display: flex;
-  position: sticky !important;
-  top: 0.125rem;
+  position: sticky;
 }
 
 #clearButton {
@@ -160,7 +182,7 @@ footer {
   position: absolute;
   right: 0;
   width: 0.7rem !important;
-  color: #000000;
+  color: var(--black);
   cursor: pointer;
   border: none !important;
 }
@@ -168,19 +190,20 @@ footer {
 /* search results */
 
 #searchResults {
-  margin-top: -1.8rem;
-  width: 20rem;
-  background-color: #242424;
-  padding: 5px 10px;
-  border-radius: 0 0 0.35rem 0.35rem;
+  z-index: 2;
   display: none;
+  padding: 5px 10px;
+  margin-top: -2rem;
+  width: 20rem;
+  background-color: var(--primary);
+  border-radius: 0 0 0.35rem 0.35rem;
 }
 
 #searchResults hr {
   margin: 10px 3px;
   height: 1px;
   border: none;
-  background-color: #ffffff;
+  background-color: var(--text);
 }
 
 #searchResults div {
@@ -192,7 +215,7 @@ footer {
 .lyrics {
   padding: 1rem 3rem;
   width: 30rem;
-  background-color: #242424;
+  background-color: var(--primary);
   font-size: 1.25rem;
   border-radius: 0.35rem;
 }
@@ -203,12 +226,8 @@ footer {
 
 /* default text */
 
-.guide {
-  display: block;
-}
-
 .download_link {
-  color: #68aafa;
+  color: var(--lightBlue);
   font-size: 0.85rem;
 }
 
@@ -232,7 +251,7 @@ footer {
 }
 
 .arrows div {
-  background-color: #2a2a2a;
+  background-color: var(--buttons);
   padding: 8px;
   border-radius: 0.35rem;
   cursor: pointer;
@@ -240,7 +259,7 @@ footer {
   text-align: center;
 }
 
-.arrows div p {
+.arrows p {
   margin: 0;
 }
 
@@ -251,10 +270,10 @@ footer {
     text-decoration: underline;
   }
   .download_link:active {
-    color: #2170d0;
+    color: var(--darkBlue);
   }
   .arrows div:hover {
-    background-color: #585858;
+    background-color: var(--buttonsHover);
   }
 }
 

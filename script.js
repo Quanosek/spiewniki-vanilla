@@ -87,20 +87,32 @@ function search(e) {
     }
   });
 
+  // usuwanie ostatniego <hr> w wyszukiwarce
   if (searchResults.hasChildNodes()) searchResults.lastChild.lastChild.remove();
 
+  // jeśli nie ma tekstu w inpucie
   if (e.target.value == "") {
     searchResults.innerHTML = "";
     searchResults.style.display = "none";
     clearButton.style.display = "none";
   }
 
+  // kliknięcie Enter
   if (e.key === "Enter") {
     try {
       selectHymn(searchResults.firstElementChild.id);
     } catch {
       clearButtonFunction();
     }
+  }
+
+  // jeśli jest brak wyników
+  if (e.target.value !== "" && searchResults.innerHTML == "") {
+    let div = document.createElement("div");
+    div.style.margin = "1rem";
+    div.style.cursor = "default";
+    div.innerHTML = `Brak wyników wyszukiwania`;
+    searchResults.appendChild(div);
   }
 
   e.preventDefault();
@@ -152,7 +164,7 @@ function textFormat(text) {
     .replace("ź", "z")
     .replace("ć", "c")
     .replace("ń", "n")
-    .replace(/(\(|\))/g, "")
+    .replace(/[^\w\s]/gi, "")
     .toLowerCase();
 }
 
