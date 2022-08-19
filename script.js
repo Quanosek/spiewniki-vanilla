@@ -41,10 +41,13 @@ async function getJSON() {
 function addEventListeners() {
   const hymnBook = document.querySelector("#hymnBook");
   const searchBox = document.querySelector("#searchBox");
+  const randomButton = document.querySelector("#randomButton");
   const clearButton = document.querySelector("#clearButton");
 
+  document.addEventListener("keyup", arrowsGlobal);
   hymnBook.addEventListener("change", changeHymnBook);
   searchBox.addEventListener("keyup", search);
+  randomButton.addEventListener("click", randomButtonFunction);
   clearButton.addEventListener("click", clearButtonFunction);
 }
 
@@ -60,7 +63,8 @@ function changeHymnBook(e) {
   document.querySelector("#title").innerHTML = "";
   document.querySelector("#guide").style.display = "block";
   document.querySelector("#lyrics").innerHTML = "";
-  document.querySelector(".arrows").style.display = "none";
+  document.querySelector("#arrowLeft").style.display = "none";
+  document.querySelector("#arrowRight").style.display = "none";
 
   e.preventDefault();
 }
@@ -136,7 +140,9 @@ async function selectHymn(e) {
   title.innerHTML = "";
   lyrics.innerHTML = "";
   document.querySelector("#guide").style.display = "none";
-  document.querySelector(".arrows").style.display = "none";
+  document.querySelector("#arrowLeft").style.display = "none";
+  document.querySelector("#randomButton").style.display = "none";
+  document.querySelector("#arrowRight").style.display = "none";
   document.querySelector(".loader").style.display = "block";
 
   let xml = await fetch(list[index].link)
@@ -145,9 +151,12 @@ async function selectHymn(e) {
     .catch((err) => console.error(err));
 
   document.querySelector(".loader").style.display = "none";
+  document.querySelector("#arrowLeft").style.display = "flex";
+  document.querySelector("#randomButton").style.display = "flex";
+  document.querySelector("#arrowRight").style.display = "flex";
+
   title.innerHTML = xml.querySelector("title").innerHTML;
   lyrics.innerHTML = lyricsFormat(xml.querySelector("lyrics").innerHTML);
-  document.querySelector(".arrows").style.display = "flex";
 
   if (isNaN(e)) e.preventDefault();
 }
@@ -176,19 +185,48 @@ function lyricsFormat(lyrics) {
     .replace(/\n/g, "<br/>");
 }
 
-// strzałki boczne
+// obsługa strzałek
+function arrowLeftFunction() {
+  if (currentSong > 0) {
+    selectHymn(parseInt(currentSong) - 1);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+}
+
+function arrowRightFunction() {
+  if (currentSong <= bookLength - 2) {
+    selectHymn(parseInt(currentSong) + 1);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+}
+
+// przyciski dolne strzałek
 function arrows() {
   const arrowLeft = document.querySelector("#arrowLeft");
   const arrowRight = document.querySelector("#arrowRight");
 
   arrowLeft.addEventListener("click", () => {
-    if (currentSong > 0) selectHymn(parseInt(currentSong) - 1);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    arrowLeftFunction();
   });
   arrowRight.addEventListener("click", () => {
-    if (currentSong <= bookLength - 2) selectHymn(parseInt(currentSong) + 1);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    arrowRightFunction();
   });
+}
+
+// strzałki klawiatura
+function arrowsGlobal(e) {
+  if (e.keyCode == "37") arrowLeftFunction();
+  if (e.keyCode == "39") arrowRightFunction();
+}
+
+// random button function
+function randomButtonFunction() {
+  list = map.get(hymnBook.value);
+
+  min = Math.ceil(1);
+  max = Math.floor(list.length);
+  random = Math.floor(Math.random() * (max - min + 1)) + min;
+  selectHymn(parseInt(random));
 }
 
 // wciśnięcie przycisku do czyszczenia inputu

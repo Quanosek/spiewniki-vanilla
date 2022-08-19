@@ -150,7 +150,6 @@ footer {
   align-items: center;
   flex-direction: column;
   gap: 1rem;
-  align-items: center;
 }
 
 #hymnBook {
@@ -162,7 +161,7 @@ footer {
 .specialButton {
   padding: 5px 10px;
   width: 20rem;
-  height: 1.2rem;
+  height: 1rem;
   border: solid 2px var(--buttonsHover);
   border-radius: 0.35rem;
 }
@@ -243,24 +242,30 @@ footer {
 
 /* sides arrows */
 
-.arrows {
-  margin-top: -1rem;
+#arrowLeft,
+#arrowRight {
   display: none;
+}
+
+.bottomButtons {
+  display: flex;
+  margin-top: -1rem;
   justify-content: center;
-  gap: 20rem;
+  gap: 7rem;
   font-size: 0.8rem;
 }
 
-.arrows div {
+.bottomButtons div {
   background-color: var(--buttons);
   padding: 8px;
   border-radius: 0.35rem;
   cursor: pointer;
   width: 90px;
   text-align: center;
+  justify-content: center;
 }
 
-.arrows p {
+.bottomButtons p {
   margin: 0;
 }
 
@@ -273,7 +278,7 @@ footer {
   .download_link:active {
     color: var(--darkBlue);
   }
-  .arrows div:hover {
+  .bottomButtons div:hover {
     background-color: var(--buttonsHover);
   }
 }
@@ -291,8 +296,8 @@ footer {
     border-radius: 0;
     width: 88vw;
   }
-  .arrows {
+  .bottomButtons {
     justify-content: space-around;
-    gap: 30vw;
+    gap: 6%;
   }
 }
