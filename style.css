@@ -76,6 +76,10 @@ footer {
   text-align: center;
 }
 
+.no_select {
+  user-select: none;
+}
+
 /* loader */
 
 .loader,

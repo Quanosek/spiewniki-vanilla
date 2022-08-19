@@ -101,6 +101,16 @@ function search(e) {
     clearButton.style.display = "none";
   }
 
+  // easter egg
+  if (e.target.value == "2137") {
+    console.log("Jeszcze jak!");
+
+    hymnBook.value = "cegielki";
+    list = map.get("cegielki");
+    selectHymn(6);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
   // kliknięcie Enter
   if (e.key === "Enter") {
     try {
@@ -125,8 +135,8 @@ function search(e) {
 // mechanizm wyświetlania pieśni
 async function selectHymn(e) {
   const parser = new DOMParser();
-  let title = document.querySelector("#title");
-  let lyrics = document.querySelector("#lyrics");
+  const title = document.querySelector("#title");
+  const lyrics = document.querySelector("#lyrics");
 
   let index;
   if (isNaN(e)) index = currentSong = e.target.getAttribute("id");
@@ -194,6 +204,10 @@ function arrowLeftFunction() {
 }
 
 function arrowRightFunction() {
+  list = map.get(hymnBook.value);
+  bookLength = list.length;
+
+  console.log(currentSong, bookLength);
   if (currentSong <= bookLength - 2) {
     selectHymn(parseInt(currentSong) + 1);
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -222,11 +236,13 @@ function arrowsGlobal(e) {
 // random button function
 function randomButtonFunction() {
   list = map.get(hymnBook.value);
+  bookLength = list.length;
 
   min = Math.ceil(1);
-  max = Math.floor(list.length);
+  max = Math.floor(bookLength);
   random = Math.floor(Math.random() * (max - min + 1)) + min;
   selectHymn(parseInt(random));
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 // wciśnięcie przycisku do czyszczenia inputu
