@@ -60,9 +60,6 @@ function changeHymnBook(e) {
   searchResults.style.display = "none";
   clearButton.style.display = "none";
 
-  document.querySelector("#title").innerHTML = "";
-  document.querySelector("#guide").style.display = "block";
-  document.querySelector("#lyrics").innerHTML = "";
   document.querySelector("#arrowLeft").style.display = "none";
   document.querySelector("#arrowRight").style.display = "none";
 
@@ -142,6 +139,7 @@ async function selectHymn(e) {
   if (isNaN(e)) index = currentSong = e.target.getAttribute("id");
   else index = currentSong = e;
 
+  searchBox.blur();
   searchBox.value = "";
   searchResults.innerHTML = "";
   searchResults.style.display = "none";
