@@ -205,7 +205,6 @@ function arrowRightFunction() {
   list = map.get(hymnBook.value);
   bookLength = list.length;
 
-  console.log(currentSong, bookLength);
   if (currentSong <= bookLength - 2) {
     selectHymn(parseInt(currentSong) + 1);
     window.scrollTo({ top: 0, behavior: "smooth" });
