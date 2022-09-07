@@ -25,16 +25,16 @@ def generuj(main_url, github_url, name, regex):
             href = a['href']
             pos = href.rfind('/')
             href = href[pos:]
-            pos = regex.search(title).start()
+            pos = title.find('.')
 
             # if(href[pos+1]=="a"):
             #     aAttribute = True
             # else:
             #     aAttribute = False
 
-            number = int(title[:pos])
+            id = title[:pos]
             x = {
-                "number": number,
+                "id": id,
                 "title": title,
                 "link": github_url+href,
                 # "a": aAttribute
@@ -42,7 +42,9 @@ def generuj(main_url, github_url, name, regex):
             hymns.append(x)
 
     def myFunc(e):
-        return e['number']
+        pos = regex.search(e['title']).start()
+        number = int(e['title'][:pos])
+        return number
 
     hymns = sorted(hymns, key=myFunc)
     hymns = json.dumps(hymns)
