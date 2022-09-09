@@ -3,14 +3,8 @@ let currentSong, // remember current song index number (for arrows)
 
 // główna funkcja
 async function init() {
-  if ("serviceWorker" in navigator) {
-    window.addEventListener("load", function () {
-      navigator.serviceWorker
-        .register("/serviceWorker.js")
-        .then((res) => console.log("> Service worker: registered"))
-        .catch((err) => console.log("> Service worker: not registered " + err));
-    });
-  }
+  if ("serviceWorker" in navigator)
+    navigator.serviceWorker.register("/serviceWorker.js");
 
   map = await getJSON();
   addEventListeners();
@@ -19,13 +13,13 @@ async function init() {
 
 // fetch spisu pieśni json
 async function getJSON() {
-  brzask = await fetch(`./json/brzask.json`).then((response) => {
+  brzask = await fetch(`/json/brzask.json`).then((response) => {
     return response.json();
   });
-  cegielki = await fetch(`./json/cegielki.json`).then((response) => {
+  cegielki = await fetch(`/json/cegielki.json`).then((response) => {
     return response.json();
   });
-  nowe = await fetch(`./json/nowe.json`).then((response) => {
+  nowe = await fetch(`/json/nowe.json`).then((response) => {
     return response.json();
   });
 
@@ -53,15 +47,11 @@ function addEventListeners() {
 
 // chowanie wyników wyszukiwania, tekst i pokazanie wskazówek przy zmianie śpiewnika
 function changeHymnBook(e) {
-  currentSong = "";
-
+  hymnBook.blur();
   searchBox.value = "";
   searchResults.innerHTML = "";
   searchResults.style.display = "none";
   clearButton.style.display = "none";
-
-  document.querySelector("#arrowLeft").style.display = "none";
-  document.querySelector("#arrowRight").style.display = "none";
 
   e.preventDefault();
 }

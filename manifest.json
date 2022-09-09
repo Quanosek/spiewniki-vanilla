@@ -1,12 +1,16 @@
 {
-  "name": "Pieśni ZWBPŚ",
-  "short_name": "Śpiewnik",
+  "name": "Śpiewniki ZWBPŚW",
+  "short_name": "Śpiewniki",
   "start_url": "index.html",
   "display": "standalone",
-  "background_color": "#fdfdfd",
+  "orientation": "any",
+  "background_color": "#000000",
   "theme_color": "#000000",
-  "orientation": "portrait-primary",
   "icons": [
+    {
+      "src": "/files/icons/icon.svg",
+      "sizes": "any"
+    },
     {
       "src": "/files/icons/icon-48x48.png",
       "type": "image/png",
@@ -54,10 +58,6 @@
       "type": "image/png",
       "sizes": "1024x1024",
       "purpose": "maskable"
-    },
-    {
-      "src": "/files/icons/icon.svg",
-      "sizes": "any"
     }
   ]
 }

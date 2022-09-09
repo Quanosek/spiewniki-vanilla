@@ -1,6 +1,5 @@
-const staticPiesni = "piesni-site-v1";
+const cacheName = "piesni-v1";
 const assets = [
-  "/",
   "/index.html",
   "/style.css",
   "/script.js",
@@ -378,7 +377,7 @@ const assets = [
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Pie%C5%9Bni%20Brzasku%20Tysi%C4%85clecia/359.%20Bacz%20na%20Pana%2C%20duszo%20ma",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Pie%C5%9Bni%20Brzasku%20Tysi%C4%85clecia/359a.%20O%20Stw%C3%B3rco%20%C5%9Bwiata",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Pie%C5%9Bni%20Brzasku%20Tysi%C4%85clecia/360.%20Gdy%20mnie%20ranna%20zorza%20budzi",
-  "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Pie%C5%9Bni%20Brzasku%20Tysi%C4%85clecia/360.%20Gdy%20mnie%20ranna%20zorza%20budzi%20(s%C5%82.%20F.%20Karpi%C5%84ski)",
+  "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Pie%C5%9Bni%20Brzasku%20Tysi%C4%85clecia/360a.%20Gdy%20mnie%20ranna%20zorza%20budzi%20(s%C5%82.%20F.%20Karpi%C5%84ski)",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Pie%C5%9Bni%20Brzasku%20Tysi%C4%85clecia/361.%20Jezu%2C%20Zbawco%20mojej%20duszy",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Pie%C5%9Bni%20Brzasku%20Tysi%C4%85clecia/362.%20Na%20morzy%20razu%20jednego",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Pie%C5%9Bni%20Brzasku%20Tysi%C4%85clecia/363.%20O%20miasto%2C%20z%20jaspisu%20tw%C3%B3j%20mur",
@@ -630,7 +629,7 @@ const assets = [
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/112C.%20Ty%20wskaza%C5%82e%C5%9B%20drog%C4%99%20do%20mi%C5%82o%C5%9Bci",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/113C.%20Gdy%20dotykasz%20mego%20%C5%BCycia",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/114C.%20Okryj%20mnie",
-  "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/115C.%20W%20ogrodzie%20by%C5%82em%20ja%20sam",
+  "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/115C.%20(425.)%20W%20ogrodzie%20by%C5%82em%20ja%20sam",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/116C.%20Pan%20m%C3%B3j%20pasterzem",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/117C.%20Kto%C5%9B%20zbudowa%C5%82%20dom%20na%20piasku",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/118C.%20Ska%C5%82%C4%85%20i%20zbawieniem",
@@ -773,8 +772,8 @@ const assets = [
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/254C.%20Niech%20nam%20w%20sercach",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/255C.%20Czytaj%20Bibli%C4%99%2C%20m%C3%B3dl%20si%C4%99%20co%20dnia",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/256C.%20Co%C5%9B%20w%20mym%20sercu%20%C5%9Bpiewa",
-  "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/257C.%20Naucz%20modli%C4%87%20mnie",
-  "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/258C.%20Chcemy%20do%20%C5%9Bmierci",
+  "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/257C.%20(377.)%20Naucz%20modli%C4%87%20mnie",
+  "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/258C.%20(488.)%20Chcemy%20do%20%C5%9Bmierci",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/259C.%20M%C3%B3dl%20si%C4%99%2C%20a%C5%BC%20b%C5%82y%C5%9Bnie%20%C5%9Bwit",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/260C.%20Jam%20nie%20jest%20godny",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/261C.%20Emmanuel",
@@ -820,6 +819,7 @@ const assets = [
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/%C5%9Apiewajcie%20Panu%20Pie%C5%9B%C5%84%20Now%C4%85%20(Kozia%C5%84skie%2C%20Pozna%C5%84skie)/14N.%20(21K.)%20Wi%C4%99cej%20mi%C5%82o%C5%9Bci",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/%C5%9Apiewajcie%20Panu%20Pie%C5%9B%C5%84%20Now%C4%85%20(Kozia%C5%84skie%2C%20Pozna%C5%84skie)/15N.%20(7K.)%20W%20szumie%20trawy",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/%C5%9Apiewajcie%20Panu%20Pie%C5%9B%C5%84%20Now%C4%85%20(Kozia%C5%84skie%2C%20Pozna%C5%84skie)/16N.%20(26K.)%20Tak%20jak%20jele%C5%84",
+  "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/%C5%9Apiewajcie%20Panu%20Pie%C5%9B%C5%84%20Now%C4%85%20(Kozia%C5%84skie%2C%20Pozna%C5%84skie)/16aN.%20Tak%20jak%20jele%C5%84%20(wer.%20P.%20Kupski)",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/%C5%9Apiewajcie%20Panu%20Pie%C5%9B%C5%84%20Now%C4%85%20(Kozia%C5%84skie%2C%20Pozna%C5%84skie)/17N.%20(32K.)%20Pow%C3%B3d%20do%20rado%C5%9Bci",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/%C5%9Apiewajcie%20Panu%20Pie%C5%9B%C5%84%20Now%C4%85%20(Kozia%C5%84skie%2C%20Pozna%C5%84skie)/18N.%20(19K.)%20Ju%C5%BC%20ponad%20dwa%20tysi%C4%85ce%20lat",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/%C5%9Apiewajcie%20Panu%20Pie%C5%9B%C5%84%20Now%C4%85%20(Kozia%C5%84skie%2C%20Pozna%C5%84skie)/19N.%20(24K.)%20S%C5%82uga%20Kr%C3%B3l",
@@ -936,18 +936,48 @@ const assets = [
 
 // install & fetch elements
 
-self.addEventListener("install", (installEvent) => {
-  installEvent.waitUntil(
-    caches.open(staticPiesni).then((cache) => {
-      cache.addAll(assets);
-    })
+self.addEventListener("install", (e) => {
+  e.waitUntil(
+    (async () => {
+      const cache = await caches.open(cacheName);
+      await cache.addAll(assets);
+    })()
   );
 });
 
-self.addEventListener("fetch", (fetchEvent) => {
-  fetchEvent.respondWith(
-    caches.match(fetchEvent.request).then((res) => {
-      return res || fetch(fetchEvent.request);
+self.addEventListener("fetch", (e) => {
+  url = e.request.url;
+  if (
+    url.startsWith("chrome-extension") ||
+    url.includes("extension") ||
+    !(url.indexOf("http") === 0)
+  )
+    return;
+
+  e.respondWith(
+    (async () => {
+      const r = await caches.match(e.request);
+      if (r) return r;
+
+      try {
+        const response = await fetch(e.request);
+        const cache = await caches.open(cacheName);
+        cache.put(e.request, response.clone());
+        return response;
+      } catch {}
+    })()
+  );
+});
+
+self.addEventListener("activate", (e) => {
+  e.waitUntil(
+    caches.keys().then((keyList) => {
+      return Promise.all(
+        keyList.map((key) => {
+          if (key === cacheName) return;
+          return caches.delete(key);
+        })
+      );
     })
   );
 });
