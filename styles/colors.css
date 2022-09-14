@@ -1,0 +1,57 @@
+:root {
+  /* static colors */
+  --black: #000000;
+  --white: #ffffff;
+  --lightBlue: #68aafa;
+  --darkBlue: #2170d0;
+
+  /* theme backgrounds */
+  --blackBG: #000000;
+  --darkBG: #242424;
+  --lightBG: #ffffff;
+  --readingBG: #fdf9f2;
+}
+
+/* default/black theme */
+:root,
+:root.black {
+  --textSelection: var(--darkBlue);
+  --background: var(--blackBG);
+  --text: #ededed;
+  --boxes: #1d1d1d;
+  --buttons: #303030;
+  --buttonsHover: #444444;
+  --iconsFilter: invert();
+}
+
+:root.dark {
+  --textSelection: var(--darkBlue);
+  --background: var(--darkBG);
+  --text: #ffffff;
+  --boxes: #313131;
+  --buttons: #414141;
+  --buttonsHover: #535353;
+  --iconsFilter: invert();
+}
+
+/* light theme */
+:root.light {
+  --textSelection: var(--lightBlue);
+  --background: var(--lightBG);
+  --text: #000000;
+  --boxes: #f4f4f4;
+  --buttons: #e6e6e6;
+  --buttonsHover: #dadada;
+  --iconsFilter: none;
+}
+
+/* reading theme */
+:root.reading {
+  --textSelection: var(--lightBlue);
+  --background: var(--readingBG);
+  --text: #4d4d3c;
+  --boxes: #f9f4ea;
+  --buttons: #e5e2d8;
+  --buttonsHover: #dbd8d1;
+  --iconsFilter: none;
+}

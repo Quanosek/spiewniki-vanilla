@@ -1,17 +1,7 @@
-/* define colors */
+/* define custom values */
 
 :root {
-  /* static colors */
-  --black: #000000;
-  --white: #ffffff;
-  --lightBlue: #68aafa;
-  --darkBlue: #2170d0;
-  /* dynamic colors */
-  --background: var(--black);
-  --text: var(--white);
-  --primary: #242424;
-  --buttons: #2a2a2a;
-  --buttonsHover: #585858;
+  --rounded: 0.35rem;
 }
 
 /* custom scroll-bar */
@@ -21,7 +11,7 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--primary);
+  background: var(--boxes);
 }
 
 ::-webkit-scrollbar-thumb {
@@ -36,21 +26,21 @@
 
 ::-moz-selection {
   color: var(--white);
-  background: var(--darkBlue);
+  background: var(--textSelection);
 }
 
 ::selection {
   color: var(--white);
-  background: var(--darkBlue);
+  background: var(--textSelection);
 }
+
+/* default css */
 
 @font-face {
   font-family: "Gill Sans MT";
   src: url("/files/fonts/Gill\ Sans\ MT.ttf");
   size-adjust: 110%;
 }
-
-/* default css */
 
 html,
 body {
@@ -66,7 +56,6 @@ body {
 
 main {
   padding: 3% 5%;
-  min-height: 90vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -88,15 +77,21 @@ abbr {
   text-decoration: none;
 }
 
-footer {
-  padding: 0.6rem 0;
-  margin: 0;
-  font-size: 0.6rem;
-  text-align: center;
+button {
+  cursor: pointer;
+  border: none;
+  border-radius: var(--rounded);
+  font-family: "Gill Sans MT";
+  background-color: var(--buttons);
+  color: var(--text);
 }
 
 .no_select {
   user-select: none;
+}
+
+.skip_gap {
+  margin-top: -2rem;
 }
 
 /* loader */
@@ -168,6 +163,22 @@ footer {
 
 /* main elements */
 
+#menuButton {
+  position: absolute;
+  top: 1em;
+  right: 1rem;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#menuButton img {
+  width: 26px;
+  filter: var(--iconsFilter);
+}
+
 #piesni {
   display: flex;
   flex-direction: column;
@@ -183,7 +194,7 @@ footer {
 .specialButton {
   padding: 5px 10px;
   border: solid 2px var(--buttonsHover);
-  border-radius: 0.35rem;
+  border-radius: var(--rounded);
 }
 
 .specialButton:focus {
@@ -192,9 +203,16 @@ footer {
   box-shadow: 0 0 10px var(--lightBlue);
 }
 
+select option {
+  color: var(--black);
+  background-color: var(--white);
+}
+
 .searchHolder {
   display: flex;
   position: sticky;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 #searchBox {
@@ -205,13 +223,13 @@ footer {
 #clearButton {
   display: none;
   position: absolute;
-  right: 0;
-  top: 0;
   width: 0.6rem;
-  color: var(--black);
-  cursor: pointer;
-  border: none;
+  height: 0.6rem;
+  background: var(--white) url("/files/icons/clear.svg") no-repeat center;
   scale: 0.85;
+  border: none;
+  border-radius: var(--rounded);
+  cursor: pointer;
 }
 
 /* search results */
@@ -220,15 +238,15 @@ footer {
   z-index: 2;
   display: none;
   padding: 5px 10px;
-  margin-top: -2rem;
   width: 17.5rem;
-  background-color: var(--primary);
-  border-radius: 0 0 0.35rem 0.35rem;
+  background-color: var(--boxes);
+  border-radius: 0 0 var(--rounded) var(--rounded);
+  font-size: 0.9rem;
 }
 
 #searchResults hr {
   margin: 10px 3px;
-  height: 1px;
+  height: 1.5px;
   border: none;
   background-color: var(--text);
 }
@@ -239,12 +257,34 @@ footer {
 
 /* text section */
 
+.titleHolder {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+}
+
+.favorite {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.favorite img {
+  padding: 10px;
+  background-image: url("/files/icons/star_empty.svg");
+  background-repeat: no-repeat;
+  filter: var(--iconsFilter);
+  transition: 0.1s ease-in-out;
+}
+
 .lyrics {
   padding: 1rem 3rem;
   width: 30rem;
-  background-color: var(--primary);
-  font-size: 1.25rem;
-  border-radius: 0.35rem;
+  background-color: var(--boxes);
+  border-radius: var(--rounded);
 }
 
 .lyrics h1 {
@@ -263,6 +303,15 @@ footer {
   margin-top: -0.5rem;
 }
 
+#title,
+#guideHeader {
+  font-size: 23.8px;
+}
+#lyrics,
+#guideList {
+  font-size: 17px;
+}
+
 #lyrics {
   margin-bottom: 1.2rem;
 }
@@ -275,63 +324,89 @@ footer {
 }
 
 .bottomButtons {
-  display: flex;
   margin-top: -1rem;
+  display: flex;
   justify-content: center;
   gap: 7rem;
-  font-size: 0.8rem;
 }
 
-.bottomButtons div {
-  background-color: var(--buttons);
+.bottomButtons button {
   padding: 8px;
-  border-radius: 0.35rem;
-  cursor: pointer;
   width: 90px;
-  text-align: center;
+  height: 34px;
   justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 0.75rem;
 }
 
 .bottomButtons p {
   margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bottomButtons img {
+  margin: 0 -3px;
+  width: 20px;
+  height: auto;
+  filter: var(--iconsFilter);
+  position: relative;
+  top: 1px;
 }
 
 /* desktop only */
 
 @media (min-width: 1000px) {
+  button:hover {
+    background-color: var(--buttonsHover);
+    transition: 0.1s ease-in-out;
+  }
   .download_link:hover {
     text-decoration: underline;
   }
   .download_link:active {
     color: var(--darkBlue);
-  }
-  .bottomButtons div:hover {
-    background-color: var(--buttonsHover);
+    transition: 0.1s ease-in-out;
   }
 }
 
-/* mobile version */
+/* on mobile */
 
 @media (max-width: 768px) {
   main {
-    padding: 6% 0;
-    min-height: 100vh;
+    padding: 6% 0 16%;
+  }
+  #menuButton {
+    width: 30px;
+    height: 30px;
+  }
+
+  #menuButton img {
+    width: 22px;
   }
   .lyrics {
-    padding: 1rem 6%;
-    font-size: 1.05rem;
-    border-radius: 0;
     width: 88vw;
+    border-radius: 0;
   }
   .bottomButtons {
-    font-size: 0.65rem;
     justify-content: space-around;
     gap: 6%;
   }
+  .bottomButtons button {
+    min-width: 84px;
+    font-size: 0.7rem;
+  }
 }
 
-@media (max-width: 345px) {
+/* small-mobile */
+
+@media (max-width: 340px) {
   #searchResults {
     width: 100%;
+  }
+  .bottomButtons button {
+    width: auto;
   }
 }

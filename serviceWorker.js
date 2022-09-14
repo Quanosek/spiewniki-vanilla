@@ -1,13 +1,15 @@
 const cacheName = "piesni-v1";
 const assets = [
-  "/index.html",
-  "/style.css",
-  "/script.js",
-  "json/brzask.json",
-  "json/cegielki.json",
-  "json/nowe.json",
+  // wszystkie elementy, które nie zdążą się załadować od uruchomienia strony:
 
-  // linki tymczasowe: BRZASK
+  // ikony
+  "/files/icons/clear.svg",
+  "/files/icons/star_empty.svg",
+  "/files/icons/star_filled.svg",
+
+  // linki do wszystkich pieśni RAW GitHub
+
+  // BRZASK
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Pie%C5%9Bni%20Brzasku%20Tysi%C4%85clecia/1.%20Daj%2C%20Bo%C5%BCe%20%C5%9Awi%C4%99ty",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Pie%C5%9Bni%20Brzasku%20Tysi%C4%85clecia/2.%20Ty%C5%9B%20kaza%C5%82%20nam%2C%20o%20Panie%20m%C3%B3j",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Pie%C5%9Bni%20Brzasku%20Tysi%C4%85clecia/2a.%20Za%20przyk%C5%82ad%20bior%C4%85c%20s%C5%82owa%20Twe",
@@ -521,7 +523,7 @@ const assets = [
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/4C.%20Jak%20rozpozna%C4%87%20mam%20Chrystusa",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/5C.%20%C5%9Alepy%20cz%C5%82owiek",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/6C.%20Zapali%C4%87%20ognia%20%C5%BCar",
-  "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/7C.%20Pan%20kiedy%C5%9B%20stan%C4%85%C5%82%20nad%20brzegiem",
+  "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/7C.%20Pan%20kiedy%C5%9B%20stan%C4%85%C5%82%20nad%20brzegiem%20(Barka)",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/8C.%20Cicho%20by%C5%82o%20na%20ulicach",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/9C.%20Pasterzu%20m%C3%B3j",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/10C.%20Dobry%20pasterz",
@@ -569,7 +571,7 @@ const assets = [
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/52C.%20B%C4%99dziesz%20mi%C5%82owa%C5%82",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/53C.%20To%20przykazanie",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/54C.%20Kochany%20bracie",
-  "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/55C.%20Ptaki%20radosne%2C%20niestrudzone",
+  "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/55C.%20Ptaki%20radosne%2C%20niestrudzone%20(Listy)",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/56C.%20On%20czeka%20na%20nas",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/57C.%20Jak%20dobrze%20by%C4%87%20razem",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/58C.%20Gdzie%20dw%C3%B3ch%20lub%20trzech",
@@ -606,7 +608,7 @@ const assets = [
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/89C.%20Cz%C5%82owieka%20z%20bagna",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/90C.%20Przyjaciela%20mam",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/91C.%20Jak%20dwoje%20przyjaci%C3%B3%C5%82",
-  "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/92C.%20Jezus%20przez%20%C5%BCycie%20mnie%20wiedzie",
+  "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/92C.%20Jezus%20przez%20%C5%BCycie%20mnie%20wiedzie%20(Jezus%20jest%20mym%20przyjacielem)",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/93C.%20Gdzie%20jeste%C5%9B%20Panie%20Bo%C5%BCe",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/94C.%20Chocia%C5%BC%20nie%20wiem%20nic%20o%20jutrze",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/95C.%20S%C5%82owo%20Twoje%20jest%20pochodni%C4%85",
@@ -629,7 +631,7 @@ const assets = [
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/112C.%20Ty%20wskaza%C5%82e%C5%9B%20drog%C4%99%20do%20mi%C5%82o%C5%9Bci",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/113C.%20Gdy%20dotykasz%20mego%20%C5%BCycia",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/114C.%20Okryj%20mnie",
-  "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/115C.%20(425.)%20W%20ogrodzie%20by%C5%82em%20ja%20sam",
+  "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/115C.%20(425.)%20W%20ogrodzie%20ja%20by%C5%82em%20raz%20sam",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/116C.%20Pan%20m%C3%B3j%20pasterzem",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/117C.%20Kto%C5%9B%20zbudowa%C5%82%20dom%20na%20piasku",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/118C.%20Ska%C5%82%C4%85%20i%20zbawieniem",
@@ -675,8 +677,8 @@ const assets = [
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/158C.%20Cicho%20zapada%20zmrok",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/159C.%20Gdy%20si%C4%99%20dzie%C5%84%20ko%C5%84czy",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/160C.%20Cichy%20wieczorny%20m%C3%B3j%20%C5%9Bpiew",
-  "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/161C.%20Kiedy%20w%20jasn%C4%85%2C%20spokojn%C4%85%2C%20cich%C4%85%20noc",
-  "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/162C.%20W%C4%99dr%C3%B3wka",
+  "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/161C.%20Kiedy%20w%20jasn%C4%85%2C%20spokojn%C4%85%2C%20cich%C4%85%20noc%20(O%2C%20Bo%C5%BCe)",
+  "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/162C.%20W%C4%99dr%C3%B3wka%20(Gdy%20utraci%C5%82e%C5%9B%20wiar%C4%99)",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/163C.%20Czy%20wiesz%2C%20kto%20sprawi%C5%82%2C%20%C5%BCe",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/164C.%20Gdy%20szukasz%20Boga",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)/165C.%20Trzeba%20cho%C4%87%20jeden%20raz",
@@ -808,7 +810,7 @@ const assets = [
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/%C5%9Apiewajcie%20Panu%20Pie%C5%9B%C5%84%20Now%C4%85%20(Kozia%C5%84skie%2C%20Pozna%C5%84skie)/3N.%20(4K.)%20Jezus%20odda%C5%82%20za%20nas%20%C5%BCycie%20swe",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/%C5%9Apiewajcie%20Panu%20Pie%C5%9B%C5%84%20Now%C4%85%20(Kozia%C5%84skie%2C%20Pozna%C5%84skie)/4N.%20(6K.)%20Pragn%C4%99%20dzisiaj%20ci%20powiedzie%C4%87",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/%C5%9Apiewajcie%20Panu%20Pie%C5%9B%C5%84%20Now%C4%85%20(Kozia%C5%84skie%2C%20Pozna%C5%84skie)/5N.%20(20K.)%20Nie%20narzekaj",
-  "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/%C5%9Apiewajcie%20Panu%20Pie%C5%9B%C5%84%20Now%C4%85%20(Kozia%C5%84skie%2C%20Pozna%C5%84skie)/6N.%20(10K.)%20Wszystko%20Panie%20Ciebie%20chwali",
+  "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/%C5%9Apiewajcie%20Panu%20Pie%C5%9B%C5%84%20Now%C4%85%20(Kozia%C5%84skie%2C%20Pozna%C5%84skie)/6N.%20(10K.)%20Wszystko%2C%20Panie%2C%20Ciebie%20chwali",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/%C5%9Apiewajcie%20Panu%20Pie%C5%9B%C5%84%20Now%C4%85%20(Kozia%C5%84skie%2C%20Pozna%C5%84skie)/7N.%20(12K.)%20M%C3%B3j%20Jezus",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/%C5%9Apiewajcie%20Panu%20Pie%C5%9B%C5%84%20Now%C4%85%20(Kozia%C5%84skie%2C%20Pozna%C5%84skie)/8N.%20(13K.)%20Gdy%20ciemna%20noc%20zapada",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/%C5%9Apiewajcie%20Panu%20Pie%C5%9B%C5%84%20Now%C4%85%20(Kozia%C5%84skie%2C%20Pozna%C5%84skie)/9N.%20(15K.)%20S%C5%82owo%20Twe",
@@ -877,7 +879,7 @@ const assets = [
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/%C5%9Apiewajcie%20Panu%20Pie%C5%9B%C5%84%20Now%C4%85%20(Kozia%C5%84skie%2C%20Pozna%C5%84skie)/71N.%20Pokojem%20moim%20B%C3%B3g",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/%C5%9Apiewajcie%20Panu%20Pie%C5%9B%C5%84%20Now%C4%85%20(Kozia%C5%84skie%2C%20Pozna%C5%84skie)/72N.%20(26P.)%20G%C5%82o%C5%9Bno%20do%20Pana%20wo%C5%82am",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/%C5%9Apiewajcie%20Panu%20Pie%C5%9B%C5%84%20Now%C4%85%20(Kozia%C5%84skie%2C%20Pozna%C5%84skie)/73N.%20(6P.)%20%C5%81ask%C4%85%20jeste%C5%9Bmy%20zbawieni",
-  "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/%C5%9Apiewajcie%20Panu%20Pie%C5%9B%C5%84%20Now%C4%85%20(Kozia%C5%84skie%2C%20Pozna%C5%84skie)/74N.%20(20P.)%20Pan%20przed%20nami%20szed%C5%82",
+  "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/%C5%9Apiewajcie%20Panu%20Pie%C5%9B%C5%84%20Now%C4%85%20(Kozia%C5%84skie%2C%20Pozna%C5%84skie)/74N.%20(20P.)%20Pan%20przed%20nami%20szed%C5%82%20(W%C4%99dr%C3%B3wka)",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/%C5%9Apiewajcie%20Panu%20Pie%C5%9B%C5%84%20Now%C4%85%20(Kozia%C5%84skie%2C%20Pozna%C5%84skie)/75N.%20(44K.)%20Czcijmy%20Jezusa",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/%C5%9Apiewajcie%20Panu%20Pie%C5%9B%C5%84%20Now%C4%85%20(Kozia%C5%84skie%2C%20Pozna%C5%84skie)/76N.%20(21P.)%20Dzi%C4%99kuj%C4%99%20Ci%20Jezu",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/%C5%9Apiewajcie%20Panu%20Pie%C5%9B%C5%84%20Now%C4%85%20(Kozia%C5%84skie%2C%20Pozna%C5%84skie)/77N.%20(31P.)%20Lepszy%20jeden%20dzie%C5%84",
@@ -911,7 +913,7 @@ const assets = [
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/%C5%9Apiewajcie%20Panu%20Pie%C5%9B%C5%84%20Now%C4%85%20(Kozia%C5%84skie%2C%20Pozna%C5%84skie)/105N.%20O%20potopie",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/%C5%9Apiewajcie%20Panu%20Pie%C5%9B%C5%84%20Now%C4%85%20(Kozia%C5%84skie%2C%20Pozna%C5%84skie)/106N.%20Do%C5%9Bwiadczenia",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/%C5%9Apiewajcie%20Panu%20Pie%C5%9B%C5%84%20Now%C4%85%20(Kozia%C5%84skie%2C%20Pozna%C5%84skie)/107N.%20Czy%20znasz%20to%20imi%C4%99",
-  "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/%C5%9Apiewajcie%20Panu%20Pie%C5%9B%C5%84%20Now%C4%85%20(Kozia%C5%84skie%2C%20Pozna%C5%84skie)/108N.%20(5P.)%20Chwal%C4%99%20Ciebie%20Panie",
+  "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/%C5%9Apiewajcie%20Panu%20Pie%C5%9B%C5%84%20Now%C4%85%20(Kozia%C5%84skie%2C%20Pozna%C5%84skie)/108N.%20(5P.)%20Chwal%C4%99%20Ciebie%2C%20Panie",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/%C5%9Apiewajcie%20Panu%20Pie%C5%9B%C5%84%20Now%C4%85%20(Kozia%C5%84skie%2C%20Pozna%C5%84skie)/109N.%20Sp%C3%B3jrz%20tam%20w%20g%C3%B3rze",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/%C5%9Apiewajcie%20Panu%20Pie%C5%9B%C5%84%20Now%C4%85%20(Kozia%C5%84skie%2C%20Pozna%C5%84skie)/110N.%20Gdy%20si%C4%99%20wiara%20moja%20chwieje",
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/%C5%9Apiewajcie%20Panu%20Pie%C5%9B%C5%84%20Now%C4%85%20(Kozia%C5%84skie%2C%20Pozna%C5%84skie)/111N.%20W%C5%9Br%C3%B3d%20%C5%BCycia%20burz",
@@ -934,7 +936,7 @@ const assets = [
   "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/%C5%9Apiewajcie%20Panu%20Pie%C5%9B%C5%84%20Now%C4%85%20(Kozia%C5%84skie%2C%20Pozna%C5%84skie)/128N.%20W%20Boga%20wierz",
 ];
 
-// install & fetch elements
+// funkcje PWA
 
 self.addEventListener("install", (e) => {
   e.waitUntil(

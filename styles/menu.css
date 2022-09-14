@@ -1,0 +1,156 @@
+/* default menu */
+
+#menuHolder {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.55);
+  transition: 0.15s ease-in-out;
+  z-index: 10;
+}
+
+#menu {
+  margin-top: 5rem;
+  padding: 1vh 3vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 36rem;
+  height: 25rem;
+  background-color: var(--boxes);
+  border-radius: var(--rounded);
+}
+
+.menuContent {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.menuContent p {
+  margin-bottom: 0.75rem;
+  font-size: 0.9rem;
+}
+
+/* change color theme */
+
+#themeSelector {
+  display: flex;
+  justify-content: center;
+  gap: 1.2rem;
+}
+
+#themeSelector label {
+  width: 3rem;
+  height: 4.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: var(--rounded);
+  cursor: pointer;
+}
+#themeSelector input {
+  scale: 1.2;
+  margin-top: 3px;
+}
+
+#themeSelector img {
+  scale: 1.5;
+}
+
+#themeSelector img.invert {
+  filter: invert();
+}
+
+#themeSelector .black {
+  background-color: var(--blackBG);
+}
+#themeSelector .dark {
+  background-color: var(--darkBG);
+}
+#themeSelector .light {
+  background-color: var(--lightBG);
+}
+#themeSelector .reading {
+  background-color: var(--readingBG);
+}
+
+/* change font size */
+
+#fontSlideBar_holder {
+  margin-top: -0.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#smallerA {
+  font-size: 0.75rem;
+}
+
+#fontSlideBar {
+  width: 23rem;
+  margin: 0 0.5rem;
+}
+
+#biggerA {
+  font-size: 1.4rem;
+}
+
+#clearCache {
+  margin-top: 10px;
+  padding: 8px 20px;
+}
+
+/* buttons save/reset */
+
+.menuButtons {
+  margin-top: 16px;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.menuButtons button {
+  padding: 6px 16px;
+}
+
+/* credits footer */
+
+footer {
+  padding: 0.6rem 0;
+  margin: 0;
+  font-size: 0.6rem;
+  text-align: center;
+}
+footer hr {
+  width: 28rem;
+  height: 1.5px;
+  border: none;
+  background-color: var(--text);
+}
+
+/* on mobile */
+
+@media (max-width: 768px) {
+  #menu {
+    width: 84vw;
+  }
+  #fontSlideBar {
+    width: 65vw;
+  }
+  footer hr {
+    width: 75vw;
+  }
+}

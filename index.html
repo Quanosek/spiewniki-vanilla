@@ -1,14 +1,19 @@
 <!DOCTYPE html>
 <html lang="pl">
   <head>
-    <meta charset="utf-8" />
+    <!-- podstawowe ustawienia -->
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta
       name="viewport"
-      content="width=device-width, minimum-scale=1.0, maximum-scale = 1.0, user-scalable = no"
+      content="width=device-width, initial-scale=1.0, user-scalable=no"
     />
-    <!-- default values -->
+    <meta name="theme-color" content="#000000" />
+    <meta name="mobile-wep-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+    <!-- Informacje o domenie -->
     <title>Śpiewniki | Zrzeszenie Wolnych Badaczy Pisma Świętego</title>
-    <link rel="icon" type="image/x-icon" href="/files/icons/favicon.svg" />
     <meta
       name="description"
       content="Wszystkie Śpiewniki Zrzeszenia Wolnych Badaczy Pisma Świętego | Krzysztof Olszewski i Jakub Kłało, Wszelkie prawa zastrzeżone ©&nbsp;2022"
@@ -17,28 +22,34 @@
       name="keywords"
       content="Dabhar, dabhar.org, ZWBPS, ZWBP ŚW, BPSW, Badacze, Zrzeszenie Wolnych Badaczy Pisma Świętego, Zrzeszenie, Kraków, Warszawa, Białogard, Biłgoraj, nastrazy.org, Na Straży, Wędrówka, Wędrowniczek, Zbawienie.pl, 52Prawdy, śpiewniki, śpiewnik, śpiewnik młodzieżowy, Brzask, Śpiewnik Brzasku Tysiąclecia, Cegiełki, Uwielbiajmy Pana, Nowe Pieśni, Koziańskie, Kozy, Poznańskie, Poznań, Śpiewajmy Panu Pieśń Nową, tekst, wszystkie, pieśni, piosenki, obóz, piosenki obozowe, kursy biblijne, konwencja, konwencje"
     />
-    <link rel="manifest" href="manifest.json" />
-    <!-- ios support -->
-    <link rel="apple-touch-icon" href="files/icons/icon-48x48.png" />
-    <link rel="apple-touch-icon" href="files/icons/icon-72x72.png" />
-    <link rel="apple-touch-icon" href="files/icons/icon-96x96.png" />
-    <link rel="apple-touch-icon" href="files/icons/icon-128x128.png" />
-    <link rel="apple-touch-icon" href="files/icons/icon-192x192.png" />
-    <link rel="apple-touch-icon" href="files/icons/icon-384x384.png" />
-    <link rel="apple-touch-icon" href="files/icons/icon-512x512.png" />
-    <link rel="apple-touch-icon" href="files/icons/icon-1024x1024.png" />
-    <meta name="apple-mobile-web-app-status-bar" content="#000000" />
-    <meta name="theme-color" content="#000000" />
 
-    <link rel="stylesheet" href="/style.css?version=20" type="text/css" />
+    <!-- import -->
+    <link rel="icon" href="/files/logo/favicon.ico" sizes="any" />
+    <link rel="icon" href="/files/logo/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/files/logo/icon-180x180.png" />
+    <link rel="manifest" href="/manifest.json" />
+
+    <!-- style i skrypty -->
+    <link rel="stylesheet" href="/styles/colors.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/main.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/menu.css" type="text/css" />
+
+    <script src="/scripts/main.js"></script>
+    <script src="/scripts/menu.js"></script>
   </head>
 
   <body>
     <main>
       <abbr title="Wróć do strony głównej">
         <a onclick="window.location.reload()" class="no_select">
-          <h1>Śpiewnik</h1>
+          <h1>Śpiewniki</h1>
         </a>
+      </abbr>
+
+      <abbr title="Więcej" class="skip_gap">
+        <button id="menuButton" class="menu no_select">
+          <img src="/files/icons/menu.svg" />
+        </button>
       </abbr>
 
       <form id="piesni" onsubmit="return false">
@@ -57,43 +68,52 @@
             name="searchBox"
             placeholder="Wpisz tytuł lub numer pieśni"
           />
-          <div id="clearButton" class="specialButton">X</div>
+          <div id="clearButton" class="specialButton no_select"></div>
         </div>
       </form>
 
-      <div id="searchResults"></div>
+      <div id="searchResults" class="skip_gap"></div>
 
       <div class="lyrics">
         <div class="loader"></div>
-        <h1 id="title"></h1>
+        <div class="titleHolder">
+          <h1 id="title"></h1>
+          <!-- <abbr title="Dodaj do ulubionych">
+            <button id="addFavorite" class="favorite no_select">
+              <img id="star" />
+            </button>
+          </abbr> -->
+        </div>
 
         <div>
           <div id="guide">
-            <h2>Oznaczenia numeracji pieśni:</h2>
-            <p>
-              <b>bez litery</b> - śpiewnik "Pieśni Brzasku Tysiąclecia"
-              <a
-                href="/files/Piesni Brzasku Tysiaclecia.pdf"
-                target="_blank"
-                class="download_link"
-              >
-                (pobierz&nbsp;PDF)
-              </a>
-            </p>
-            <p><b>C</b> - śpiewnik "Uwielbiajmy Pana" ("Cegiełki")</p>
-            <p>
-              <b>N</b> - śpiewnik "Śpiewajcie Panu Pieśń Nową"
-              ("Nowe&nbsp;Pieśni")
-              <a
-                href="/files/Spiewajcie Panu Piesn Nowa.pdf"
-                target="_blank"
-                class="download_link"
-              >
-                (pobierz&nbsp;PDF)
-              </a>
-            </p>
-            <p class="indented"><b>K</b> - śpiewnik Koziański</p>
-            <p class="indented"><b>P</b> - śpiewnik Poznański</p>
+            <h2 id="guideHeader">Oznaczenia numeracji pieśni:</h2>
+            <div id="guideList">
+              <p>
+                <b>bez litery</b> - śpiewnik "Pieśni Brzasku Tysiąclecia"
+                <a
+                  href="/files/Piesni Brzasku Tysiaclecia.pdf"
+                  target="_blank"
+                  class="download_link"
+                >
+                  (pobierz&nbsp;PDF)
+                </a>
+              </p>
+              <p><b>C</b> - śpiewnik "Uwielbiajmy Pana" ("Cegiełki")</p>
+              <p>
+                <b>N</b> - śpiewnik "Śpiewajcie Panu Pieśń Nową"
+                ("Nowe&nbsp;Pieśni")
+                <a
+                  href="/files/Spiewajcie Panu Piesn Nowa.pdf"
+                  target="_blank"
+                  class="download_link"
+                >
+                  (pobierz&nbsp;PDF)
+                </a>
+              </p>
+              <p class="indented"><b>K</b> - śpiewnik Koziański</p>
+              <p class="indented"><b>P</b> - śpiewnik Poznański</p>
+            </div>
           </div>
 
           <div id="lyrics"></div>
@@ -101,31 +121,21 @@
       </div>
 
       <div class="bottomButtons no_select">
-        <div id="arrowLeft">
-          <p>< poprzednie</p>
-        </div>
-        <div id="randomButton">
-          <p>wylosuj pieśń</p>
-        </div>
-        <div id="arrowRight">
-          <p>następne ></p>
-        </div>
+        <button id="arrowLeft">
+          <img src="/files/icons/before.svg" />
+          <p>poprzednie</p>
+        </button>
+        <button id="randomButton">
+          <p>wylosuj&nbsp;pieśń</p>
+        </button>
+        <button id="arrowRight">
+          <p>następne</p>
+          <img src="/files/icons/next.svg" />
+        </button>
       </div>
     </main>
 
-    <footer>
-      <h3>
-        Autorzy&nbsp;strony:
-        <a href="https://github.com/Krist0f0l0s"> Krzysztof&nbsp;Olszewski </a>
-        i
-        <a href="https://github.com/Quanosek"> Jakub&nbsp;Kłało </a>
-      </h3>
-      <p>
-        Wszelkie prawa zastrzeżone ©&nbsp;2022 | domena
-        <a href="https://www.klalo.pl" target="_blank">klalo.pl</a>
-      </p>
-    </footer>
-
-    <script src="/script.js?version=20"></script>
+    <div id="menuHolder"></div>
+    <script src="/scripts/preventSleep.js"></script>
   </body>
 </html>

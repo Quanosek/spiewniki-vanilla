@@ -7,7 +7,7 @@ async function init() {
     navigator.serviceWorker.register("/serviceWorker.js");
 
   map = await getJSON();
-  addEventListeners();
+  EventListeners();
   arrows();
 }
 
@@ -32,15 +32,17 @@ async function getJSON() {
 }
 
 // dodawanie wszystkich eventListenerów
-function addEventListeners() {
-  const hymnBook = document.querySelector("#hymnBook");
-  const searchBox = document.querySelector("#searchBox");
-  const randomButton = document.querySelector("#randomButton");
-  const clearButton = document.querySelector("#clearButton");
+function EventListeners() {
+  const hymnBook = document.getElementById("hymnBook");
+  const searchBox = document.getElementById("searchBox");
+  // const favorite = document.getElementById("addFavorite");
+  const randomButton = document.getElementById("randomButton");
+  const clearButton = document.getElementById("clearButton");
 
-  document.addEventListener("keyup", arrowsGlobal);
   hymnBook.addEventListener("change", changeHymnBook);
   searchBox.addEventListener("keyup", search);
+  // favorite.addEventListener("click", favoriteFunction);
+  document.addEventListener("keyup", arrowsGlobal);
   randomButton.addEventListener("click", randomButtonFunction);
   clearButton.addEventListener("click", clearButtonFunction);
 }
@@ -48,12 +50,7 @@ function addEventListeners() {
 // chowanie wyników wyszukiwania, tekst i pokazanie wskazówek przy zmianie śpiewnika
 function changeHymnBook(e) {
   hymnBook.blur();
-  searchBox.value = "";
-  searchResults.innerHTML = "";
-  searchResults.style.display = "none";
-  clearButton.style.display = "none";
-
-  e.preventDefault();
+  clearButtonFunction();
 }
 
 // mechanizm szukania pieśni
@@ -64,6 +61,7 @@ function search(e) {
 
   list = map.get(hymnBook.value);
   bookLength = list.length;
+
   list.forEach((hymn, index) => {
     if (textFormat(hymn.title).search(textFormat(e.target.value)) != -1) {
       // console.log(hymn.link); // podgląd wszystkich linków raw_github
@@ -73,7 +71,6 @@ function search(e) {
       div.innerHTML = `${hymn.title}<hr>`;
       searchResults.appendChild(div);
 
-      // dodawanie eventlistenera do wyświetlania pieśni
       div.addEventListener("click", selectHymn);
     }
   });
@@ -115,48 +112,51 @@ function search(e) {
     div.innerHTML = `Brak wyników wyszukiwania`;
     searchResults.appendChild(div);
   }
-
-  e.preventDefault();
 }
 
 // mechanizm wyświetlania pieśni
 async function selectHymn(e) {
   const parser = new DOMParser();
+
   const title = document.querySelector("#title");
   const lyrics = document.querySelector("#lyrics");
+  const guide = document.querySelector("#guide");
+  const loader = document.querySelector(".loader");
+  const titleHolder = document.querySelector(".titleHolder");
+  const arrowLeft = document.querySelector("#arrowLeft");
+  const arrowRight = document.querySelector("#arrowRight");
 
   let index;
   if (isNaN(e)) index = currentSong = e.target.getAttribute("id");
   else index = currentSong = e;
 
   searchBox.blur();
-  searchBox.value = "";
-  searchResults.innerHTML = "";
-  searchResults.style.display = "none";
-  clearButton.style.display = "none";
+  clearButtonFunction();
+
+  guide.style.display = "none";
 
   title.innerHTML = "";
   lyrics.innerHTML = "";
-  document.querySelector("#guide").style.display = "none";
-  document.querySelector("#arrowLeft").style.display = "none";
-  document.querySelector("#randomButton").style.display = "none";
-  document.querySelector("#arrowRight").style.display = "none";
-  document.querySelector(".loader").style.display = "block";
+
+  loader.style.display = "block";
+  titleHolder.style.display = "none";
+  arrowLeft.style.display = "none";
+  randomButton.style.display = "none";
+  arrowRight.style.display = "none";
 
   let xml = await fetch(list[index].link)
     .then((res) => res.text())
     .then((xml) => parser.parseFromString(xml, "text/xml"))
     .catch((err) => console.error(err));
 
-  document.querySelector(".loader").style.display = "none";
-  document.querySelector("#arrowLeft").style.display = "flex";
-  document.querySelector("#randomButton").style.display = "flex";
-  document.querySelector("#arrowRight").style.display = "flex";
-
   title.innerHTML = xml.querySelector("title").innerHTML;
   lyrics.innerHTML = lyricsFormat(xml.querySelector("lyrics").innerHTML);
 
-  if (isNaN(e)) e.preventDefault();
+  loader.style.display = "none";
+  titleHolder.style.display = "flex";
+  arrowLeft.style.display = "flex";
+  randomButton.style.display = "flex";
+  arrowRight.style.display = "flex";
 }
 
 // podmienienie polskich znaków diakrytycznych
@@ -183,7 +183,34 @@ function lyricsFormat(lyrics) {
     .replace(/\n/g, "<br/>");
 }
 
+// ulubione pieśni
+function favoriteFunction() {
+  const star = document.getElementById("star");
+  const star_empty = 'url("/files/icons/star_empty.svg")';
+  const star_filled = 'url("/files/icons/star_filled.svg")';
+
+  if (
+    !star.style.backgroundImage ||
+    star.style.backgroundImage === star_empty
+  ) {
+    star.style.backgroundImage = star_filled;
+    // console.log("Added to favorite songs!");
+
+    //
+    // code here
+    //
+  } else {
+    star.style.backgroundImage = star_empty;
+    // console.log("Removed from favorite songs!");
+
+    //
+    // code here
+    //
+  }
+}
+
 // obsługa strzałek
+
 function arrowLeftFunction() {
   if (currentSong > 0) {
     selectHymn(parseInt(currentSong) - 1);
@@ -203,15 +230,12 @@ function arrowRightFunction() {
 
 // przyciski dolne strzałek
 function arrows() {
-  const arrowLeft = document.querySelector("#arrowLeft");
-  const arrowRight = document.querySelector("#arrowRight");
-
-  arrowLeft.addEventListener("click", () => {
-    arrowLeftFunction();
-  });
-  arrowRight.addEventListener("click", () => {
-    arrowRightFunction();
-  });
+  document
+    .querySelector("#arrowLeft")
+    .addEventListener("click", arrowLeftFunction);
+  document
+    .querySelector("#arrowRight")
+    .addEventListener("click", arrowRightFunction);
 }
 
 // strzałki klawiatura
