@@ -23,7 +23,7 @@
   align-items: center;
   justify-content: space-between;
   width: 36rem;
-  height: 25rem;
+  height: 25.5rem;
   background-color: var(--boxes);
   border-radius: var(--rounded);
 }

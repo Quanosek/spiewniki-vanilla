@@ -7,7 +7,7 @@
 
   /* theme backgrounds */
   --blackBG: #000000;
-  --darkBG: #242424;
+  --darkBG: #212121;
   --lightBG: #ffffff;
   --readingBG: #fdf9f2;
 }
@@ -49,7 +49,7 @@
 :root.reading {
   --textSelection: var(--lightBlue);
   --background: var(--readingBG);
-  --text: #4d4d3c;
+  --text: #23221e;
   --boxes: #f9f4ea;
   --buttons: #e5e2d8;
   --buttonsHover: #dbd8d1;

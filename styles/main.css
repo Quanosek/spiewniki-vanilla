@@ -333,7 +333,7 @@ select option {
 .bottomButtons button {
   padding: 8px;
   width: 90px;
-  height: 34px;
+  height: 35px;
   justify-content: center;
   align-items: center;
   text-align: center;
@@ -379,12 +379,12 @@ select option {
     padding: 6% 0 16%;
   }
   #menuButton {
-    width: 30px;
-    height: 30px;
+    width: 32px;
+    height: 32px;
   }
 
   #menuButton img {
-    width: 22px;
+    width: 23px;
   }
   .lyrics {
     width: 88vw;
@@ -396,6 +396,7 @@ select option {
   }
   .bottomButtons button {
     min-width: 84px;
+    height: 32px;
     font-size: 0.7rem;
   }
 }
