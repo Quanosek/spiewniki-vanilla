@@ -1,25 +1,27 @@
-let currentSong, // remember current song index number (for arrows)
-  bookLength = ""; // remember current book index length (for arrows)
+import { showMenu, hideMenu } from "/scripts/menu.js?v=1";
+
+let currentSong, bookLength;
+let map, list;
 
 // główna funkcja
-async function init() {
+(async () => {
   if ("serviceWorker" in navigator)
     navigator.serviceWorker.register("/serviceWorker.js");
 
   map = await getJSON();
-  EventListeners();
+  eventsListener();
   arrows();
-}
+})();
 
 // fetch spisu pieśni json
 async function getJSON() {
-  brzask = await fetch(`/json/brzask.json`).then((response) => {
+  const brzask = await fetch(`/json/brzask.json`).then((response) => {
     return response.json();
   });
-  cegielki = await fetch(`/json/cegielki.json`).then((response) => {
+  const cegielki = await fetch(`/json/cegielki.json`).then((response) => {
     return response.json();
   });
-  nowe = await fetch(`/json/nowe.json`).then((response) => {
+  const nowe = await fetch(`/json/nowe.json`).then((response) => {
     return response.json();
   });
 
@@ -32,7 +34,9 @@ async function getJSON() {
 }
 
 // dodawanie wszystkich eventListenerów
-function EventListeners() {
+function eventsListener() {
+  document.addEventListener("keyup", globalShortcuts);
+
   const hymnBook = document.getElementById("hymnBook");
   const searchBox = document.getElementById("searchBox");
   // const favorite = document.getElementById("addFavorite");
@@ -42,13 +46,33 @@ function EventListeners() {
   hymnBook.addEventListener("change", changeHymnBook);
   searchBox.addEventListener("keyup", search);
   // favorite.addEventListener("click", favoriteFunction);
-  document.addEventListener("keyup", arrowsGlobal);
   randomButton.addEventListener("click", randomButtonFunction);
   clearButton.addEventListener("click", clearButtonFunction);
 }
 
+function globalShortcuts(e) {
+  // console.log(e.keyCode);
+  switch (e.keyCode) {
+    case 37: // strzałka w lewo
+      arrowLeftFunction();
+      break;
+    case 39: // strzałka w prawo
+      arrowRightFunction();
+      break;
+    case 27: // Esc
+      hideMenu();
+      break;
+    case 85: // R
+      showMenu();
+      break;
+    case 87: // W
+      randomButtonFunction();
+      break;
+  }
+}
+
 // chowanie wyników wyszukiwania, tekst i pokazanie wskazówek przy zmianie śpiewnika
-function changeHymnBook(e) {
+function changeHymnBook() {
   hymnBook.blur();
   clearButtonFunction();
 }
@@ -209,8 +233,15 @@ function favoriteFunction() {
   }
 }
 
-// obsługa strzałek
+// przyciski dolne strzałek
+function arrows() {
+  const arrowLeft = document.getElementById("arrowLeft");
+  const arrowRight = document.getElementById("arrowRight");
+  arrowLeft.addEventListener("click", arrowLeftFunction);
+  arrowRight.addEventListener("click", arrowRightFunction);
+}
 
+// obsługa strzałek
 function arrowLeftFunction() {
   if (currentSong > 0) {
     selectHymn(parseInt(currentSong) - 1);
@@ -219,29 +250,10 @@ function arrowLeftFunction() {
 }
 
 function arrowRightFunction() {
-  list = map.get(hymnBook.value);
-  bookLength = list.length;
-
   if (currentSong <= bookLength - 2) {
     selectHymn(parseInt(currentSong) + 1);
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
-}
-
-// przyciski dolne strzałek
-function arrows() {
-  document
-    .querySelector("#arrowLeft")
-    .addEventListener("click", arrowLeftFunction);
-  document
-    .querySelector("#arrowRight")
-    .addEventListener("click", arrowRightFunction);
-}
-
-// strzałki klawiatura
-function arrowsGlobal(e) {
-  if (e.keyCode == "37") arrowLeftFunction();
-  if (e.keyCode == "39") arrowRightFunction();
 }
 
 // random button function
@@ -249,9 +261,9 @@ function randomButtonFunction() {
   list = map.get(hymnBook.value);
   bookLength = list.length;
 
-  min = Math.ceil(1);
-  max = Math.floor(bookLength);
-  random = Math.floor(Math.random() * (max - min + 1)) + min;
+  const min = Math.ceil(1);
+  const max = Math.floor(bookLength);
+  const random = Math.floor(Math.random() * (max - min + 1)) + min;
   selectHymn(parseInt(random));
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
@@ -263,5 +275,3 @@ function clearButtonFunction() {
   searchResults.style.display = "none";
   clearButton.style.display = "none";
 }
-
-init();

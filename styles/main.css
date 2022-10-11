@@ -1,3 +1,6 @@
+@import "colors.css?=1";
+@import "menu.css?=1";
+
 /* define custom values */
 
 :root {
@@ -38,7 +41,7 @@
 
 @font-face {
   font-family: "Gill Sans MT";
-  src: url("/files/fonts/Gill\ Sans\ MT.ttf");
+  src: url("/files/fonts/gill_sans_mt.ttf") format("truetype");
   size-adjust: 110%;
 }
 

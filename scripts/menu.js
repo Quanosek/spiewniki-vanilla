@@ -1,11 +1,9 @@
-async function init() {
-  // menu HTML
-  window.addEventListener("load", () => {
-    document.getElementById("menuHolder").innerHTML = `
+async function menuHTML() {
+  document.getElementById("menuHolder").innerHTML = `
     <div id="menu">
 
       <div class="menuContent">
-      <div>
+        <div>
           <p>Zmień motyw kolorów</p>
             <form id="themeSelector" class="no_select">
             <label class="black" for="black">
@@ -35,7 +33,6 @@ async function init() {
           </div> 
         </div>
         <button id="clearCache" class="no_select">Wyczyść pamięć podręczną</button>
-
         <div class="menuButtons no_select">
           <button id="saveButton">Zapisz</button>
           <button id="cancelButton">Resetuj</button>  
@@ -45,87 +42,73 @@ async function init() {
       <footer>
         <hr>
         <h3>
-          Autorzy&nbsp;strony:
-          <a href="https://github.com/Krist0f0l0s"> Krzysztof&nbsp;Olszewski</a>
-          i<a href="https://github.com/Quanosek">&nbsp;Jakub&nbsp;Kłało</a>
+          Autorzy&nbsp;strony:<a href="https://github.com/Krist0f0l0s"> Krzysztof&nbsp;Olszewski</a>i<a href="https://github.com/Quanosek">&nbsp;Jakub&nbsp;Kłało</a>
         </h3>
         <p>
-          Wszelkie prawa zastrzeżone ©&nbsp;2022 | domena&nbsp;<a
-            href="https://www.klalo.pl"
-            target="_blank"
-            >klalo.pl</a
-          >
+          Wszelkie prawa zastrzeżone ©&nbsp;2022 | domena&nbsp;<a href="https://www.klalo.pl" target="_blank">klalo.pl</a>
         </p>
-    </footer>
+      </footer>
 
     </div>
-    `;
-
-    // wczytywanie danych z pamięci podręcznej
-
-    const theme = localStorage.getItem("theme");
-    const radios = document.querySelectorAll(
-      'input[type="radio"][name="theme"]'
-    );
-    const fontSlideBar = document.getElementById("fontSlideBar");
-    const fontSize = localStorage.getItem("fontSize");
-
-    const title = document.getElementById("title");
-    const guideHeader = document.getElementById("guideHeader");
-    const lyrics = document.getElementById("lyrics");
-    const guideList = document.getElementById("guideList");
-
-    radios.forEach((selection) => {
-      if (!theme && selection.value === "black") selection.checked = "true";
-      else if (theme === selection.value) selection.checked = "true";
-    });
-    if (!theme) document.documentElement.className = "black";
-    else document.documentElement.className = theme;
-
-    fontSlideBar.value = fontSize;
-    title.style.fontSize = guideHeader.style.fontSize =
-      parseInt(fontSize) * 1.4 + "px";
-    lyrics.style.fontSize = guideList.style.fontSize = fontSize + "px";
-
-    // działanie funkcji
-    EventListener();
-  });
+  `;
 }
 
-// dodawanie wszystkich eventListenerów
-function EventListener() {
-  const menuButton = document.getElementById("menuButton");
+(async () => {
+  await menuHTML();
+
+  // wczytywanie danych z pamięci podręcznej
+
+  const theme = localStorage.getItem("theme");
   const radios = document.querySelectorAll('input[type="radio"][name="theme"]');
+  const fontSlideBar = document.getElementById("fontSlideBar");
+  const fontSize = localStorage.getItem("fontSize");
+
+  const title = document.getElementById("title");
+  const guideHeader = document.getElementById("guideHeader");
+  const lyrics = document.getElementById("lyrics");
+  const guideList = document.getElementById("guideList");
+
+  radios.forEach((selection) => {
+    if (!theme && selection.value === "black") selection.checked = "true";
+    else if (theme === selection.value) selection.checked = "true";
+  });
+  if (!theme) document.documentElement.className = "black";
+  else document.documentElement.className = theme;
+
+  fontSlideBar.value = fontSize;
+  title.style.fontSize = guideHeader.style.fontSize =
+    parseInt(fontSize) * 1.4 + "px";
+  lyrics.style.fontSize = guideList.style.fontSize = fontSize + "px";
+
+  // działanie funkcji
+  eventsListener(theme, radios);
+})();
+
+// dodawanie wszystkich eventListenerów
+function eventsListener(theme, radios) {
   const clearCacheButton = document.getElementById("clearCache");
-  const saveButton = document.getElementById("saveButton");
   const resetButton = document.getElementById("cancelButton");
 
-  menuButton.addEventListener("click", showMenu);
-  radios.forEach((selection) =>
-    selection.addEventListener("change", () => changeTheme(selection))
-  );
+  radios.forEach((selection) => {
+    selection.addEventListener(
+      "change",
+      () => (document.documentElement.className = selection.value)
+    );
+  });
   fontSlideBar.addEventListener("change", fontSizeChange);
-  clearCacheButton.addEventListener("click", clearCache);
+  menuButton.addEventListener("click", showMenu);
   saveButton.addEventListener("click", saveMenu);
-  resetButton.addEventListener("click", resetSettings);
+
+  clearCacheButton.addEventListener("click", clearCache);
+  resetButton.addEventListener("click", () => resetSettings(theme, radios));
 }
 
 // pokazanie menu
-function showMenu() {
-  const xPos = window.scrollX;
-  const yPos = window.scrollY;
-  window.onscroll = () => {
-    window.scroll(xPos, yPos);
-  };
+export function showMenu() {
+  window.onscroll = () => window.scroll(0, 0);
 
-  const menuHolder = document.getElementById("menuHolder");
   menuHolder.style.visibility = "visible";
   menuHolder.style.opacity = "1";
-}
-
-// zmiana motywu kolorów
-function changeTheme(selection) {
-  document.documentElement.className = selection.value;
 }
 
 // zapytanie przeglądarki z potwierdzeniem działań wyczyszczenia cache
@@ -154,34 +137,25 @@ function saveMenu() {
 }
 
 // reset i ukrycie menu
-function resetSettings() {
+function resetSettings(theme, radios) {
   const retVal = confirm("Czy na pewno chcesz przywrócić ustawienia domyślne?");
   if (retVal == true) {
     theme = document.documentElement.className = "black";
-    const radios = document.querySelectorAll(
-      'input[type="radio"][name="theme"]'
-    );
     radios.forEach((selection) => {
       if (theme === selection.value) selection.checked = "true";
     });
-    localStorage.removeItem("theme");
 
-    const fontSlideBar = document.getElementById("fontSlideBar");
     fontSlideBar.value = "17";
     fontSizeChange();
+    localStorage.removeItem("theme");
     localStorage.removeItem("fontSize");
-
     hideMenu();
   }
 }
 
 // ukrycie menu
-function hideMenu() {
-  const menuHolder = document.getElementById("menuHolder");
-
+export function hideMenu() {
   window.onscroll = "";
   menuHolder.style.visibility = "hidden";
   menuHolder.style.opacity = "0";
 }
-
-init();
