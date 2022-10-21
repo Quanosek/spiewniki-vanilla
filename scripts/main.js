@@ -1,7 +1,7 @@
 import { showMenu, hideMenu } from "/scripts/menu.js?v=1";
 import { Hymn } from "/scripts/hymn.js";
 
-let currentSong, bookLength;
+let bookLength;
 let map, list, hymn;
 
 // główna funkcja
