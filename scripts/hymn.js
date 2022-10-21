@@ -1,5 +1,6 @@
 export class Hymn {
-    constructor(title, lyrics, presenatation) {
+    constructor(id, title, lyrics, presenatation) {
+        this.id = id;
         this.title = title;
         let separator = /\s*\[\w*\]\s*/;
         let verses = lyrics.split(separator).slice(1);

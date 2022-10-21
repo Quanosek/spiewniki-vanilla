@@ -116,7 +116,7 @@ function search(e) {
 
     hymnBook.value = "cegielki";
     list = map.get("cegielki");
-    selectHymn(6);
+    selectHymn(null, 6);
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
@@ -165,7 +165,7 @@ async function selectHymn(e, id) {
   randomButton.style.display = "none";
   arrowRight.style.display = "none";
 
-  let hymn = await getHymn(id);
+  hymn = await getHymn(id);
 
   title.innerHTML = hymn.title;
   lyrics.innerHTML = hymn.getLyrics();
@@ -189,7 +189,7 @@ async function getHymn(id) {
   let lyrics = xml.querySelector("lyrics").innerHTML;
   let presentation = xml.querySelector("presentation").innerHTML ? xml.querySelector("presentation").innerHTML : null;
 
-  hymn = new Hymn(title, lyrics, presentation);
+  hymn = new Hymn(id, title, lyrics, presentation);
   return hymn;
 }
 
@@ -245,15 +245,15 @@ function arrows() {
 
 // obsługa strzałek
 function arrowLeftFunction() {
-  if (currentSong > 0) {
-    selectHymn(parseInt(currentSong) - 1);
+  if (hymn.id > 0) {
+    selectHymn(null, parseInt(hymn.id) - 1);
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 }
 
 function arrowRightFunction() {
-  if (currentSong <= bookLength - 2) {
-    selectHymn(parseInt(currentSong) + 1);
+  if (hymn.id <= bookLength - 2) {
+    selectHymn(null, parseInt(hymn.id) + 1);
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 }
@@ -266,7 +266,7 @@ function randomButtonFunction() {
   const min = Math.ceil(1);
   const max = Math.floor(bookLength);
   const random = Math.floor(Math.random() * (max - min + 1)) + min;
-  selectHymn(parseInt(random));
+  selectHymn(null, parseInt(random));
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
