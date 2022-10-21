@@ -96,7 +96,7 @@ function search(e) {
       div.innerHTML = `${hymn.title}<hr>`;
       searchResults.appendChild(div);
 
-      div.addEventListener("click", selectHymn);
+      div.addEventListener("click", selectHymn.bind(null, e, index));
     }
   });
 
@@ -123,7 +123,7 @@ function search(e) {
   // kliknięcie Enter
   if (e.key === "Enter") {
     try {
-      selectHymn(searchResults.firstElementChild.id);
+      selectHymn(null, searchResults.firstElementChild.id);
     } catch {
       clearButtonFunction();
     }
@@ -140,7 +140,7 @@ function search(e) {
 }
 
 // mechanizm wyświetlania pieśni
-async function selectHymn(e) {
+async function selectHymn(e, id) {
   const parser = new DOMParser();
 
   const title = document.querySelector("#title");
@@ -150,10 +150,6 @@ async function selectHymn(e) {
   const titleHolder = document.querySelector(".titleHolder");
   const arrowLeft = document.querySelector("#arrowLeft");
   const arrowRight = document.querySelector("#arrowRight");
-
-  let id;
-  if (isNaN(e)) id = currentSong = e.target.getAttribute("id");
-  else id = currentSong = e;
 
   searchBox.blur();
   clearButtonFunction();
