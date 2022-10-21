@@ -151,7 +151,9 @@ async function selectHymn(e) {
   const arrowLeft = document.querySelector("#arrowLeft");
   const arrowRight = document.querySelector("#arrowRight");
 
-  let id = currentSong = this.getAttribute("id");
+  let id;
+  if (isNaN(e)) id = currentSong = e.target.getAttribute("id");
+  else id = currentSong = e;
 
   searchBox.blur();
   clearButtonFunction();
@@ -168,7 +170,6 @@ async function selectHymn(e) {
   arrowRight.style.display = "none";
 
   let hymn = await getHymn(id);
-  console.log(hymn.presenatation)
 
   title.innerHTML = hymn.title;
   lyrics.innerHTML = hymn.getLyrics();
