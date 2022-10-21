@@ -1,7 +1,8 @@
 import { showMenu, hideMenu } from "/scripts/menu.js?v=1";
+import { Hymn } from "/scripts/hymn.js";
 
 let currentSong, bookLength;
-let map, list;
+let map, list, hymn;
 
 // główna funkcja
 (async () => {
@@ -150,9 +151,7 @@ async function selectHymn(e) {
   const arrowLeft = document.querySelector("#arrowLeft");
   const arrowRight = document.querySelector("#arrowRight");
 
-  let index;
-  if (isNaN(e)) index = currentSong = e.target.getAttribute("id");
-  else index = currentSong = e;
+  let id = currentSong = this.getAttribute("id");
 
   searchBox.blur();
   clearButtonFunction();
@@ -168,19 +167,33 @@ async function selectHymn(e) {
   randomButton.style.display = "none";
   arrowRight.style.display = "none";
 
-  let xml = await fetch(list[index].link)
-    .then((res) => res.text())
-    .then((xml) => parser.parseFromString(xml, "text/xml"))
-    .catch((err) => console.error(err));
+  let hymn = await getHymn(id);
+  console.log(hymn.presenatation)
 
-  title.innerHTML = xml.querySelector("title").innerHTML;
-  lyrics.innerHTML = lyricsFormat(xml.querySelector("lyrics").innerHTML);
+  title.innerHTML = hymn.title;
+  lyrics.innerHTML = hymn.getLyrics();
 
   loader.style.display = "none";
   titleHolder.style.display = "flex";
   arrowLeft.style.display = "flex";
   randomButton.style.display = "flex";
   arrowRight.style.display = "flex";
+}
+
+//fetch i formatowanie pieśni
+async function getHymn(id) {
+  const parser = new DOMParser();
+  let xml = await fetch(list[id].link)
+    .then((res) => res.text())
+    .then((xml) => parser.parseFromString(xml, "text/xml"))
+    .catch((err) => console.error(err));
+
+  let title = xml.querySelector("title").innerHTML;
+  let lyrics = xml.querySelector("lyrics").innerHTML;
+  let presentation = xml.querySelector("presentation").innerHTML ? xml.querySelector("presentation").innerHTML : null;
+
+  hymn = new Hymn(title, lyrics, presentation);
+  return hymn;
 }
 
 // podmienienie polskich znaków diakrytycznych
@@ -197,14 +210,6 @@ function textFormat(text) {
     .replace("ń", "n")
     .replace(/[^\w\s]/gi, "")
     .toLowerCase();
-}
-
-// oczyszczenie tekstu z tagów xml (regexy)
-function lyricsFormat(lyrics) {
-  return lyrics
-    .replace(/\s*(\[V\d*\]|\[C\d*\])\s*/, "")
-    .replace(/\s*(\[V\d*\]|\[C\d*\])\s*/g, "<br/><br/>")
-    .replace(/\n/g, "<br/>");
 }
 
 // ulubione pieśni
