@@ -9,9 +9,7 @@ def generuj(main_url, github_url, name, regex):
     soup = BeautifulSoup(req.text, "html.parser")
 
     rows = soup.find_all(attrs={"role": "grid"})
-
     rows = rows[0].children
-
     next(rows)
     next(rows)
     next(rows)
@@ -28,17 +26,11 @@ def generuj(main_url, github_url, name, regex):
             href = href[pos:]
             pos = title.find('.')
 
-            # if(href[pos+1]=="a"):
-            #     aAttribute = True
-            # else:
-            #     aAttribute = False
-
-            id = title[:pos]
+            # id = title[:pos]
             x = {
-                "id": id,
+                # "id": id,
                 "title": title,
                 "link": github_url+href,
-                # "a": aAttribute
             }
             hymns.append(x)
 

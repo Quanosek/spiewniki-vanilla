@@ -122,7 +122,6 @@ input.specialButton {
 
 .favorite img {
   filter: var(--iconsFilter);
-  transition: 0.1s ease-in-out;
 }
 
 /* loader */

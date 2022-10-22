@@ -1,4 +1,5 @@
 import { menuInit, hideMenu } from "/scripts/menu.js";
+import { favList } from "/scripts/favoriteMenu.js";
 import { Hymn } from "/scripts/hymn.js";
 let map, list, hymn;
 
@@ -10,11 +11,10 @@ let map, list, hymn;
     navigator.serviceWorker.register("/serviceWorker.js");
 
   map = await getJSON();
-
-  // create favorite array
-  if (!localStorage.getItem("favorite"))
-    localStorage.setItem("favorite", JSON.stringify([]));
   eventsListener();
+
+  // tworzenie lokalnej tablicy ulubionych pieśni
+  if (!localStorage.getItem("favorite")) localStorage.setItem("favorite", "[]");
 })();
 
 // fetch spisu pieśni json
@@ -37,7 +37,7 @@ async function getJSON() {
   return map;
 }
 
-// dodawanie wszystkich eventListenerów
+// słuchanie eventów strony
 function eventsListener() {
   document.addEventListener("keyup", globalShortcuts);
 
@@ -56,18 +56,19 @@ function eventsListener() {
       document.querySelector(".mobileMenu").style.display = "none";
     }
   });
-  searchBox.addEventListener("focusout", () => showMobileElements());
+  searchBox.addEventListener("focusout", showMobileElements);
   searchBox.addEventListener("keyup", search);
 
   LSarrow.addEventListener("click", leftSideMenu);
   hymnBook.addEventListener("change", changeHymnBook);
-  favorite.addEventListener("click", favoriteFunction);
+  favorite.addEventListener("click", () => addFavorite(hymn.title));
   arrowLeft.addEventListener("click", prevHymn);
   arrowRight.addEventListener("click", nextHymn);
   clearButton.addEventListener("click", clearSearchBox);
   randomButton.addEventListener("click", randomHymn);
 }
 
+// skróty klawiszowe
 function globalShortcuts(e) {
   // console.log(e.keyCode); // podgląd wciskanych klawiszy
   switch (e.keyCode) {
@@ -78,12 +79,14 @@ function globalShortcuts(e) {
       nextHymn();
       break;
     case 27: // Esc
+      clearSearchBox();
       document.querySelector(".leftSide").classList.remove("active");
       hideMenu();
       break;
   }
 }
 
+// menu dolne na urządzeniach mobilnych
 function showMobileElements() {
   if (window.screen.width <= 768) {
     document.querySelector(".actionButtons").style.display = "flex";
@@ -91,6 +94,7 @@ function showMobileElements() {
   }
 }
 
+// boczny panel opcji
 function leftSideMenu() {
   const menu = document.querySelector(".leftSide");
   const LSbuttons = document.querySelector(".LSbuttons");
@@ -100,71 +104,118 @@ function leftSideMenu() {
   else menu.classList.remove("active");
 }
 
-// chowanie wyników wyszukiwania, tekst i pokazanie wskazówek przy zmianie śpiewnika
+// zmiana śpiewnika
 function changeHymnBook() {
   hymnBook.blur();
   clearSearchBox();
 }
 
 // mechanizm szukania pieśni
-function search(e) {
-  searchResults.innerHTML = "";
-  searchResults.style.display = "flex";
-  clearButton.style.display = "block";
-
-  // lista wyszukiwania
-  list = map.get(hymnBook.value);
-
-  list.forEach((hymn, index) => {
-    if (textFormat(hymn.title).search(textFormat(e.target.value)) != -1) {
-      // console.log(hymn.link); // podgląd linków raw_github
-      const div = document.createElement("div");
-      div.setAttribute("id", index);
-      div.innerHTML = `${hymn.title}`;
-      searchResults.appendChild(div);
-      searchResults.appendChild(document.createElement("hr"));
-
-      div.addEventListener("click", selectHymn.bind(e, index));
-    }
-  });
-
-  // usuwanie ostatniego <hr> w wyszukiwarce
-  if (searchResults.hasChildNodes()) searchResults.lastChild.remove();
-
-  // brak tekstu w wyszukiwarce
-  if (e.target.value == "") {
+export function search(e) {
+  if (e.target) {
     searchResults.innerHTML = "";
-    searchResults.style.display = "none";
-    clearButton.style.display = "none";
-    showMobileElements();
-  }
+    searchResults.style.display = "flex";
+    clearButton.style.display = "block";
 
-  // easter egg
-  if (e.target.value == "2137") {
-    console.log("Jeszcze jak!");
-
-    hymnBook.value = "cegielki";
+    // lista wyszukiwania
     list = map.get(hymnBook.value);
-    selectHymn(6);
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }
 
-  // kliknięcie Enter
-  if (e.key === "Enter") {
-    try {
-      selectHymn(searchResults.firstElementChild.id);
-    } catch {
-      clearSearchBox();
+    list.forEach((hymn, index) => {
+      if (textFormat(hymn.title).search(textFormat(e.target.value)) != -1) {
+        // console.log(hymn.link); // podgląd linków raw_github
+        const div = document.createElement("div");
+        div.setAttribute("id", index);
+        div.innerHTML = `${hymn.title}`;
+        searchResults.appendChild(div);
+        searchResults.appendChild(document.createElement("hr"));
+
+        div.addEventListener("click", selectHymn.bind(e, index));
+      }
+    });
+
+    // usuwanie ostatniego <hr> w wyszukiwarce
+    if (searchResults.hasChildNodes()) searchResults.lastChild.remove();
+
+    // brak tekstu w wyszukiwarce
+    if (e.target.value == "") {
+      searchResults.innerHTML = "";
+      searchResults.style.display = "none";
+      clearButton.style.display = "none";
+      showMobileElements();
     }
-  }
 
-  // brak wyników wyszukiwania
-  if (e.target.value !== "" && searchResults.innerHTML == "") {
-    const div = document.createElement("div");
-    div.style.cursor = "default";
-    div.innerHTML = `Brak wyników wyszukiwania`;
-    searchResults.appendChild(div);
+    // easter egg
+    if (e.target.value == "2137") {
+      console.log("Jeszcze jak!");
+
+      hymnBook.value = "cegielki";
+      list = map.get(hymnBook.value);
+      selectHymn(6);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    // kliknięcie Enter
+    if (e.key === "Enter") {
+      try {
+        selectHymn(searchResults.firstElementChild.id);
+      } catch {
+        clearSearchBox();
+      }
+    }
+
+    // brak wyników wyszukiwania
+    if (e.target.value !== "" && searchResults.innerHTML == "") {
+      const div = document.createElement("div");
+      div.style.cursor = "default";
+      div.innerHTML = `Brak wyników wyszukiwania`;
+      searchResults.appendChild(div);
+    }
+  } else {
+    // szukanie pieśni po tytule i przypisywanie id
+    list = map.get("all");
+
+    list.forEach((hymn, index) => {
+      const title = hymn.title.replace(/\([^()]*\)\s*/g, "");
+      e = e.replace(/\([^()]*\)\s*/g, "");
+
+      if (title.search(e) != -1) {
+        const handler = document.createElement("div");
+        handler.setAttribute("id", index);
+        handler.setAttribute("class", "favoriteHandler");
+
+        const song = document.createElement("div");
+        song.innerHTML = `${hymn.title}`;
+        handler.appendChild(song);
+
+        const del = document.createElement("img");
+        del.src = "/files/icons/clear.svg";
+        handler.appendChild(del);
+
+        favoriteList.appendChild(handler);
+        favoriteList.appendChild(document.createElement("hr"));
+
+        del.addEventListener("click", () => {
+          console.log(index);
+          addFavorite(title);
+          favList();
+        });
+        song.addEventListener("click", () => {
+          hymnBook.value = "all";
+          selectHymn(index);
+          hideMenu();
+        });
+      }
+    });
   }
+}
+
+// przycisk czyszczący searchBox input
+function clearSearchBox() {
+  searchBox.value = "";
+  searchResults.innerHTML = "";
+  searchResults.style.display = "none";
+  clearButton.style.display = "none";
+  showMobileElements();
 }
 
 // mechanizm wyświetlania pieśni
@@ -198,12 +249,8 @@ async function selectHymn(id) {
   const star_filled = "/files/icons/star_filled.svg";
 
   const array = JSON.parse(localStorage.getItem("favorite"));
-  if (array.includes(id)) star.src = star_filled;
+  if (array.includes(hymn.title)) star.src = star_filled;
   else star.src = star_empty;
-
-  console.log(
-    window.screen.height - document.querySelector(".textBox").offsetHeight
-  );
 
   const textBox = document.querySelector(".textBox");
   if (
@@ -217,6 +264,7 @@ async function selectHymn(id) {
     textBox.style.marginBottom = "0";
     textBox.style.paddingBottom = "2rem";
   }
+
   loader.style.display = "none";
   titleHolder.style.display = "flex";
   addFavorite.style.display = "flex";
@@ -259,25 +307,25 @@ function textFormat(text) {
     .toLowerCase();
 }
 
-// ulubione pieśni
-function favoriteFunction() {
+// dodawanie/usuwanie ulubionych pieśni
+function addFavorite(param) {
   const star = document.getElementById("star");
   const star_empty = "/files/icons/star_empty.svg";
   const star_filled = "/files/icons/star_filled.svg";
 
   let array = localStorage.getItem("favorite");
   array = JSON.parse(array);
-  if (array.includes(hymn.id)) {
-    array = array.filter((num) => num !== hymn.id);
+  if (array.includes(param)) {
+    array = array.filter((x) => x !== param);
     star.src = star_empty;
   } else {
     star.src = star_filled;
-    array.push(hymn.id);
+    array.push(param);
   }
   localStorage.setItem("favorite", JSON.stringify(array));
 }
 
-// obsługa strzałek
+// wyświetlanie poprzedniej pieśni
 function prevHymn() {
   if (hymn.id > 0) {
     selectHymn(parseInt(hymn.id) - 1);
@@ -285,6 +333,7 @@ function prevHymn() {
   }
 }
 
+// wyświetlanie następnej pieśni
 function nextHymn() {
   if (hymn.id <= list.length - 2) {
     selectHymn(parseInt(hymn.id) + 1);
@@ -292,7 +341,7 @@ function nextHymn() {
   }
 }
 
-// random button function
+// wyszukanie losowej pieśni z wybranego śpiewnika
 export function randomHymn() {
   list = map.get(hymnBook.value);
 
@@ -301,13 +350,4 @@ export function randomHymn() {
   const random = Math.floor(Math.random() * (max - min + 1)) + min;
   selectHymn(parseInt(random));
   window.scrollTo({ top: 0, behavior: "smooth" });
-}
-
-// wciśnięcie przycisku do czyszczenia inputu
-function clearSearchBox() {
-  searchBox.value = "";
-  searchResults.innerHTML = "";
-  searchResults.style.display = "none";
-  clearButton.style.display = "none";
-  showMobileElements();
 }

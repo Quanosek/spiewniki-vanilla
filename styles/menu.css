@@ -116,6 +116,58 @@
   font-size: 1.4rem;
 }
 
+/* favorite list */
+.favoriteList {
+  max-width: 35rem;
+  width: 80vw;
+  text-align: left;
+  font-size: 0.9rem;
+  border: 1px solid var(--text);
+  border-radius: 0.35rem;
+}
+
+.favoriteHandler {
+  height: 2.65rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 0.35rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.favoriteHandler div {
+  max-width: 32rem;
+  width: 74vw;
+  padding: 0.45rem 0rem 0.45rem 0.8rem;
+}
+
+.favoriteHandler img {
+  margin-right: 3px;
+  padding: 6px;
+  opacity: 0;
+  filter: var(--iconsFilter);
+  transition: 0.1s ease-in-out;
+}
+
+.favoriteList hr {
+  margin: 0 6px;
+  height: 1px;
+  opacity: 0.8;
+  border: none;
+  background-color: var(--text);
+}
+
+.favoriteNoResults {
+  padding: 0.45rem 0rem 0.45rem 0.8rem;
+  height: 2.65rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  cursor: default;
+}
+
 /* action buttons */
 .menuButtons {
   margin-top: 0.6rem;
@@ -147,4 +199,25 @@ button.menuButtons,
   height: 1px;
   border: none;
   background-color: var(--text);
+}
+
+/* only desktop */
+@media (min-width: 1024px) {
+  .favoriteHandler:hover {
+    background-color: var(--buttons);
+  }
+  .favoriteHandler:hover img {
+    opacity: 1;
+  }
+}
+
+/* normal mobile view */
+@media (max-width: 768px) {
+  .favoriteHandler img {
+    opacity: 1;
+    scale: 0.8;
+  }
+  .favoriteNoResults {
+    scale: 0.8;
+  }
 }
