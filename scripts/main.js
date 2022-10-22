@@ -1,7 +1,8 @@
-import { menuInit, hideMenu } from "/scripts/menu.js";
+import { showMenu, hideMenu } from "/scripts/menu.js?v=1";
+import { Hymn } from "/scripts/hymn.js";
 
-let currentSong, bookLength;
-let map, list;
+let bookLength;
+let map, list, hymn;
 
 // główna funkcja
 (async () => {
@@ -126,7 +127,7 @@ function search(e) {
       searchResults.appendChild(div);
       searchResults.appendChild(document.createElement("hr"));
 
-      div.addEventListener("click", selectHymn);
+      div.addEventListener("click", selectHymn.bind(null, e, index));
     }
   });
 
@@ -147,14 +148,14 @@ function search(e) {
 
     hymnBook.value = "cegielki";
     list = map.get("cegielki");
-    selectHymn(6);
+    selectHymn(null, 6);
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
   // kliknięcie Enter
   if (e.key === "Enter") {
     try {
-      selectHymn(searchResults.firstElementChild.id);
+      selectHymn(null, searchResults.firstElementChild.id);
     } catch {
       clearSearchBox();
     }
@@ -170,7 +171,7 @@ function search(e) {
 }
 
 // mechanizm wyświetlania pieśni
-async function selectHymn(e) {
+async function selectHymn(e, id) {
   const parser = new DOMParser();
 
   const title = document.getElementById("title");
@@ -181,11 +182,10 @@ async function selectHymn(e) {
   const arrowLeft = document.getElementById("arrowLeft");
   const arrowRight = document.getElementById("arrowRight");
 
-  let index;
-  if (isNaN(e)) index = currentSong = parseInt(e.target.getAttribute("id"));
-  else index = currentSong = parseInt(e);
+  searchBox.blur();
+  clearButtonFunction();
 
-  searchBox.blur(), clearSearchBox(), showMobileElements();
+  guide.style.display = "none";
 
   title.innerHTML = "";
   lyrics.innerHTML = "";
@@ -196,13 +196,10 @@ async function selectHymn(e) {
   randomButton.style.display = "none";
   arrowRight.style.display = "none";
 
-  let xml = await fetch(list[index].link)
-    .then((res) => res.text())
-    .then((xml) => parser.parseFromString(xml, "text/xml"))
-    .catch((err) => console.error(err));
+  hymn = await getHymn(id);
 
-  title.innerHTML = xml.querySelector("title").innerHTML;
-  lyrics.innerHTML = lyricsFormat(xml.querySelector("lyrics").innerHTML);
+  title.innerHTML = hymn.title;
+  lyrics.innerHTML = hymn.getLyrics();
 
   const star = document.getElementById("star");
   const star_empty = "/files/icons/star_empty.svg";
@@ -220,6 +217,24 @@ async function selectHymn(e) {
   arrowRight.style.display = "flex";
 }
 
+//fetch i formatowanie pieśni
+async function getHymn(id) {
+  const parser = new DOMParser();
+  let xml = await fetch(list[id].link)
+    .then((res) => res.text())
+    .then((xml) => parser.parseFromString(xml, "text/xml"))
+    .catch((err) => console.error(err));
+
+  let title = xml.querySelector("title").innerHTML;
+  let lyrics = xml.querySelector("lyrics").innerHTML;
+  let presentation = xml.querySelector("presentation").innerHTML
+    ? xml.querySelector("presentation").innerHTML
+    : null;
+
+  hymn = new Hymn(id, title, lyrics, presentation);
+  return hymn;
+}
+
 // podmienienie polskich znaków diakrytycznych
 function textFormat(text) {
   return text
@@ -234,14 +249,6 @@ function textFormat(text) {
     .replace("ń", "n")
     .replace(/[^\w\s]/gi, "")
     .toLowerCase();
-}
-
-// oczyszczenie tekstu z tagów xml (regexy)
-function lyricsFormat(lyrics) {
-  return lyrics
-    .replace(/\s*(\[V\d*\]|\[C\d*\]|\[K\d*\])\s*/, "")
-    .replace(/\s*(\[V\d*\]|\[C\d*\]|\[K\d*\])\s*/g, "<br/><br/>")
-    .replace(/\n/g, "<br/>");
 }
 
 // ulubione pieśni
@@ -263,16 +270,16 @@ function favoriteFunction() {
 }
 
 // obsługa strzałek
-function prevHymn() {
-  if (currentSong > 0) {
-    selectHymn(currentSong - 1);
+function arrowLeftFunction() {
+  if (hymn.id > 0) {
+    selectHymn(null, parseInt(hymn.id) - 1);
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 }
 
-function nextHymn() {
-  if (currentSong <= bookLength - 2) {
-    selectHymn(currentSong + 1);
+function arrowRightFunction() {
+  if (hymn.id <= bookLength - 2) {
+    selectHymn(null, parseInt(hymn.id) + 1);
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 }
@@ -285,7 +292,7 @@ export function randomHymn() {
   const min = Math.ceil(1);
   const max = Math.floor(bookLength);
   const random = Math.floor(Math.random() * (max - min + 1)) + min;
-  selectHymn(parseInt(random));
+  selectHymn(null, parseInt(random));
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
