@@ -92,9 +92,9 @@ input.specialButton {
 
 /* content box */
 .textBox {
-  position: relative;
   padding: 2.2rem 3rem;
   width: 48rem;
+  position: relative;
   background-color: var(--boxes);
   border-radius: var(--rounded);
 }
@@ -388,8 +388,9 @@ input.specialButton {
     display: none !important;
   }
   .textBox {
-    width: 100%;
     padding: 2rem 1.4rem;
+    margin-bottom: -16%;
+    width: 100%;
     border-radius: 0;
   }
   .actionButtons {

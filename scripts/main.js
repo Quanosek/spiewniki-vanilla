@@ -14,7 +14,6 @@ let map, list, hymn;
   // create favorite array
   if (!localStorage.getItem("favorite"))
     localStorage.setItem("favorite", JSON.stringify([]));
-
   eventsListener();
 })();
 
@@ -202,6 +201,22 @@ async function selectHymn(id) {
   if (array.includes(id)) star.src = star_filled;
   else star.src = star_empty;
 
+  console.log(
+    window.screen.height - document.querySelector(".textBox").offsetHeight
+  );
+
+  const textBox = document.querySelector(".textBox");
+  if (
+    window.screen.height - document.querySelector(".textBox").offsetHeight <=
+      200 &&
+    window.screen.width <= 768
+  ) {
+    textBox.style.marginBottom = "-16%";
+    textBox.style.paddingBottom = "6rem";
+  } else {
+    textBox.style.marginBottom = "0";
+    textBox.style.paddingBottom = "2rem";
+  }
   loader.style.display = "none";
   titleHolder.style.display = "flex";
   addFavorite.style.display = "flex";
