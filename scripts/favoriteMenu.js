@@ -1,5 +1,3 @@
-import { hideMenu } from "/scripts/menu.js";
-
 function menuHTML() {
   document.querySelector(".menu").innerHTML = `
     <div id="FavoriteList" class="menuContent">

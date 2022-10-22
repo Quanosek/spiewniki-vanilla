@@ -1,7 +1,5 @@
-import { showMenu, hideMenu } from "/scripts/menu.js?v=1";
+import { menuInit, hideMenu } from "/scripts/menu.js";
 import { Hymn } from "/scripts/hymn.js";
-
-let bookLength;
 let map, list, hymn;
 
 // główna funkcja
@@ -72,7 +70,7 @@ function eventsListener() {
 }
 
 function globalShortcuts(e) {
-  // console.log(e.keyCode);
+  // console.log(e.keyCode); // podgląd wciskanych klawiszy
   switch (e.keyCode) {
     case 37: // strzałka w lewo
       prevHymn();
@@ -115,26 +113,26 @@ function search(e) {
   searchResults.style.display = "flex";
   clearButton.style.display = "block";
 
+  // lista wyszukiwania
   list = map.get(hymnBook.value);
-  bookLength = list.length;
 
   list.forEach((hymn, index) => {
     if (textFormat(hymn.title).search(textFormat(e.target.value)) != -1) {
-      // console.log(hymn.link); // podgląd wszystkich linków raw_github
+      // console.log(hymn.link); // podgląd linków raw_github
       const div = document.createElement("div");
       div.setAttribute("id", index);
       div.innerHTML = `${hymn.title}`;
       searchResults.appendChild(div);
       searchResults.appendChild(document.createElement("hr"));
 
-      div.addEventListener("click", selectHymn.bind(null, e, index));
+      div.addEventListener("click", selectHymn.bind(e, index));
     }
   });
 
   // usuwanie ostatniego <hr> w wyszukiwarce
   if (searchResults.hasChildNodes()) searchResults.lastChild.remove();
 
-  // jeśli nie ma tekstu w inpucie
+  // brak tekstu w wyszukiwarce
   if (e.target.value == "") {
     searchResults.innerHTML = "";
     searchResults.style.display = "none";
@@ -147,23 +145,23 @@ function search(e) {
     console.log("Jeszcze jak!");
 
     hymnBook.value = "cegielki";
-    list = map.get("cegielki");
-    selectHymn(null, 6);
+    list = map.get(hymnBook.value);
+    selectHymn(6);
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
   // kliknięcie Enter
   if (e.key === "Enter") {
     try {
-      selectHymn(null, searchResults.firstElementChild.id);
+      selectHymn(searchResults.firstElementChild.id);
     } catch {
       clearSearchBox();
     }
   }
 
-  // jeśli jest brak wyników
+  // brak wyników wyszukiwania
   if (e.target.value !== "" && searchResults.innerHTML == "") {
-    let div = document.createElement("div");
+    const div = document.createElement("div");
     div.style.cursor = "default";
     div.innerHTML = `Brak wyników wyszukiwania`;
     searchResults.appendChild(div);
@@ -171,9 +169,7 @@ function search(e) {
 }
 
 // mechanizm wyświetlania pieśni
-async function selectHymn(e, id) {
-  const parser = new DOMParser();
-
+async function selectHymn(id) {
   const title = document.getElementById("title");
   const lyrics = document.getElementById("lyrics");
   const loader = document.querySelector(".loader");
@@ -182,10 +178,7 @@ async function selectHymn(e, id) {
   const arrowLeft = document.getElementById("arrowLeft");
   const arrowRight = document.getElementById("arrowRight");
 
-  searchBox.blur();
-  clearButtonFunction();
-
-  guide.style.display = "none";
+  searchBox.blur(), clearSearchBox(), showMobileElements();
 
   title.innerHTML = "";
   lyrics.innerHTML = "";
@@ -206,7 +199,7 @@ async function selectHymn(e, id) {
   const star_filled = "/files/icons/star_filled.svg";
 
   const array = JSON.parse(localStorage.getItem("favorite"));
-  if (array.includes(currentSong)) star.src = star_filled;
+  if (array.includes(id)) star.src = star_filled;
   else star.src = star_empty;
 
   loader.style.display = "none";
@@ -220,14 +213,14 @@ async function selectHymn(e, id) {
 //fetch i formatowanie pieśni
 async function getHymn(id) {
   const parser = new DOMParser();
-  let xml = await fetch(list[id].link)
+  const xml = await fetch(list[id].link)
     .then((res) => res.text())
     .then((xml) => parser.parseFromString(xml, "text/xml"))
     .catch((err) => console.error(err));
 
-  let title = xml.querySelector("title").innerHTML;
-  let lyrics = xml.querySelector("lyrics").innerHTML;
-  let presentation = xml.querySelector("presentation").innerHTML
+  const title = xml.querySelector("title").innerHTML;
+  const lyrics = xml.querySelector("lyrics").innerHTML;
+  const presentation = xml.querySelector("presentation").innerHTML
     ? xml.querySelector("presentation").innerHTML
     : null;
 
@@ -259,27 +252,27 @@ function favoriteFunction() {
 
   let array = localStorage.getItem("favorite");
   array = JSON.parse(array);
-  if (array.includes(currentSong)) {
-    array = array.filter((num) => num !== currentSong);
+  if (array.includes(hymn.id)) {
+    array = array.filter((num) => num !== hymn.id);
     star.src = star_empty;
   } else {
     star.src = star_filled;
-    array.push(currentSong);
+    array.push(hymn.id);
   }
   localStorage.setItem("favorite", JSON.stringify(array));
 }
 
 // obsługa strzałek
-function arrowLeftFunction() {
+function prevHymn() {
   if (hymn.id > 0) {
-    selectHymn(null, parseInt(hymn.id) - 1);
+    selectHymn(parseInt(hymn.id) - 1);
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 }
 
-function arrowRightFunction() {
-  if (hymn.id <= bookLength - 2) {
-    selectHymn(null, parseInt(hymn.id) + 1);
+function nextHymn() {
+  if (hymn.id <= list.length - 2) {
+    selectHymn(parseInt(hymn.id) + 1);
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 }
@@ -287,12 +280,11 @@ function arrowRightFunction() {
 // random button function
 export function randomHymn() {
   list = map.get(hymnBook.value);
-  bookLength = list.length;
 
   const min = Math.ceil(1);
-  const max = Math.floor(bookLength);
+  const max = Math.floor(list.length);
   const random = Math.floor(Math.random() * (max - min + 1)) + min;
-  selectHymn(null, parseInt(random));
+  selectHymn(parseInt(random));
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
