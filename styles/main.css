@@ -1,16 +1,14 @@
-@import "colors.css?=1";
-@import "menu.css?=1";
-
-/* define custom values */
+@import "reset.css";
+@import "colors.css";
+@import "app.css";
+@import "menu.css";
 
 :root {
   --rounded: 0.35rem;
 }
 
-/* custom scroll-bar */
-
 ::-webkit-scrollbar {
-  width: 0.9em;
+  width: 1vw;
 }
 
 ::-webkit-scrollbar-track {
@@ -25,8 +23,6 @@
   background: var(--buttonsHover);
 }
 
-/* custom text select color */
-
 ::-moz-selection {
   color: var(--white);
   background: var(--textSelection);
@@ -37,8 +33,6 @@
   background: var(--textSelection);
 }
 
-/* default css */
-
 @font-face {
   font-family: "Gill Sans MT";
   src: url("/files/fonts/gill_sans_mt.ttf") format("truetype");
@@ -47,14 +41,9 @@
 
 html,
 body {
-  padding: 0;
-  margin: 0;
-  height: 100%;
-  width: 100%;
   font-family: "Gill Sans MT";
-  background-color: var(--background);
   color: var(--text);
-  box-sizing: border-box;
+  background-color: var(--background);
 }
 
 main {
@@ -66,351 +55,59 @@ main {
   overflow: hidden;
 }
 
+h1,
+h2 {
+  margin-bottom: 4px;
+}
+
 h1 {
-  margin: 0;
+  font-size: 2rem;
 }
 
-a {
-  color: var(--text);
-  text-decoration: none;
-  cursor: pointer;
+h2 {
+  font-size: 1.5rem;
 }
 
-abbr {
-  text-decoration: none;
+h3 {
+  font-size: 0.7rem;
+}
+
+h1,
+h2,
+h3,
+b {
+  font-weight: 600;
 }
 
 button {
-  cursor: pointer;
-  border: none;
+  padding: 3% 5%;
   border-radius: var(--rounded);
-  font-family: "Gill Sans MT";
   background-color: var(--buttons);
-  color: var(--text);
+  cursor: pointer;
+}
+
+::placeholder {
+  opacity: 0.55;
 }
 
 .no_select {
   user-select: none;
 }
 
-.skip_gap {
-  margin-top: -2rem;
-}
-
-/* loader */
-
-.loader,
-.loader:before,
-.loader:after {
-  width: 2.5em;
-  height: 2.5em;
-  border-radius: 50%;
-  -webkit-animation-fill-mode: both;
-  animation-fill-mode: both;
-  -webkit-animation: loadAnimation 1.8s infinite ease-in-out;
-  animation: loadAnimation 1.8s infinite ease-in-out;
-}
-
-.loader {
-  display: none;
-  margin: 2rem auto 5rem;
-  position: relative;
-  color: var(--text);
-  font-size: 10px;
-  text-indent: -9999em;
-  -webkit-transform: translateZ(0);
-  -ms-transform: translateZ(0);
-  transform: translateZ(0);
-  -webkit-animation-delay: -0.16s;
-  animation-delay: -0.16s;
-}
-
-.loader:before,
-.loader:after {
-  content: "";
-  position: absolute;
-  top: 0;
-}
-
-.loader:before {
-  left: -3.5em;
-  -webkit-animation-delay: -0.32s;
-  animation-delay: -0.32s;
-}
-
-.loader:after {
-  left: 3.5em;
-}
-
-@-webkit-keyframes loadAnimation {
-  0%,
-  80%,
-  100% {
-    box-shadow: 0 2.5em 0 -1.3em;
-  }
-  40% {
-    box-shadow: 0 2.5em 0 0;
-  }
-}
-
-@keyframes loadAnimation {
-  0%,
-  80%,
-  100% {
-    box-shadow: 0 2.5em 0 -1.3em;
-  }
-  40% {
-    box-shadow: 0 2.5em 0 0;
-  }
-}
-
-/* main elements */
-
-#menuButton {
-  position: absolute;
-  top: 1em;
-  right: 1rem;
-  width: 35px;
-  height: 35px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-#menuButton img {
-  width: 26px;
-  filter: var(--iconsFilter);
-}
-
-#piesni {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  max-width: 90%;
-}
-
-#hymnBook {
-  height: 2rem;
-  cursor: pointer;
-}
-
-.specialButton {
-  padding: 5px 10px;
-  border: solid 2px var(--buttonsHover);
-  border-radius: var(--rounded);
-}
-
-.specialButton:focus {
-  outline: none;
-  border-color: var(--lightBlue);
-  box-shadow: 0 0 10px var(--lightBlue);
-}
-
-select option {
-  color: var(--black);
-  background-color: var(--white);
-}
-
-.searchHolder {
-  display: flex;
-  position: sticky;
-  align-items: center;
-  justify-content: flex-end;
-}
-
-#searchBox {
-  width: 100%;
-  height: 1.1rem;
-}
-
-#clearButton {
-  display: none;
-  position: absolute;
-  width: 0.6rem;
-  height: 0.6rem;
-  background: var(--white) url("/files/icons/clear.svg") no-repeat center;
-  scale: 0.85;
-  border: none;
-  border-radius: var(--rounded);
-  cursor: pointer;
-}
-
-/* search results */
-
-#searchResults {
-  z-index: 2;
-  display: none;
-  padding: 5px 10px;
-  width: 17.5rem;
-  background-color: var(--boxes);
-  border-radius: 0 0 var(--rounded) var(--rounded);
-  font-size: 0.9rem;
-}
-
-#searchResults hr {
-  margin: 10px 3px;
-  height: 1.5px;
-  border: none;
-  background-color: var(--text);
-}
-
-#searchResults div {
-  cursor: pointer;
-}
-
-/* text section */
-
-.titleHolder {
-  display: none;
-  align-items: center;
-  justify-content: space-between;
-  gap: 5px;
-}
-
-.favorite {
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.favorite img {
-  padding: 10px;
-  background-image: url("/files/icons/star_empty.svg");
-  background-repeat: no-repeat;
-  filter: var(--iconsFilter);
-  transition: 0.1s ease-in-out;
-}
-
-.lyrics {
-  padding: 1rem 3rem;
-  width: 30rem;
-  background-color: var(--boxes);
-  border-radius: var(--rounded);
-}
-
-.lyrics h1 {
-  margin: 1.2rem 0;
-}
-
-/* default text */
-
-.download_link {
-  color: var(--lightBlue);
-  font-size: 0.85rem;
-}
-
-.indented {
-  text-indent: 3.5%;
-  margin-top: -0.5rem;
-}
-
-#title,
-#guideHeader {
-  font-size: 23.8px;
-}
-#lyrics,
-#guideList {
-  font-size: 17px;
-}
-
-#lyrics {
-  margin-bottom: 1.2rem;
-}
-
-/* sides arrows */
-
-#arrowLeft,
-#arrowRight {
-  display: none;
-}
-
-.bottomButtons {
-  margin-top: -1rem;
-  display: flex;
-  justify-content: center;
-  gap: 7rem;
-}
-
-.bottomButtons button {
-  padding: 8px;
-  width: 90px;
-  height: 35px;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  font-size: 0.75rem;
-}
-
-.bottomButtons p {
-  margin: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.bottomButtons img {
-  margin: 0 -3px;
-  width: 20px;
-  height: auto;
-  filter: var(--iconsFilter);
-  position: relative;
-  top: 1px;
+.invert {
+  filter: invert();
 }
 
 /* desktop only */
-
-@media (min-width: 1000px) {
-  button:hover {
-    background-color: var(--buttonsHover);
-    transition: 0.1s ease-in-out;
-  }
-  .download_link:hover {
+@media (min-width: 1024px) {
+  a:hover {
     text-decoration: underline;
-  }
-  .download_link:active {
-    color: var(--darkBlue);
-    transition: 0.1s ease-in-out;
   }
 }
 
-/* on mobile */
-
+/* normal mobile view */
 @media (max-width: 768px) {
   main {
     padding: 6% 0 16%;
-  }
-  #menuButton {
-    width: 32px;
-    height: 32px;
-  }
-
-  #menuButton img {
-    width: 23px;
-  }
-  .lyrics {
-    width: 88vw;
-    border-radius: 0;
-  }
-  .bottomButtons {
-    justify-content: space-around;
-    gap: 6%;
-  }
-  .bottomButtons button {
-    min-width: 84px;
-    height: 32px;
-    font-size: 0.7rem;
-  }
-}
-
-/* small-mobile */
-
-@media (max-width: 340px) {
-  #searchResults {
-    width: 100%;
-  }
-  .bottomButtons button {
-    width: auto;
   }
 }

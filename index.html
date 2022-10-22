@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pl">
   <head>
-    <!-- podstawowe ustawienia -->
+    <!-- meta dane -->
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta
       name="viewport"
@@ -12,7 +12,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
 
-    <!-- Informacje o domenie -->
+    <!-- informacje -->
     <title>Śpiewniki | Zrzeszenie Wolnych Badaczy Pisma Świętego</title>
     <meta
       name="description"
@@ -23,116 +23,130 @@
       content="Dabhar, dabhar.org, ZWBPS, ZWBP ŚW, BPSW, Badacze, Zrzeszenie Wolnych Badaczy Pisma Świętego, Zrzeszenie, Kraków, Warszawa, Białogard, Biłgoraj, nastrazy.org, Na Straży, Wędrówka, Wędrowniczek, Zbawienie.pl, 52Prawdy, śpiewniki, śpiewnik, śpiewnik młodzieżowy, Brzask, Śpiewnik Brzasku Tysiąclecia, Cegiełki, Uwielbiajmy Pana, Nowe Pieśni, Koziańskie, Kozy, Poznańskie, Poznań, Śpiewajmy Panu Pieśń Nową, tekst, wszystkie, pieśni, piosenki, obóz, piosenki obozowe, kursy biblijne, konwencja, konwencje"
     />
 
+    <!-- favicon -->
     <link rel="icon" href="/files/logo/favicon.ico" sizes="any" />
     <link rel="icon" href="/files/logo/icon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/files/logo/icon-180x180.png" />
 
     <!-- import -->
-    <link rel="manifest" href="/manifest.json?v=1" />
+    <link rel="manifest" href="/manifest.json" />
 
-    <link rel="stylesheet" href="/styles/main.css?v=1" type="text/css" />
-    <script type="module" src="/scripts/main.js?v=1"></script>
+    <link rel="stylesheet" href="/styles/main.css" type="text/css" />
+    <script type="module" src="/scripts/main.js"></script>
   </head>
 
   <body>
     <main>
-      <abbr title="Wróć do strony głównej">
-        <a onclick="window.location.reload()" class="no_select">
-          <h1>Śpiewniki</h1>
-        </a>
-      </abbr>
+      <h1
+        class="titleText no_select"
+        onclick="window.location.reload()"
+        title="Kliknij, aby wrócić do strony głównej"
+      >
+        Śpiewniki
+      </h1>
 
-      <abbr title="Więcej" class="skip_gap">
-        <button id="menuButton" class="menu no_select">
-          <img src="/files/icons/menu.svg" />
-        </button>
-      </abbr>
+      <form class="searchForm" onsubmit="return false">
+        <div class="formHolder">
+          <select id="hymnBook" class="specialButton">
+            <option value="all">Wszystkie śpiewniki</option>
+            <option value="brzask">Pieśni Brzasku Tysiąclecia</option>
+            <option value="cegielki">Uwielbiajmy Pana (Cegiełki)</option>
+            <option value="nowe">
+              Śpiewajmy Panu Pieśń Nową (Nowe Pieśni)
+            </option>
+          </select>
+          <div class="formIcon arrowButton no_select"></div>
+        </div>
 
-      <form id="piesni" onsubmit="return false">
-        <select id="hymnBook" class="specialButton">
-          <option value="all">Wszystkie śpiewniki</option>
-          <option value="brzask">Pieśni Brzasku Tysiąclecia</option>
-          <option value="cegielki">Uwielbiajmy Pana (Cegiełki)</option>
-          <option value="nowe">Śpiewajmy Panu Pieśń Nową (Nowe Pieśni)</option>
-        </select>
-
-        <div class="searchHolder">
+        <div class="formHolder">
           <input
+            type="text"
+            placeholder="Wpisz tytuł lub numer pieśni"
             id="searchBox"
             class="specialButton"
-            type="text"
-            name="searchBox"
-            placeholder="Wpisz tytuł lub numer pieśni"
             autocomplete="off"
+            onclick="this.select()"
           />
-          <div id="clearButton" class="specialButton no_select"></div>
+          <div id="clearButton" class="formIcon clearButton no_select"></div>
         </div>
       </form>
+      <div id="searchResults" class="searchResults"></div>
 
-      <div id="searchResults" class="skip_gap"></div>
-
-      <div class="lyrics">
+      <div class="textBox">
         <div class="loader"></div>
         <div class="titleHolder">
-          <h1 id="title"></h1>
-          <!-- <abbr title="Dodaj do ulubionych">
-            <button id="addFavorite" class="favorite no_select">
-              <img id="star" />
-            </button>
-          </abbr> -->
+          <h1 id="title">Oznaczenia numeracji pieśni:</h1>
+          <button
+            id="addFavorite"
+            class="favorite no_select"
+            title="Dodaj do ulubionych"
+          >
+            <img id="star" src="/files/icons/star_empty.svg" alt="star" />
+          </button>
         </div>
 
-        <div>
-          <div id="guide">
-            <h2 id="guideHeader">Oznaczenia numeracji pieśni:</h2>
-            <div id="guideList">
-              <p>
-                <b>bez litery</b> - śpiewnik "Pieśni Brzasku Tysiąclecia"
-                <a
-                  href="/files/Piesni Brzasku Tysiaclecia.pdf"
-                  target="_blank"
-                  class="download_link"
-                >
-                  (pobierz&nbsp;PDF)
-                </a>
-              </p>
-              <p><b>C</b> - śpiewnik "Uwielbiajmy Pana" ("Cegiełki")</p>
-              <p>
-                <b>N</b> - śpiewnik "Śpiewajcie Panu Pieśń Nową"
-                ("Nowe&nbsp;Pieśni")
-                <a
-                  href="/files/Spiewajcie Panu Piesn Nowa.pdf"
-                  target="_blank"
-                  class="download_link"
-                >
-                  (pobierz&nbsp;PDF)
-                </a>
-              </p>
-              <p class="indented"><b>K</b> - śpiewnik Koziański</p>
-              <p class="indented"><b>P</b> - śpiewnik Poznański</p>
-            </div>
+        <div id="lyrics" class="lyrics">
+          <div class="guide">
+            <p>
+              <b>bez litery</b> - śpiewnik "Pieśni Brzasku Tysiąclecia"
+              <a
+                href="/files/Piesni Brzasku Tysiaclecia.pdf"
+                target="_blank"
+                class="download_link"
+              >
+                (pobierz&nbsp;PDF)
+              </a>
+            </p>
+            <p><b>C</b> - śpiewnik "Uwielbiajmy Pana" ("Cegiełki")</p>
+            <p>
+              <b>N</b> - śpiewnik "Śpiewajcie Panu Pieśń Nową"
+              ("Nowe&nbsp;Pieśni")
+              <a
+                href="/files/Spiewajcie Panu Piesn Nowa.pdf"
+                target="_blank"
+                class="download_link"
+              >
+                (pobierz&nbsp;PDF)
+              </a>
+            </p>
+            <p class="indented"><b>K</b> - śpiewnik Koziański</p>
+            <p class="indented"><b>P</b> - śpiewnik Poznański</p>
           </div>
+        </div>
 
-          <div id="lyrics"></div>
+        <div class="leftSide">
+          <div class="LSbuttons"></div>
+          <div class="LSarrow" title="Pokaż opcje">
+            <img
+              src="/files/icons/arrow.svg"
+              alt="show options"
+              id="sideArrow"
+              draggable="false"
+            />
+          </div>
         </div>
       </div>
 
-      <div class="bottomButtons no_select">
-        <button id="arrowLeft">
-          <img src="/files/icons/before.svg" />
+      <div class="actionButtons">
+        <button id="arrowLeft" class="prevArrow">
+          <img src="/files/icons/arrow.svg" alt="<" />
           <p>poprzednie</p>
         </button>
         <button id="randomButton">
           <p>wylosuj&nbsp;pieśń</p>
         </button>
-        <button id="arrowRight">
+        <button id="arrowRight" class="nextArrow">
           <p>następne</p>
-          <img src="/files/icons/next.svg" />
+          <img src="/files/icons/arrow.svg" alt=">" />
         </button>
       </div>
-    </main>
 
-    <div id="menuHolder"></div>
-    <script src="/scripts/preventSleep.js"></script>
+      <div class="mobileMenu no_select"></div>
+
+      <div class="menuHolder">
+        <div class="darkBackground"></div>
+        <div class="menu"></div>
+      </div>
+    </main>
   </body>
 </html>

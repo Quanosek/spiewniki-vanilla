@@ -24,6 +24,7 @@
   --iconsFilter: invert();
 }
 
+/* dark theme */
 :root.dark {
   --textSelection: var(--darkBlue);
   --background: var(--darkBG);
