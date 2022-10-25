@@ -1,4 +1,4 @@
-export class Hymn {
+export default class Hymn {
   constructor(id, title, lyrics, presentation) {
     this.id = id;
     this.title = title;

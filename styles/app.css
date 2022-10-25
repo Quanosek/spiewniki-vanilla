@@ -261,7 +261,7 @@ input.specialButton {
 /* action buttons */
 .actionButtons {
   z-index: 10;
-  margin-top: -1rem;
+  margin: -1rem 0 5rem 0;
   display: flex;
   justify-content: center;
   gap: 7rem;
@@ -349,7 +349,7 @@ input.specialButton {
 }
 
 /* small desktop */
-@media (max-width: 1024px) {
+@media (max-width: 1150px) {
   .LSbuttons {
     position: fixed;
     top: 6rem;
@@ -394,6 +394,7 @@ input.specialButton {
   }
   .actionButtons {
     padding: 0 10px;
+    margin-bottom: 0;
     display: flex;
     justify-content: space-between;
     width: 100%;
@@ -433,11 +434,8 @@ input.specialButton {
 }
 
 /* small mobile view */
-@media (max-width: 340px) {
+@media (max-width: 375px) {
   .searchResults {
     width: 100%;
-  }
-  .actionButtons button {
-    width: auto;
   }
 }

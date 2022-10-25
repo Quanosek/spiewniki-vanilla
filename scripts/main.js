@@ -1,6 +1,8 @@
-import { menuInit, hideMenu } from "/scripts/menu.js";
-import { favList } from "/scripts/favoriteMenu.js";
-import { Hymn } from "/scripts/hymn.js";
+import { menuInit, showMenu, hideMenu } from "/scripts/menu.js";
+import favoriteMenu, { favList } from "/scripts/favoriteMenu.js";
+import themeMenu from "/scripts/themeMenu.js";
+import Hymn from "/scripts/hymn.js";
+
 let map, list, hymn;
 
 // główna funkcja
@@ -73,17 +75,29 @@ function globalShortcuts(e) {
   // console.log(e.keyCode); // podgląd wciskanych klawiszy
   switch (e.keyCode) {
     case 37: // strzałka w lewo
-      prevHymn();
-      break;
+      return prevHymn();
     case 39: // strzałka w prawo
-      nextHymn();
-      break;
+      return nextHymn();
     case 27: // Esc
+      hymnBook.blur(), searchBox.blur();
       clearSearchBox();
       document.querySelector(".leftSide").classList.remove("active");
       hideMenu();
       break;
   }
+  // znaki poza polem wyszukiwania
+  if (
+    document.activeElement !== searchBox &&
+    document.querySelector(".menuHolder").style.visibility !== "visible"
+  )
+    switch (e.keyCode) {
+      case 87: // W
+        return randomHymn();
+      case 85: // U
+        return showMenu(), favoriteMenu();
+      case 77: // M
+        return showMenu(), themeMenu();
+    }
 }
 
 // menu dolne na urządzeniach mobilnych
@@ -175,8 +189,8 @@ export function search(e) {
     list = map.get("all");
 
     list.forEach((hymn, index) => {
-      const title = hymn.title.replace(/\([^()]*\)\s*/g, "");
-      e = e.replace(/\([^()]*\)\s*/g, "");
+      const title = hymn.title.replace(/\s\([^()]*\)*/g, "");
+      e = e.replace(/\s\([^()]*\)*/g, "");
 
       if (title.search(e) != -1) {
         const handler = document.createElement("div");
@@ -195,7 +209,6 @@ export function search(e) {
         favoriteList.appendChild(document.createElement("hr"));
 
         del.addEventListener("click", () => {
-          console.log(index);
           addFavorite(title);
           favList();
         });
@@ -317,7 +330,7 @@ function addFavorite(param) {
   array = JSON.parse(array);
   if (array.includes(param)) {
     array = array.filter((x) => x !== param);
-    star.src = star_empty;
+    if (hymn) if (param === hymn.title) star.src = star_empty;
   } else {
     star.src = star_filled;
     array.push(param);
@@ -327,18 +340,20 @@ function addFavorite(param) {
 
 // wyświetlanie poprzedniej pieśni
 function prevHymn() {
-  if (hymn.id > 0) {
-    selectHymn(parseInt(hymn.id) - 1);
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }
+  if (hymn)
+    if (hymn.id > 0) {
+      selectHymn(parseInt(hymn.id) - 1);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
 }
 
 // wyświetlanie następnej pieśni
 function nextHymn() {
-  if (hymn.id <= list.length - 2) {
-    selectHymn(parseInt(hymn.id) + 1);
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }
+  if (hymn)
+    if (hymn.id <= list.length - 2) {
+      selectHymn(parseInt(hymn.id) + 1);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
 }
 
 // wyszukanie losowej pieśni z wybranego śpiewnika

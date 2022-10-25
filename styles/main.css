@@ -17,6 +17,7 @@
 
 ::-webkit-scrollbar-thumb {
   background: var(--buttons);
+  border-radius: var(--rounded);
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -35,13 +36,25 @@
 
 @font-face {
   font-family: "Gill Sans MT";
-  src: url("/files/fonts/gill_sans_mt.ttf") format("truetype");
+  src: url("/files/fonts/Gill\ Sans\ MT.ttf") format("truetype");
   size-adjust: 110%;
+}
+
+@font-face {
+  font-family: "Brutal Type Medium";
+  src: url("/files/fonts/Brutal\ Type\ Medium.ttf") format("truetype");
+  unicode-range: U+30-39;
+  size-adjust: 106%;
+}
+
+html {
+  overflow-y: scroll;
 }
 
 html,
 body {
-  font-family: "Gill Sans MT";
+  font-family: "Brutal Type Medium", "Gill Sans MT";
+  font-variant-numeric: slashed-zero;
   color: var(--text);
   background-color: var(--background);
 }

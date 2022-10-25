@@ -52,7 +52,7 @@ function multipleButton(name, func) {
   }
 }
 
-function showMenu() {
+export function showMenu() {
   window.scrollTo({ top: 0, behavior: "smooth" });
   const menuHolder = document.querySelector(".menuHolder");
   menuHolder.style.visibility = "visible";
