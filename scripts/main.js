@@ -30,12 +30,17 @@ async function getJSON() {
   const nowe = await fetch(`/json/nowe.json`).then((response) => {
     return response.json();
   });
+  const epifania = await fetch(`/json/epifania.json`).then((response) => {
+    return response.json();
+  });
 
   let map = new Map();
   map.set("all", brzask.concat(cegielki, nowe));
+  // map.set("all", brzask.concat(cegielki, nowe, epifania));
   map.set("brzask", brzask);
   map.set("cegielki", cegielki);
   map.set("nowe", nowe);
+  // map.set("epifania", nowe);
   return map;
 }
 

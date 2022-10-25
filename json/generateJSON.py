@@ -45,10 +45,6 @@ def generuj(main_url, github_url, name, regex):
         outfile.write(hymns)
 
 
-main_url = "https://github.com/Quanosek/Piesni-OpenSong/tree/main/%C5%9Apiewajcie%20Panu%20Pie%C5%9B%C5%84%20Now%C4%85%20(Kozia%C5%84skie%2C%20Pozna%C5%84skie)"
-raw_url = "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/%C5%9Apiewajcie%20Panu%20Pie%C5%9B%C5%84%20Now%C4%85%20(Kozia%C5%84skie%2C%20Pozna%C5%84skie)"
-generuj(main_url, raw_url, "nowe", re.compile(r'([N.]|[aN.])'))
-
 main_url = "https://github.com/Quanosek/Piesni-OpenSong/tree/main/Pie%C5%9Bni%20Brzasku%20Tysi%C4%85clecia"
 raw_url = "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Pie%C5%9Bni%20Brzasku%20Tysi%C4%85clecia"
 generuj(main_url, raw_url, "brzask", re.compile(r'([.]|[a.])'))
@@ -56,5 +52,13 @@ generuj(main_url, raw_url, "brzask", re.compile(r'([.]|[a.])'))
 main_url = "https://github.com/Quanosek/Piesni-OpenSong/tree/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)"
 raw_url = "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Uwielbiajmy%20Pana%20(Cegie%C5%82ki)"
 generuj(main_url, raw_url, "cegielki", re.compile(r'([C.]|[aC.])'))
+
+main_url = "https://github.com/Quanosek/Piesni-OpenSong/tree/main/%C5%9Apiewajcie%20Panu%20Pie%C5%9B%C5%84%20Now%C4%85%20(Nowe%20Pie%C5%9Bni)"
+raw_url = "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/%C5%9Apiewajcie%20Panu%20Pie%C5%9B%C5%84%20Now%C4%85%20(Nowe%20Pie%C5%9Bni)"
+generuj(main_url, raw_url, "nowe", re.compile(r'([N.]|[aN.])'))
+
+main_url = "https://github.com/Quanosek/Piesni-OpenSong/tree/main/%C5%9Apiewniczek%20M%C5%82odzie%C5%BCowy%20Epifanii"
+raw_url = "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/%C5%9Apiewniczek%20M%C5%82odzie%C5%BCowy%20Epifanii"
+generuj(main_url, raw_url, "epifania", re.compile(r'([E.]|[aE.])'))
 
 print("Gotowe.")

@@ -204,7 +204,8 @@ input.specialButton {
 
 .indented {
   text-indent: 3.5%;
-  margin-top: -0.5rem;
+  margin-top: -0.3rem;
+  font-size: 1.1rem;
 }
 
 .textBox h1 {
