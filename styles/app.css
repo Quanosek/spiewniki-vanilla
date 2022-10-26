@@ -122,6 +122,8 @@ input.specialButton {
 
 .favorite img {
   filter: var(--iconsFilter);
+  width: 30px;
+  max-width: 30px;
 }
 
 /* loader */
