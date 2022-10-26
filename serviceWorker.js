@@ -36,21 +36,26 @@ const assets = [
 
 // wszystkie teksty pieśni z plików JSON (raw github)
 let hymnsArray = [];
-async function cacheHymnBook(name) {
-  const x = await fetch(`/json/${name}.json`).then((response) => {
-    return response.json();
-  });
-  for (let i = 0; i < x.length; i++) hymnsArray.push(x[i].link);
+async function cacheHymnBook(hymnBooks) {
+  for (let i = 0; i < hymnBooks.length; i++) {
+    const x = await fetch(`/json/${hymnBooks[i]}.json`).then((response) => {
+      return response.json();
+    });
+    for (let j = 0; j < x.length; j++) hymnsArray.push(x[j].link);
+  }
 }
 
 // instalacja nowego sw
 self.addEventListener("install", (e) => {
+  self.skipWaiting();
   e.waitUntil(
     (async () => {
-      await cacheHymnBook("brzask");
-      await cacheHymnBook("cegielki");
-      await cacheHymnBook("nowe");
-      await cacheHymnBook("epifania");
+      await cacheHymnBook([
+        "brzask",
+        "cegielki",
+        "nowe",
+        //  "epifania"
+      ]);
 
       const contentToCache = assets.concat(hymnsArray);
 

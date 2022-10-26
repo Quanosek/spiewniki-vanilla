@@ -26,9 +26,7 @@ def generuj(main_url, github_url, name, regex):
             href = href[pos:]
             pos = title.find('.')
 
-            # id = title[:pos]
             x = {
-                # "id": id,
                 "title": title,
                 "link": github_url+href,
             }
@@ -57,8 +55,8 @@ main_url = "https://github.com/Quanosek/Piesni-OpenSong/tree/main/%C5%9Apiewajci
 raw_url = "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/%C5%9Apiewajcie%20Panu%20Pie%C5%9B%C5%84%20Now%C4%85%20(Nowe%20Pie%C5%9Bni)"
 generuj(main_url, raw_url, "nowe", re.compile(r'([N.]|[aN.])'))
 
-main_url = "https://github.com/Quanosek/Piesni-OpenSong/tree/main/%C5%9Apiewniczek%20M%C5%82odzie%C5%BCowy%20Epifanii"
-raw_url = "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/%C5%9Apiewniczek%20M%C5%82odzie%C5%BCowy%20Epifanii"
-generuj(main_url, raw_url, "epifania", re.compile(r'([E.]|[aE.])'))
+# main_url = "https://github.com/Quanosek/Piesni-OpenSong/tree/main/%C5%9Apiewniczek%20M%C5%82odzie%C5%BCowy%20Epifanii"
+# raw_url = "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/%C5%9Apiewniczek%20M%C5%82odzie%C5%BCowy%20Epifanii"
+# generuj(main_url, raw_url, "epifania", re.compile(r'([E.]|[aE.])'))
 
 print("Gotowe.")

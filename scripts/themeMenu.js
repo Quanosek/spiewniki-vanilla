@@ -32,7 +32,6 @@ function menuHTML() {
           <div id="bigger">A</div>
         </div>
       </div>
-      <button id="clearCache" class="menuButtons no_select">Wyczyść pamięć podręczną</button>
       <div class="menuButtons no_select">
         <button id="saveButton">Zapisz</button>
         <button id="cancelButton">Resetuj</button>
@@ -76,7 +75,6 @@ export default function init() {
 
 // dodawanie wszystkich eventListenerów
 function eventsListener(theme, radios) {
-  const clearCacheButton = document.getElementById("clearCache");
   const resetButton = document.getElementById("cancelButton");
 
   radios.forEach((selection) => {
@@ -84,12 +82,12 @@ function eventsListener(theme, radios) {
       document.documentElement.className = selection.value;
     });
   });
+
   fontSlideBar.addEventListener("change", () =>
     fontSizeChange(fontSlideBar.value)
   );
-  saveButton.addEventListener("click", hideMenu);
 
-  clearCacheButton.addEventListener("click", clearCache);
+  saveButton.addEventListener("click", hideMenu);
   resetButton.addEventListener("click", () => resetSettings(theme, radios));
 }
 
@@ -97,17 +95,6 @@ function eventsListener(theme, radios) {
 function fontSizeChange(param) {
   title.style.fontSize = parseInt(param) * 1.4 + "px";
   lyrics.style.fontSize = param * 1.1 + "px";
-}
-
-// zapytanie przeglądarki z potwierdzeniem działań wyczyszczenia cache
-function clearCache() {
-  const retVal = confirm("Czy na pewno chcesz wyczyścić całą stronę?");
-  if (retVal == true) {
-    caches.keys().then(function (names) {
-      for (let name of names) caches.delete(name);
-    });
-    document.location.reload();
-  }
 }
 
 // reset i ukrycie menu
