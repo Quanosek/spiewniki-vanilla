@@ -1,4 +1,4 @@
-const version = 2;
+const version = 3;
 const cacheName = `piesni-${version}`;
 
 const assets = [
@@ -19,6 +19,12 @@ const assets = [
   "/scripts/main.js",
   "/scripts/menu.js",
   "/scripts/themeMenu.js",
+
+  // bazy danych json
+  "/json/brzask.json",
+  "/json/cegielki.json",
+  // "/json/epifania.json",
+  "/json/nowe.json",
 
   // czcionki
   "/files/fonts/Brutal Type Medium.ttf",
