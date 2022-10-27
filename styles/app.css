@@ -206,7 +206,7 @@ input.specialButton {
 .indented {
   text-indent: 3.5%;
   margin-top: -0.3rem;
-  font-size: 1.1rem;
+  font-size: 88%;
 }
 
 .textBox h1 {
@@ -487,6 +487,7 @@ input.specialButton {
   }
 }
 
+/* slideShow */
 .slides {
   z-index: 100;
   display: none;

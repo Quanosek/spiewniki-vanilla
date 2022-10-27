@@ -67,6 +67,7 @@ async function menuHTML() {
   `;
 }
 
+// czytanie wielu elementów z tą samą klasą
 function multipleButton(name, func) {
   const x = document.querySelectorAll(name);
   for (let i = 0; i < x.length; i++) {
@@ -74,6 +75,7 @@ function multipleButton(name, func) {
   }
 }
 
+// pokazanie menu
 export function showMenu() {
   window.scrollTo({ top: 0, behavior: "smooth" });
   const menuHolder = document.querySelector(".menuHolder");
@@ -81,6 +83,7 @@ export function showMenu() {
   menuHolder.style.opacity = "1";
 }
 
+// główna funkcja
 export async function menuInit() {
   await menuHTML();
   document.querySelector(".darkBackground").addEventListener("click", hideMenu);
@@ -105,26 +108,25 @@ export async function menuInit() {
   randomButton2.addEventListener("click", randomHymn);
 }
 
+// uruchomienie prezentacji
 export function runSlideshow() {
   const elem = document.documentElement;
   if (elem.requestFullscreen) elem.requestFullscreen();
   else if (elem.webkitRequestFullscreen) elem.webkitRequestFullscreen();
   else if (elem.msRequestFullscreen) elem.msRequestFullscreen();
 
-  // display text
+  // włączenie prezentacji
   const slideHandler = document.getElementById("slideHandler");
   slideHandler.style.display = "flex";
-
   document.documentElement.style.overflowY = "hidden";
+  document.querySelector("main").style.height = "100vh";
 
-  const main = document.querySelector("main").style;
-  main.height = "100vh";
-
+  // event ukrycia prezentacji
   document.addEventListener("fullscreenchange", () => {
     if (!document.fullscreenElement) {
       slideHandler.style.display = "none";
       document.documentElement.style.overflowY = "scroll";
-      main.height = "auto";
+      document.querySelector("main").style.height = "auto";
     }
   });
 }

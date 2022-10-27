@@ -1,12 +1,10 @@
+/* import */
 @import "reset.css";
 @import "colors.css";
 @import "app.css";
 @import "menu.css";
 
-:root {
-  --rounded: 0.35rem;
-}
-
+/* scrollbar */
 ::-webkit-scrollbar {
   width: 1vw;
 }
@@ -24,6 +22,7 @@
   background: var(--buttonsHover);
 }
 
+/* selection */
 ::-moz-selection {
   color: var(--white);
   background: var(--textSelection);
@@ -34,6 +33,7 @@
   background: var(--textSelection);
 }
 
+/* fonts */
 @font-face {
   font-family: "Gill Sans MT";
   src: url("/files/fonts/Gill\ Sans\ MT.ttf") format("truetype");
@@ -47,6 +47,7 @@
   size-adjust: 106%;
 }
 
+/* default tags */
 html {
   overflow-y: scroll;
 }
@@ -97,6 +98,11 @@ button {
   border-radius: var(--rounded);
   background-color: var(--buttons);
   cursor: pointer;
+}
+
+/* custom values */
+:root {
+  --rounded: 0.35rem;
 }
 
 ::placeholder {
