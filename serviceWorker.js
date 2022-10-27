@@ -1,4 +1,4 @@
-const version = 3;
+const version = 2;
 const cacheName = `piesni-${version}`;
 
 const assets = [
@@ -20,9 +20,20 @@ const assets = [
   "/scripts/menu.js",
   "/scripts/themeMenu.js",
 
+  // czcionki
+  "/files/fonts/Brutal Type Medium.ttf",
+  "/files/fonts/Gill Sans MT.ttf",
+
   // ikonki
   "/files/icons/arrow.svg",
-  "/files/icons/clear.svg",
+  "/files/icons/close.svg",
+  // "/files/icons/dice.svg",
+  // "/files/icons/file.svg",
+  // "/files/icons/link.svg",
+  "/files/icons/monitor.svg",
+  // "/files/icons/music.svg",
+  // "/files/icons/printer.svg",
+  "/files/icons/settings.svg",
   "/files/icons/star_empty.svg",
   "/files/icons/star_filled.svg",
   "/files/icons/text.svg",

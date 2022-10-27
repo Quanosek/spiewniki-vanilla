@@ -67,13 +67,14 @@
 
 .themeSelector input {
   scale: 1.2 !important;
-  margin: 3px 0 -4px 0 !important;
+  margin: -0.5rem 0 0.5rem 0 !important;
   all: revert;
   cursor: pointer;
 }
 
 .themeSelector img {
-  scale: 1.5;
+  width: 2.8rem;
+  scale: 0.9;
 }
 
 .themeSelector .black {
@@ -148,9 +149,9 @@
 }
 
 .favoriteHandler img {
-  margin-right: 3px;
-  padding: 6px;
+  margin: 0 0.6rem;
   opacity: 0;
+  height: 26px;
   filter: var(--iconsFilter);
   transition: 0.1s ease-in-out;
 }
@@ -212,14 +213,14 @@ button.menuButtons,
     background-color: var(--buttons);
   }
   .favoriteHandler:hover img {
-    opacity: 1;
+    opacity: 0.8;
   }
 }
 
 /* normal mobile view */
 @media (max-width: 768px) {
   .favoriteHandler img {
-    opacity: 1;
+    opacity: 0.8;
     scale: 0.8;
   }
   .favoriteNoResults {

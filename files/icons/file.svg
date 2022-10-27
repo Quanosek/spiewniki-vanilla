@@ -5,5 +5,8 @@
 <style type="text/css">
 	.st0{fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
 </style>
-<path id="text" class="st0" d="M17,9.5H3 M21,4.5H3 M21,14.5H3 M17,19.5H3"/>
+<g id="file">
+	<path id="outside" class="st0" d="M14,2H6C4.9,2,4,2.9,4,4v16c0,1.1,0.9,2,2,2h12c1.1,0,2-0.9,2-2V8L14,2z"/>
+	<path id="inside" class="st0" d="M14,3v5h5 M16,13H8 M16,17H8 M10,9H8"/>
+</g>
 </svg>

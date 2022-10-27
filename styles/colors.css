@@ -21,6 +21,7 @@
   --boxes: #1d1d1d;
   --buttons: #303030;
   --buttonsHover: #444444;
+  --mobileMenu: #171717;
   --iconsFilter: invert();
 }
 
@@ -32,6 +33,7 @@
   --boxes: #313131;
   --buttons: #414141;
   --buttonsHover: #535353;
+  --mobileMenu: #2a2a2a;
   --iconsFilter: invert();
 }
 
@@ -43,6 +45,7 @@
   --boxes: #f4f4f4;
   --buttons: #e6e6e6;
   --buttonsHover: #dadada;
+  --mobileMenu: #ffffff;
   --iconsFilter: none;
 }
 
@@ -54,5 +57,6 @@
   --boxes: #f9f4ea;
   --buttons: #e5e2d8;
   --buttonsHover: #dbd8d1;
+  --mobileMenu: #fffbf2;
   --iconsFilter: none;
 }

@@ -1,1 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?><svg id="Warstwa_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 38"><path d="M12.15,31.75l7.85-4.7,7.85,4.75-2.1-8.9,6.9-6-9.1-.8-3.55-8.4-3.55,8.35-9.1,.8,6.9,6-2.1,8.9Zm-4.5,6.25l3.25-14.05L0,14.5l14.4-1.25L20,0l5.6,13.25,14.4,1.25-10.9,9.45,3.25,14.05-12.35-7.45-12.35,7.45Z"/></svg>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 26.3.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 24 24" style="enable-background:new 0 0 24 24;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+</style>
+<polygon id="star" class="st0" points="12,2.49 15.09,8.75 22,9.76 17,14.63 18.18,21.51 12,18.26 5.82,21.51 7,14.63 2,9.76 
+	8.91,8.75 "/>
+</svg>

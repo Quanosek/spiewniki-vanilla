@@ -5,5 +5,10 @@
 <style type="text/css">
 	.st0{fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
 </style>
-<path id="text" class="st0" d="M17,9.5H3 M21,4.5H3 M21,14.5H3 M17,19.5H3"/>
+<g id="printer">
+	<rect id="bottom" x="6" y="14" class="st0" width="12" height="8"/>
+	<path id="middle_00000052788529499272729660000013469079027879159974_" class="st0" d="M6,18H4c-1.1,0-2-0.9-2-2v-5
+		c0-1.1,0.9-2,2-2h16c1.1,0,2,0.9,2,2v5c0,1.1-0.9,2-2,2h-2"/>
+	<polyline id="top" class="st0" points="6,9 6,2 18,2 18,9 	"/>
+</g>
 </svg>

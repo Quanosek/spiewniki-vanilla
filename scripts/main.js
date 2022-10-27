@@ -1,4 +1,4 @@
-import { menuInit, showMenu, hideMenu } from "/scripts/menu.js";
+import { menuInit, showMenu, hideMenu, runSlideshow } from "/scripts/menu.js";
 import favoriteMenu, { favList } from "/scripts/favoriteMenu.js";
 import themeMenu from "/scripts/themeMenu.js";
 import Hymn from "/scripts/hymn.js";
@@ -46,7 +46,11 @@ async function getJSON() {
 
 // słuchanie eventów strony
 function eventsListener() {
-  document.addEventListener("keyup", globalShortcuts);
+  let i = -1;
+
+  document.addEventListener("keyup", (e) => {
+    i = globalShortcuts(e, i);
+  });
 
   const LSarrow = document.querySelector(".LSarrow");
   const hymnBook = document.getElementById("hymnBook");
@@ -73,36 +77,94 @@ function eventsListener() {
   arrowRight.addEventListener("click", nextHymn);
   clearButton.addEventListener("click", clearSearchBox);
   randomButton.addEventListener("click", randomHymn);
+
+  document.addEventListener("fullscreenchange", () => {
+    if (document.fullscreenElement) {
+      i = -1;
+      document.getElementById("sTitle").innerHTML = hymn.title;
+      printVerse(i);
+    }
+  });
 }
 
 // skróty klawiszowe
-function globalShortcuts(e) {
+function globalShortcuts(e, i) {
   // console.log(e.keyCode); // podgląd wciskanych klawiszy
-  switch (e.keyCode) {
-    case 37: // strzałka w lewo
-      return prevHymn();
-    case 39: // strzałka w prawo
-      return nextHymn();
-    case 27: // Esc
-      hymnBook.blur(), searchBox.blur();
-      clearSearchBox();
-      document.querySelector(".leftSide").classList.remove("active");
-      hideMenu();
-      break;
-  }
-  // znaki poza polem wyszukiwania
-  if (
-    document.activeElement !== searchBox &&
-    document.querySelector(".menuHolder").style.visibility !== "visible"
-  )
+
+  // nawigacja pokazem slajdów
+  if (document.querySelector(".slides").style.display === "flex")
     switch (e.keyCode) {
-      case 87: // W
-        return randomHymn();
-      case 85: // U
-        return showMenu(), favoriteMenu();
-      case 77: // M
-        return showMenu(), themeMenu();
+      case 37: // strzałka w lewo
+        if (i >= 0) {
+          i--;
+          if (hymn.presentation) printVerse(hymn.presentation[i]);
+          else printVerse(i);
+        }
+        break;
+      case 39: // strzałka w prawo
+        if (hymn.presentation) {
+          if (i < hymn.presentation.length) {
+            i++;
+            printVerse(hymn.presentation[i]);
+          }
+        } else {
+          if (i < hymn.verses.length) {
+            i++;
+            printVerse(i);
+          }
+        }
+        break;
     }
+  else {
+    // globalne skróty klawiszowe
+    switch (e.keyCode) {
+      case 37: // strzałka w lewo
+        return prevHymn();
+      case 39: // strzałka w prawo
+        return nextHymn();
+      case 27: // Esc
+        hymnBook.blur(), searchBox.blur();
+        clearSearchBox();
+        document.querySelector(".leftSide").classList.remove("active");
+        hideMenu();
+        break;
+    }
+
+    // znaki poza polem wyszukiwania
+    if (
+      document.activeElement !== searchBox &&
+      document.querySelector(".menuHolder").style.visibility !== "visible"
+    )
+      switch (e.keyCode) {
+        case 87: // W
+          return randomHymn();
+        case 85: // U
+          return showMenu(), favoriteMenu();
+        case 77: // M
+          return showMenu(), themeMenu();
+        case 80: // P
+          if (hymn) return runSlideshow();
+      }
+  }
+
+  return i;
+}
+
+// search for verse in correct order
+function printVerse(i) {
+  const sTitle = document.getElementById("sTitle");
+  const sVerse = document.getElementById("sVerse");
+
+  if (hymn.verses[i]) {
+    sTitle.classList.add("top");
+    sVerse.innerHTML = hymn.verses[i];
+    document.getElementById("sTitle").innerHTML = hymn.title;
+  } else {
+    sTitle.classList.remove("top");
+    sVerse.innerHTML = "";
+
+    if (i !== -1) sTitle.innerHTML = "";
+  }
 }
 
 // menu dolne na urządzeniach mobilnych
@@ -141,7 +203,6 @@ export function search(e) {
 
     list.forEach((hymn, index) => {
       if (textFormat(hymn.title).search(textFormat(e.target.value)) != -1) {
-        // console.log(hymn.link); // podgląd linków raw_github
         const div = document.createElement("div");
         div.setAttribute("id", index);
         div.innerHTML = `${hymn.title}`;
@@ -207,7 +268,7 @@ export function search(e) {
         handler.appendChild(song);
 
         const del = document.createElement("img");
-        del.src = "/files/icons/clear.svg";
+        del.src = "/files/icons/close.svg";
         handler.appendChild(del);
 
         favoriteList.appendChild(handler);
@@ -289,11 +350,16 @@ async function selectHymn(id) {
   arrowLeft.style.display = "flex";
   randomButton.style.display = "flex";
   arrowRight.style.display = "flex";
+
+  Array.from(document.querySelectorAll(".onHymn")).forEach((el) =>
+    el.classList.remove("onHymn")
+  );
 }
 
 //fetch i formatowanie pieśni
 async function getHymn(id) {
   const parser = new DOMParser();
+
   const xml = await fetch(list[id].link)
     .then((res) => res.text())
     .then((xml) => parser.parseFromString(xml, "text/xml"))
@@ -333,6 +399,7 @@ function addFavorite(param) {
 
   let array = localStorage.getItem("favorite");
   array = JSON.parse(array);
+
   if (array.includes(param)) {
     array = array.filter((x) => x !== param);
     if (hymn) if (param === hymn.title) star.src = star_empty;
@@ -340,6 +407,7 @@ function addFavorite(param) {
     star.src = star_filled;
     array.push(param);
   }
+
   localStorage.setItem("favorite", JSON.stringify(array));
 }
 
@@ -366,8 +434,8 @@ export function randomHymn() {
   list = map.get(hymnBook.value);
 
   const min = Math.ceil(1);
-  const max = Math.floor(list.length);
-  const random = Math.floor(Math.random() * (max - min + 1)) + min;
+  const max = Math.floor(list.length) + 1;
+  const random = Math.floor(Math.random() * (max - min)) + min;
   selectHymn(parseInt(random));
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
