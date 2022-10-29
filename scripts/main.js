@@ -30,17 +30,20 @@ async function getJSON() {
   const nowe = await fetch(`/json/nowe.json`).then((response) => {
     return response.json();
   });
-  // const epifania = await fetch(`/json/epifania.json`).then((response) => {
-  //   return response.json();
-  // });
+  const epifania = await fetch(`/json/epifania.json`).then((response) => {
+    return response.json();
+  });
+  const inne = await fetch(`/json/inne.json`).then((response) => {
+    return response.json();
+  });
 
   let map = new Map();
-  map.set("all", brzask.concat(cegielki, nowe));
-  // map.set("all", brzask.concat(cegielki, nowe, epifania));
+  map.set("all", brzask.concat(cegielki, nowe, epifania, inne));
   map.set("brzask", brzask);
   map.set("cegielki", cegielki);
   map.set("nowe", nowe);
-  // map.set("epifania", nowe);
+  map.set("epifania", epifania);
+  map.set("inne", inne);
   return map;
 }
 
@@ -117,11 +120,8 @@ function globalShortcuts(e, i) {
     }
   else {
     // globalne skróty klawiszowe
+
     switch (e.keyCode) {
-      case 37: // strzałka w lewo
-        return prevHymn();
-      case 39: // strzałka w prawo
-        return nextHymn();
       case 27: // Esc
         hymnBook.blur(), searchBox.blur();
         clearSearchBox();
@@ -130,12 +130,15 @@ function globalShortcuts(e, i) {
         break;
     }
 
-    // znaki poza polem wyszukiwania
     if (
       document.activeElement !== searchBox &&
       document.querySelector(".menuHolder").style.visibility !== "visible"
     )
       switch (e.keyCode) {
+        case 37: // strzałka w lewo
+          return prevHymn();
+        case 39: // strzałka w prawo
+          return nextHymn();
         case 87: // W
           return randomHymn();
         case 85: // U
@@ -378,6 +381,7 @@ async function getHymn(id) {
 // podmienienie polskich znaków diakrytycznych
 function textFormat(text) {
   return text
+    .toLowerCase()
     .replace("ę", "e")
     .replace("ó", "o")
     .replace("ą", "a")
@@ -387,8 +391,7 @@ function textFormat(text) {
     .replace("ź", "z")
     .replace("ć", "c")
     .replace("ń", "n")
-    .replace(/[^\w\s]/gi, "")
-    .toLowerCase();
+    .replace(/[^\w\s]/gi, "");
 }
 
 // dodawanie/usuwanie ulubionych pieśni

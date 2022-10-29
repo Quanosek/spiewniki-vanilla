@@ -1,3 +1,5 @@
+from ast import If
+from asyncio.windows_events import NULL
 from bs4 import BeautifulSoup
 import json
 import requests
@@ -36,8 +38,10 @@ def generuj(main_url, github_url, name, regex):
         pos = regex.search(e['title']).start()
         number = int(e['title'][:pos])
         return number
-
-    hymns = sorted(hymns, key=myFunc)
+    if regex:
+        hymns = sorted(hymns, key=myFunc)
+    else:
+        hymns = sorted(hymns)
     hymns = json.dumps(hymns)
     with open(name + ".json", "w") as outfile:
         outfile.write(hymns)
@@ -55,8 +59,12 @@ main_url = "https://github.com/Quanosek/Piesni-OpenSong/tree/main/%C5%9Apiewajci
 raw_url = "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/%C5%9Apiewajcie%20Panu%20Pie%C5%9B%C5%84%20Now%C4%85%20(Nowe%20Pie%C5%9Bni)"
 generuj(main_url, raw_url, "nowe", re.compile(r'([N.]|[aN.])'))
 
-# main_url = "https://github.com/Quanosek/Piesni-OpenSong/tree/main/%C5%9Apiewniczek%20M%C5%82odzie%C5%BCowy%20Epifanii"
-# raw_url = "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/%C5%9Apiewniczek%20M%C5%82odzie%C5%BCowy%20Epifanii"
-# generuj(main_url, raw_url, "epifania", re.compile(r'([E.]|[aE.])'))
+main_url = "https://github.com/Quanosek/Piesni-OpenSong/tree/main/%C5%9Apiewniczek%20M%C5%82odzie%C5%BCowy%20Epifanii"
+raw_url = "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/%C5%9Apiewniczek%20M%C5%82odzie%C5%BCowy%20Epifanii"
+generuj(main_url, raw_url, "epifania", re.compile(r'([E.]|[aE.])'))
+
+main_url = "https://github.com/Quanosek/Piesni-OpenSong/tree/main/Inne"
+raw_url = "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Inne"
+generuj(main_url, raw_url, "inne", NULL)
 
 print("Gotowe.")
