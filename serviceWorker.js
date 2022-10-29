@@ -68,12 +68,7 @@ self.addEventListener("install", (e) => {
   self.skipWaiting();
   e.waitUntil(
     (async () => {
-      await cacheHymnBook([
-        "brzask",
-        "cegielki",
-        "nowe",
-        //  "epifania"
-      ]);
+      await cacheHymnBook(["brzask", "cegielki", "nowe", "epifania", "inne"]);
 
       const contentToCache = assets.concat(hymnsArray);
 
