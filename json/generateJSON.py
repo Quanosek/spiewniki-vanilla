@@ -6,7 +6,7 @@ import requests
 import re
 
 
-def generuj(main_url, github_url, name, regex):
+def generuj(main_url, raw_url, name, regex):
     req = requests.get(main_url)
     soup = BeautifulSoup(req.text, "html.parser")
 
@@ -30,7 +30,7 @@ def generuj(main_url, github_url, name, regex):
 
             x = {
                 "title": title,
-                "link": github_url+href,
+                "link": raw_url+href,
             }
             hymns.append(x)
 
@@ -38,10 +38,10 @@ def generuj(main_url, github_url, name, regex):
         pos = regex.search(e['title']).start()
         number = int(e['title'][:pos])
         return number
+
     if regex:
         hymns = sorted(hymns, key=myFunc)
-    else:
-        hymns = sorted(hymns)
+
     hymns = json.dumps(hymns)
     with open(name + ".json", "w") as outfile:
         outfile.write(hymns)

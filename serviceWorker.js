@@ -1,4 +1,4 @@
-const version = 4;
+const version = 5;
 const cacheName = `piesni-${version}`;
 
 const assets = [
