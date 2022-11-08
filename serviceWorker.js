@@ -80,6 +80,14 @@ self.addEventListener("install", (e) => {
 
 // zapisanie i odczyt plików
 self.addEventListener("fetch", (e) => {
+  url = e.request.url;
+  if (
+    url.startsWith("chrome-extension") ||
+    url.includes("extension") ||
+    !(url.indexOf("http") === 0)
+  )
+    return;
+
   e.respondWith(
     (async () => {
       const r = await caches.match(e.request);
