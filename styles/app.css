@@ -503,7 +503,6 @@ input.specialButton {
   background-color: var(--white);
   color: var(--black);
   text-align: center;
-  cursor: none;
   user-select: none;
 }
 .sTitle {

@@ -83,11 +83,22 @@ function eventsListener() {
 
   document.addEventListener("fullscreenchange", () => {
     if (document.fullscreenElement) {
+      document.addEventListener("mousemove", handleMouseMove);
       i = -1;
       document.getElementById("sTitle").innerHTML = hymn.title;
       printVerse(i);
+    } else {
+      document.removeEventListener("mousemove", handleMouseMove);
     }
   });
+}
+
+function handleMouseMove() {
+  const slidesStyle = document.querySelector(".slides").style;
+  slidesStyle.cursor = "default";
+  setTimeout(() => {
+    slidesStyle.cursor = "none";
+  }, 2000);
 }
 
 // skróty klawiszowe
@@ -158,9 +169,9 @@ function printVerse(i) {
   const sTitle = document.getElementById("sTitle");
   const sVerse = document.getElementById("sVerse");
 
-  if (hymn.verses[i]) {
+  if (hymn.getVerse(i)) {
     sTitle.classList.add("top");
-    sVerse.innerHTML = hymn.verses[i];
+    sVerse.innerHTML = hymn.getVerse(i);
     document.getElementById("sTitle").innerHTML = hymn.title;
   } else {
     sTitle.classList.remove("top");
@@ -370,11 +381,12 @@ async function getHymn(id) {
 
   const title = xml.querySelector("title").innerHTML;
   const lyrics = xml.querySelector("lyrics").innerHTML;
+  const author = xml.querySelector("author").innerHTML;
   const presentation = xml.querySelector("presentation").innerHTML
     ? xml.querySelector("presentation").innerHTML
     : null;
 
-  hymn = new Hymn(id, title, lyrics, presentation);
+  hymn = new Hymn(id, title, lyrics, author, presentation);
   return hymn;
 }
 
@@ -382,15 +394,15 @@ async function getHymn(id) {
 function textFormat(text) {
   return text
     .toLowerCase()
-    .replace("ę", "e")
-    .replace("ó", "o")
-    .replace("ą", "a")
-    .replace("ś", "s")
-    .replace("ł", "l")
-    .replace("ż", "z")
-    .replace("ź", "z")
-    .replace("ć", "c")
-    .replace("ń", "n")
+    .replaceAll("ę", "e")
+    .replaceAll("ó", "o")
+    .replaceAll("ą", "a")
+    .replaceAll("ś", "s")
+    .replaceAll("ł", "l")
+    .replaceAll("ż", "z")
+    .replaceAll("ź", "z")
+    .replaceAll("ć", "c")
+    .replaceAll("ń", "n")
     .replace(/[^\w\s]/gi, "");
 }
 
