@@ -283,7 +283,7 @@ export function search(e) {
 
         const del = document.createElement("img");
         del.src = "/files/icons/close.svg";
-        del.style.pointerEvents = "none";
+        del.draggable = "false";
         handler.appendChild(del);
 
         favoriteList.appendChild(handler);
