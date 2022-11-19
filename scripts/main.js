@@ -64,22 +64,29 @@ function eventsListener() {
   const clearButton = document.getElementById("clearButton");
   const randomButton = document.getElementById("randomButton");
 
+  const actionButtons = document.querySelector(".actionButtons");
+  const mobileMenu = document.querySelector(".mobileMenu");
+
   searchBox.addEventListener("focus", () => {
     if (window.screen.width <= 768) {
-      document.querySelector(".actionButtons").style.display = "none";
-      document.querySelector(".mobileMenu").style.display = "none";
+      actionButtons.style.display = "none";
+      mobileMenu.style.display = "none";
     }
   });
+  searchBox.addEventListener("focusout", () => {
+    actionButtons.style.display = "";
+    mobileMenu.style.display = "";
+  });
 
-  searchBox.addEventListener("focusout", showMobileElements);
   searchBox.addEventListener("keyup", search);
-
   LSarrow.addEventListener("click", leftSideMenu);
   hymnBook.addEventListener("change", changeHymnBook);
 
   favorite.addEventListener("click", () => {
-    const a = map.get("all").find((x) => x.title.includes(hymn.title));
-    addFavorite(a.title);
+    map.get("all").find((hymnAll) => {
+      if (hymnAll.title.replace(/\s\([^()]*\)*/g, "").includes(hymn.title))
+        addFavorite(hymnAll.title.replace(/\s\([^()]*\)*/g, ""));
+    });
   });
 
   arrowLeft.addEventListener("click", prevHymn);
@@ -233,7 +240,6 @@ function search(e) {
     searchResults.innerHTML = "";
     searchResults.style.display = "none";
     clearButton.style.display = "none";
-    showMobileElements();
   }
 
   // easter egg
@@ -286,7 +292,6 @@ function clearSearchBox() {
   searchResults.innerHTML = "";
   searchResults.style.display = "none";
   clearButton.style.display = "none";
-  showMobileElements();
 }
 
 // mechanizm wyświetlania pieśni
@@ -299,7 +304,8 @@ async function selectHymn(id) {
   const arrowLeft = document.getElementById("arrowLeft");
   const arrowRight = document.getElementById("arrowRight");
 
-  searchBox.blur(), clearSearchBox(), showMobileElements();
+  searchBox.blur();
+  clearSearchBox();
 
   title.innerHTML = "";
   lyrics.innerHTML = "";
@@ -323,18 +329,18 @@ async function selectHymn(id) {
   if (array.includes(hymn.title)) star.src = star_filled;
   else star.src = star_empty;
 
-  const textBox = document.querySelector(".textBox");
-  if (
-    window.screen.height - document.querySelector(".textBox").offsetHeight <=
-      200 &&
-    window.screen.width <= 768
-  ) {
-    textBox.style.marginBottom = "-16%";
-    textBox.style.paddingBottom = "6rem";
-  } else {
-    textBox.style.marginBottom = "0";
-    textBox.style.paddingBottom = "2rem";
-  }
+  // const textBox = document.querySelector(".textBox");
+  // if (
+  //   window.screen.height - document.querySelector(".textBox").offsetHeight <=
+  //     200 &&
+  //   window.screen.width <= 768
+  // ) {
+  //   textBox.style.marginBottom = "-16%";
+  //   textBox.style.paddingBottom = "6rem";
+  // } else {
+  //   textBox.style.marginBottom = "";
+  //   textBox.style.paddingBottom = "";
+  // }
 
   loader.style.display = "none";
   titleHolder.style.display = "flex";
@@ -379,7 +385,7 @@ function addFavorite(param) {
 
   if (array.includes(param)) {
     array = array.filter((x) => x !== param);
-    if (hymn) if (param === hymn.title) star.src = star_empty;
+    if (hymn) if (param.includes(hymn.title)) star.src = star_empty;
   } else {
     star.src = star_filled;
     array.push(param);
@@ -453,12 +459,4 @@ export function randomHymn() {
   const random = Math.floor(Math.random() * (max - min)) + min;
   selectHymn(parseInt(random));
   window.scrollTo({ top: 0, behavior: "smooth" });
-}
-
-// menu dolne na urządzeniach mobilnych
-function showMobileElements() {
-  if (window.screen.width <= 768) {
-    document.querySelector(".actionButtons").style.display = "flex";
-    document.querySelector(".mobileMenu").style.display = "flex";
-  }
 }

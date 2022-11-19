@@ -4,11 +4,10 @@ import favoriteMenu from "/scripts/favoriteMenu.js";
 
 async function menuHTML() {
   document.querySelector(".LSbuttons").innerHTML = `
-  
-  <div id="themeMenu" title="Kliknij, lub użyj klawisza S">
-    <img src="/files/icons/settings.svg" draggable="false" />
-    | Ustawienia
-  </div>
+    <div id="themeMenu" title="Kliknij, lub użyj klawisza S">
+      <img src="/files/icons/settings.svg" draggable="false" />
+      | Ustawienia
+    </div>
     <div id="favoriteMenu" title="Kliknij, lub użyj klawisza F">
       <img src="/files/icons/star_empty.svg" draggable="false" />
       | Ulubione

@@ -69,7 +69,7 @@ input.specialButton {
   display: none;
   flex-direction: column;
   margin-top: -2.2rem;
-  padding: 0.5rem 1.25rem;
+  padding: 0.5rem 0;
   width: 20rem;
   background-color: var(--boxes);
   border-radius: 0 0 var(--rounded) var(--rounded);
@@ -77,12 +77,15 @@ input.specialButton {
 }
 
 .searchResults div {
-  padding: 0.9rem 0;
+  padding: 0.9rem 1.25rem;
   cursor: pointer;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .searchResults hr {
-  margin: 0 -5px;
+  margin: 0 10px;
   height: 1px;
   opacity: 0.8;
   border: none;
@@ -280,7 +283,7 @@ input.specialButton {
 .actionButtons {
   z-index: 20;
   margin: -1rem 0 5rem 0;
-  display: flex !important;
+  display: flex;
   justify-content: center;
   gap: 7rem;
 }
@@ -323,7 +326,7 @@ input.specialButton {
 .mobileMenu {
   z-index: 10;
   padding: 0 3%;
-  display: none !important;
+  display: none;
   justify-content: center;
   align-items: center;
   gap: 6px;
@@ -357,8 +360,8 @@ input.specialButton {
 @media (max-width: 400px) {
   .actionButtons {
     scale: 0.9;
-    width: 110% !important;
-    bottom: 4rem !important;
+    width: 110%;
+    bottom: 4rem;
   }
   .mobileMenu {
     height: 3.2rem;
@@ -371,7 +374,7 @@ input.specialButton {
 
 @media (max-width: 320px) {
   .actionButtons {
-    bottom: 3.6rem !important;
+    bottom: 3.6rem;
   }
   .mobileMenu {
     height: 3rem;
@@ -433,7 +436,7 @@ input.specialButton {
   }
   .LSbuttons,
   .LSarrow {
-    display: none !important;
+    display: none;
   }
   .textBox {
     padding: 2rem 1.4rem;
@@ -443,7 +446,7 @@ input.specialButton {
   .actionButtons {
     padding: 0 10px;
     margin-bottom: 0;
-    display: flex !important;
+    display: flex;
     justify-content: space-between;
     width: 100%;
     position: fixed;
@@ -477,7 +480,7 @@ input.specialButton {
     display: none !important;
   }
   .mobileMenu {
-    display: flex !important;
+    display: flex;
   }
 }
 

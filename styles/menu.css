@@ -151,6 +151,9 @@
   max-width: 32rem;
   width: 74vw;
   padding: 0.45rem 0rem 0.45rem 0.8rem;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .favoriteHandler img {
