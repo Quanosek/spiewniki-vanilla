@@ -70,12 +70,18 @@ function eventsListener() {
       document.querySelector(".mobileMenu").style.display = "none";
     }
   });
+
   searchBox.addEventListener("focusout", showMobileElements);
   searchBox.addEventListener("keyup", search);
 
   LSarrow.addEventListener("click", leftSideMenu);
   hymnBook.addEventListener("change", changeHymnBook);
-  favorite.addEventListener("click", () => addFavorite(hymn.title));
+
+  favorite.addEventListener("click", () => {
+    const a = map.get("all").find((x) => x.title.includes(hymn.title));
+    addFavorite(a.title);
+  });
+
   arrowLeft.addEventListener("click", prevHymn);
   arrowRight.addEventListener("click", nextHymn);
   clearButton.addEventListener("click", clearSearchBox);
@@ -93,6 +99,7 @@ function eventsListener() {
   });
 }
 
+// poruszanie myszką przy pokazie slajdów
 function handleMouseMove() {
   const slidesStyle = document.querySelector(".slides").style;
   slidesStyle.cursor = "default";
@@ -164,7 +171,7 @@ function globalShortcuts(e, i) {
   return i;
 }
 
-// search for verse in correct order
+// szukanie wersów tekstu pieśni
 function printVerse(i) {
   const sTitle = document.getElementById("sTitle");
   const sVerse = document.getElementById("sVerse");
@@ -178,14 +185,6 @@ function printVerse(i) {
     sVerse.innerHTML = "";
 
     if (i !== -1) sTitle.innerHTML = "";
-  }
-}
-
-// menu dolne na urządzeniach mobilnych
-function showMobileElements() {
-  if (window.screen.width <= 768) {
-    document.querySelector(".actionButtons").style.display = "flex";
-    document.querySelector(".mobileMenu").style.display = "flex";
   }
 }
 
@@ -206,101 +205,79 @@ function changeHymnBook() {
 }
 
 // mechanizm szukania pieśni
-export function search(e) {
-  if (e.target) {
-    searchResults.innerHTML = "";
-    searchResults.style.display = "flex";
-    clearButton.style.display = "block";
+function search(e) {
+  searchResults.innerHTML = "";
+  searchResults.style.display = "flex";
+  clearButton.style.display = "block";
 
-    // lista wyszukiwania
-    list = map.get(hymnBook.value);
+  // lista wyszukiwania
+  list = map.get(hymnBook.value);
 
-    list.forEach((hymn, index) => {
-      if (textFormat(hymn.title).search(textFormat(e.target.value)) != -1) {
-        const div = document.createElement("div");
-        div.setAttribute("id", index);
-        div.innerHTML = `${hymn.title}`;
-        searchResults.appendChild(div);
-        searchResults.appendChild(document.createElement("hr"));
-
-        div.addEventListener("click", selectHymn.bind(e, index));
-      }
-    });
-
-    // usuwanie ostatniego <hr> w wyszukiwarce
-    if (searchResults.hasChildNodes()) searchResults.lastChild.remove();
-
-    // brak tekstu w wyszukiwarce
-    if (e.target.value == "") {
-      searchResults.innerHTML = "";
-      searchResults.style.display = "none";
-      clearButton.style.display = "none";
-      showMobileElements();
-    }
-
-    // easter egg
-    if (e.target.value == "2137") {
-      console.log("Jeszcze jak!");
-
-      hymnBook.value = "cegielki";
-      list = map.get(hymnBook.value);
-      selectHymn(6);
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-
-    // kliknięcie Enter
-    if (e.key === "Enter") {
-      try {
-        selectHymn(searchResults.firstElementChild.id);
-      } catch {
-        clearSearchBox();
-      }
-    }
-
-    // brak wyników wyszukiwania
-    if (e.target.value !== "" && searchResults.innerHTML == "") {
+  list.forEach((hymn, index) => {
+    if (textFormat(hymn.title).search(textFormat(e.target.value)) != -1) {
       const div = document.createElement("div");
-      div.style.cursor = "default";
-      div.innerHTML = `Brak wyników wyszukiwania`;
+      div.setAttribute("id", index);
+      div.innerHTML = `${hymn.title}`;
       searchResults.appendChild(div);
+      searchResults.appendChild(document.createElement("hr"));
+
+      div.addEventListener("click", selectHymn.bind(e, index));
     }
-  } else {
-    // szukanie pieśni po tytule i przypisywanie id
-    list = map.get("all");
+  });
 
-    list.forEach((hymn, index) => {
-      const title = hymn.title.replace(/\s\([^()]*\)*/g, "");
-      e = e.replace(/\s\([^()]*\)*/g, "");
+  // usuwanie ostatniego <hr> w wyszukiwarce
+  if (searchResults.hasChildNodes()) searchResults.lastChild.remove();
 
-      if (title.search(e) != -1) {
-        const handler = document.createElement("div");
-        handler.setAttribute("id", index);
-        handler.setAttribute("class", "favoriteHandler");
-
-        const song = document.createElement("div");
-        song.innerHTML = `${hymn.title}`;
-        handler.appendChild(song);
-
-        const del = document.createElement("img");
-        del.src = "/files/icons/close.svg";
-        del.draggable = "false";
-        handler.appendChild(del);
-
-        favoriteList.appendChild(handler);
-        favoriteList.appendChild(document.createElement("hr"));
-
-        del.addEventListener("click", () => {
-          addFavorite(title);
-          favList();
-        });
-        song.addEventListener("click", () => {
-          hymnBook.value = "all";
-          selectHymn(index);
-          hideMenu();
-        });
-      }
-    });
+  // brak tekstu w wyszukiwarce
+  if (e.target.value == "") {
+    searchResults.innerHTML = "";
+    searchResults.style.display = "none";
+    clearButton.style.display = "none";
+    showMobileElements();
   }
+
+  // easter egg
+  if (e.target.value == "2137") {
+    console.log("Jeszcze jak!");
+
+    hymnBook.value = "cegielki";
+    list = map.get(hymnBook.value);
+    selectHymn(6);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  // kliknięcie Enter
+  if (e.key === "Enter") {
+    try {
+      selectHymn(searchResults.firstElementChild.id);
+    } catch {
+      clearSearchBox();
+    }
+  }
+
+  // brak wyników wyszukiwania
+  if (e.target.value !== "" && searchResults.innerHTML == "") {
+    const div = document.createElement("div");
+    div.style.cursor = "default";
+    div.innerHTML = `Brak wyników wyszukiwania`;
+    searchResults.appendChild(div);
+  }
+}
+
+// podmienienie polskich znaków diakrytycznych
+function textFormat(text) {
+  return text
+    .toLowerCase()
+    .replaceAll("ę", "e")
+    .replaceAll("ó", "o")
+    .replaceAll("ą", "a")
+    .replaceAll("ś", "s")
+    .replaceAll("ł", "l")
+    .replaceAll("ż", "z")
+    .replaceAll("ź", "z")
+    .replaceAll("ć", "c")
+    .replaceAll("ń", "n")
+    .replace(/[^\w\s]/gi, "");
 }
 
 // przycisk czyszczący searchBox input
@@ -391,22 +368,6 @@ async function getHymn(id) {
   return hymn;
 }
 
-// podmienienie polskich znaków diakrytycznych
-function textFormat(text) {
-  return text
-    .toLowerCase()
-    .replaceAll("ę", "e")
-    .replaceAll("ó", "o")
-    .replaceAll("ą", "a")
-    .replaceAll("ś", "s")
-    .replaceAll("ł", "l")
-    .replaceAll("ż", "z")
-    .replaceAll("ź", "z")
-    .replaceAll("ć", "c")
-    .replaceAll("ń", "n")
-    .replace(/[^\w\s]/gi, "");
-}
-
 // dodawanie/usuwanie ulubionych pieśni
 function addFavorite(param) {
   const star = document.getElementById("star");
@@ -425,6 +386,44 @@ function addFavorite(param) {
   }
 
   localStorage.setItem("favorite", JSON.stringify(array));
+}
+
+// szukanie pieśni po tytule i wyświetlenie w liście
+export function searchFavorite(param) {
+  list = map.get("all");
+  list.forEach((hymn, index) => {
+    // usunięcie znaków specjalnych
+    const title = hymn.title.replace(/\s\([^()]*\)*/g, "");
+    param = param.replace(/\s\([^()]*\)*/g, "");
+
+    if (title.includes(param)) {
+      // elementy HTML
+      const handler = document.createElement("div");
+      handler.setAttribute("id", index);
+      handler.setAttribute("class", "favoriteHandler");
+
+      const song = document.createElement("div");
+      song.innerHTML = `${hymn.title}`;
+      handler.appendChild(song);
+
+      const del = document.createElement("img");
+      del.src = "/files/icons/close.svg";
+      del.addEventListener("dragstart", (e) => e.preventDefault());
+      handler.appendChild(del);
+
+      favoriteList.appendChild(handler);
+      favoriteList.appendChild(document.createElement("hr"));
+
+      // zachowanie elementów listy
+      del.addEventListener("click", () => {
+        addFavorite(title), favList();
+      });
+      song.addEventListener("click", () => {
+        hymnBook.value = "all";
+        selectHymn(index), hideMenu();
+      });
+    }
+  });
 }
 
 // wyświetlanie poprzedniej pieśni
@@ -454,4 +453,12 @@ export function randomHymn() {
   const random = Math.floor(Math.random() * (max - min)) + min;
   selectHymn(parseInt(random));
   window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+// menu dolne na urządzeniach mobilnych
+function showMobileElements() {
+  if (window.screen.width <= 768) {
+    document.querySelector(".actionButtons").style.display = "flex";
+    document.querySelector(".mobileMenu").style.display = "flex";
+  }
 }

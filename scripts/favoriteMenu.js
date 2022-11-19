@@ -1,4 +1,4 @@
-import { search } from "/scripts/main.js";
+import { searchFavorite } from "/scripts/main.js";
 import { hideMenu } from "/scripts/menu.js";
 
 function menuHTML() {
@@ -31,19 +31,29 @@ function menuHTML() {
 
 export default () => {
   menuHTML(), favList();
-
   eventsListener();
 };
 
-// posortowana lista ulubionych
+// interaktywna lista ulubionych
 export function favList() {
   favoriteList.innerHTML = "";
 
+  // sortowanie
   let data = JSON.parse(localStorage.getItem("favorite"));
   data = data.sort((a, b) => a.localeCompare(b, "en", { numeric: true }));
-  for (let i = 0; i < data.length; i++) search(data[i]);
 
-  lengthInfo(data);
+  // wyświetlanie
+  let length = data.length;
+  for (let i = 0; i < length; i++) searchFavorite(data[i]);
+
+  // informacja o ilości dodanych pieśni
+  let translation;
+  if (length === 1) translation = "pieśń";
+  else translation = "pieśni";
+
+  let paragraph = document.getElementById("favLength");
+  if (length > 0) paragraph.innerHTML = `dodano ${length} ${translation}`;
+  else paragraph.innerHTML = "";
 
   // usuwanie ostatniego <hr> w wyszukiwarce
   if (favoriteList.hasChildNodes()) favoriteList.lastChild.remove();
@@ -57,24 +67,12 @@ export function favList() {
   }
 }
 
-function lengthInfo(data) {
-  let paragraph = document.getElementById("favLength");
-  let length = data.length;
-
-  let translation;
-  if (length === 1) translation = "pieśń";
-  else translation = "pieśni";
-
-  if (length > 0) paragraph.innerHTML = `dodano ${length} ${translation}`;
-  else paragraph.innerHTML = "";
-}
-
 function eventsListener() {
   const clear = document.getElementById("clearFavorite");
   const close = document.getElementById("closeMenu");
 
   clear.addEventListener("click", clearFavArray);
-  close.addEventListener("click", () => hideMenu());
+  close.addEventListener("click", hideMenu);
 }
 
 function clearFavArray() {

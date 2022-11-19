@@ -56,10 +56,12 @@ const assets = [
 let hymnsArray = [];
 async function cacheHymnBook(hymnBooks) {
   for (let i = 0; i < hymnBooks.length; i++) {
-    const x = await fetch(`/json/${hymnBooks[i]}.json`).then((response) => {
-      return response.json();
-    });
-    for (let j = 0; j < x.length; j++) hymnsArray.push(x[j].link);
+    await fetch(`/json/${hymnBooks[i]}.json`)
+      .then((response) => response.json())
+      .then((hymnsBook) => {
+        for (let j = 0; j < hymnsBook.length; j++)
+          hymnsArray.push(hymnsBook[j].link);
+      });
   }
 }
 

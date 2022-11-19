@@ -5,7 +5,7 @@ function menuHTML() {
     <div id="changeTheme" class="menuContent">
       <h2>Ustawienia aplikacji</h2>
       <div>
-        <p>Zmień motyw kolorów</p>
+        <p>Motyw kolorów:</p>
         <form class="themeSelector no_select">
           <label class="black" for="black">
             <img class="invert" src="/files/icons/text.svg" draggable="false" />
@@ -25,12 +25,12 @@ function menuHTML() {
           </label>
         </form>
       </div>
-      <div>
-        <p>Zmień wielkość tekstu</p>
+      <div class="fontSize">
+        <p>Wielkość tekstu:</p>
         <div class="fontSlideBar no_select">
-          <div id="smaller">A</div>
+          <div class="smaller">A</div>
           <input type="range" id="fontSlideBar" min="14" max="28" step="0.5" />
-          <div id="bigger">A</div>
+          <div class="bigger">A</div>
         </div>
       </div>
       <div class="menuButtons no_select">
