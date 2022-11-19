@@ -154,7 +154,7 @@ function globalShortcuts(e, i) {
           return showMenu(), favoriteMenu();
         case 82: // R
           return randomHymn();
-        case 85: // U
+        case 83: // S
           return showMenu(), themeMenu();
         case 80: // P
           if (hymn) return runSlideshow();

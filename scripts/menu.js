@@ -5,23 +5,23 @@ import favoriteMenu from "/scripts/favoriteMenu.js";
 async function menuHTML() {
   document.querySelector(".LSbuttons").innerHTML = `
   
-  <div id="themeMenu" title="Kliknij, lub użyj klawisza U.">
+  <div id="themeMenu" title="Kliknij, lub użyj klawisza S">
     <img src="/files/icons/settings.svg" draggable="false" />
     | Ustawienia
   </div>
-    <div id="favoriteMenu" title="Kliknij, lub użyj klawisza F.">
+    <div id="favoriteMenu" title="Kliknij, lub użyj klawisza F">
       <img src="/files/icons/star_empty.svg" draggable="false" />
       | Ulubione
     </div>
-    <div id="Slideshow" class="onHymn" title="Kliknij, lub użyj klawisza P.">
+    <div id="Slideshow" class="onHymn" title="Kliknij, lub użyj klawisza P">
       <img src="/files/icons/monitor.svg" draggable="false" />
       | Pokaz slajdów
     </div>
-    <!-- <div id="openPDF" class="onHymn" title="Kliknij, lub użyj klawisza N.">
+    <!-- <div id="openPDF" class="onHymn" title="Kliknij, lub użyj klawisza N">
       <img src="/files/icons/file.svg" draggable="false" />
       | Otwórz PDF
     </div>
-    <div id="playSong" class="onHymn" title="Kliknij, lub użyj klawisza M.">
+    <div id="playSong" class="onHymn" title="Kliknij, lub użyj klawisza M">
       <img src="/files/icons/music.svg" draggable="false" />
       | Odtwórz melodię
     </div>
@@ -44,23 +44,23 @@ async function menuHTML() {
       <img src="/files/icons/printer.svg" draggable="false" />
       <p>Drukuj</p>
     </div> -->
-    <div id="themeMenu" class="mobileShortcut" title="Kliknij, lub użyj klawisza U.">
+    <div id="themeMenu" class="mobileShortcut" title="Kliknij, lub użyj klawisza S">
       <img src="/files/icons/settings.svg" draggable="false" />
       <p>Ustawienia</p>
     </div>
-    <div id="randomButton2" class="mobileShortcut" title="Kliknij, lub użyj klawisza R.">
+    <div id="randomButton2" class="mobileShortcut" title="Kliknij, lub użyj klawisza R">
       <img src="/files/icons/dice.svg" draggable="false" />
       <p>Wylosuj</p>
     </div>
-    <div id="favoriteMenu" class="mobileShortcut" title="Kliknij, lub użyj klawisza F.">
+    <div id="favoriteMenu" class="mobileShortcut" title="Kliknij, lub użyj klawisza F">
       <img src="/files/icons/star_empty.svg" draggable="false" />
       <p>Ulubione</p>
     </div>
-    <!-- <div id="openPDF" class="mobileShortcut onHymn" title="Kliknij, lub użyj klawisza N.">
+    <!-- <div id="openPDF" class="mobileShortcut onHymn" title="Kliknij, lub użyj klawisza N">
       <img src="/files/icons/file.svg" draggable="false" />
       <p>PDF</p>
     </div>
-    <div id="playSong" class="mobileShortcut onHymn" title="Kliknij, lub użyj klawisza M.">
+    <div id="playSong" class="mobileShortcut onHymn" title="Kliknij, lub użyj klawisza M">
       <img src="/files/icons/music.svg" draggable="false" />
       <p>Melodia</p>
     </div> -->
