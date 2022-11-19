@@ -48,7 +48,11 @@
 
       <form class="searchForm" onsubmit="return false">
         <div class="formHolder">
-          <select id="hymnBook" class="specialButton">
+          <select
+            id="hymnBook"
+            class="specialButton"
+            title="Kliknij, aby wybierać śpiewnik"
+          >
             <option value="all">Wszystkie śpiewniki</option>
             <option value="brzask">Pieśni Brzasku Tysiąclecia</option>
             <option value="cegielki">Uwielbiajmy Pana (Cegiełki)</option>
@@ -85,7 +89,12 @@
             class="favorite no_select"
             title="Dodaj do ulubionych"
           >
-            <img id="star" src="/files/icons/star_empty.svg" alt="star" />
+            <img
+              id="star"
+              src="/files/icons/star_empty.svg"
+              alt="star"
+              draggable="false"
+            />
           </button>
         </div>
 
@@ -150,14 +159,22 @@
       </div>
 
       <div class="actionButtons">
-        <button id="arrowLeft" class="prevArrow">
+        <button
+          id="arrowLeft"
+          class="prevArrow"
+          title="Kliknij, lub użyj strzałki w lewo."
+        >
           <img src="/files/icons/arrow.svg" alt="<" />
           <p>poprzednie</p>
         </button>
-        <button id="randomButton">
+        <button id="randomButton" title="Kliknij, lub użyj klawisza R.">
           <p>wylosuj&nbsp;pieśń</p>
         </button>
-        <button id="arrowRight" class="nextArrow">
+        <button
+          id="arrowRight"
+          class="nextArrow"
+          title="Kliknij, lub użyj strzałki w prawo."
+        >
           <p>następne</p>
           <img src="/files/icons/arrow.svg" alt=">" />
         </button>

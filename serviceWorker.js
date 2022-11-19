@@ -1,4 +1,4 @@
-const version = 5;
+const version = 6;
 const cacheName = `piesni-${version}`;
 
 const assets = [
@@ -34,7 +34,7 @@ const assets = [
   // ikonki
   "/files/icons/arrow.svg",
   "/files/icons/close.svg",
-  // "/files/icons/dice.svg",
+  "/files/icons/dice.svg",
   // "/files/icons/file.svg",
   // "/files/icons/link.svg",
   "/files/icons/monitor.svg",

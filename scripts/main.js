@@ -150,11 +150,11 @@ function globalShortcuts(e, i) {
           return prevHymn();
         case 39: // strzałka w prawo
           return nextHymn();
-        case 87: // W
+        case 70: // F
+          return showMenu(), favoriteMenu();
+        case 82: // R
           return randomHymn();
         case 85: // U
-          return showMenu(), favoriteMenu();
-        case 77: // M
           return showMenu(), themeMenu();
         case 80: // P
           if (hymn) return runSlideshow();
@@ -283,6 +283,7 @@ export function search(e) {
 
         const del = document.createElement("img");
         del.src = "/files/icons/close.svg";
+        del.style.pointerEvents = "none";
         handler.appendChild(del);
 
         favoriteList.appendChild(handler);

@@ -322,7 +322,7 @@ input.specialButton {
 /* bottom shortcuts menu on mobile */
 .mobileMenu {
   z-index: 10;
-  padding: 5px 3%;
+  padding: 0 3%;
   display: none !important;
   justify-content: center;
   align-items: center;
@@ -338,10 +338,11 @@ input.specialButton {
 .mobileShortcut {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  gap: 2px;
+  gap: 4px;
   text-align: center;
+  height: 100%;
   width: 8em;
   font-size: 0.7rem;
   cursor: pointer;

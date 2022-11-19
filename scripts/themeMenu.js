@@ -3,23 +3,24 @@ import { hideMenu } from "/scripts/menu.js";
 function menuHTML() {
   document.querySelector(".menu").innerHTML = `
     <div id="changeTheme" class="menuContent">
+      <h2>Ustawienia aplikacji</h2>
       <div>
         <p>Zmień motyw kolorów</p>
         <form class="themeSelector no_select">
           <label class="black" for="black">
-            <img class="invert" src="/files/icons/text.svg" />
+            <img class="invert" src="/files/icons/text.svg" draggable="false" />
             <input type="radio" name="theme" id="black" value="black" />
           </label>
           <label class="dark" for="dark">
-            <img class="invert" src="/files/icons/text.svg" />
+            <img class="invert" src="/files/icons/text.svg" draggable="false" />
             <input type="radio" name="theme" id="dark" value="dark" />
           </label>
           <label class="light" for="light">
-            <img src="/files/icons/text.svg" />
+            <img src="/files/icons/text.svg" draggable="false" />
             <input type="radio" name="theme" id="light" value="light" />
           </label>
           <label class="reading" for="reading">
-            <img src="/files/icons/text.svg" />
+            <img src="/files/icons/text.svg" draggable="false" />
             <input type="radio" name="theme" id="reading" value="reading" />
           </label>
         </form>
@@ -32,11 +33,11 @@ function menuHTML() {
           <div id="bigger">A</div>
         </div>
       </div>
-      <button id="clearCache" class="menuButtons no_select">Wyczyść pamięć podręczną</button>
       <div class="menuButtons no_select">
         <button id="saveButton">Zapisz</button>
         <button id="cancelButton">Resetuj</button>
       </div>
+      <button id="clearCache" class="menuButtons alert no_select">Wyczyść aplikację</button>
     </div>
 
     <div class="credits">
@@ -102,18 +103,25 @@ function fontSizeChange(param) {
 
 // zapytanie przeglądarki z potwierdzeniem działań wyczyszczenia cache
 function clearCache() {
-  const retVal = confirm("Czy na pewno chcesz wyczyścić całą stronę?");
+  const retVal = confirm(
+    "Czy na pewno chcesz wyczyścić całą stronę?\nKonieczne jest połączenie z internetem."
+  );
   if (retVal == true) {
-    caches.keys().then(function (names) {
-      for (let name of names) caches.delete(name);
-    });
-    window.location.reload();
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker
+        .register("/serviceWorker.js", { scope: "/" })
+        .then((registration) =>
+          registration.unregister().then(() => window.location.reload())
+        );
+    }
   }
 }
 
 // reset i ukrycie menu
 function resetSettings(theme, radios) {
-  const retVal = confirm("Czy na pewno chcesz przywrócić ustawienia domyślne?");
+  const retVal = confirm(
+    "Czy na pewno chcesz przywrócić ustawienia domyślne motywu?"
+  );
   if (retVal == true) {
     theme = document.documentElement.className = "black";
     radios.forEach((selection) => {
