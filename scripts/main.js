@@ -80,12 +80,14 @@ function eventsListener() {
 
   searchBox.addEventListener("keyup", search);
   LSarrow.addEventListener("click", leftSideMenu);
-  hymnBook.addEventListener("change", changeHymnBook);
+
+  hymnBook.addEventListener("change", () => hymnBook.blur(), clearSearchBox());
 
   favorite.addEventListener("click", () => {
     map.get("all").find((hymnAll) => {
-      if (hymnAll.title.replace(/\s\([^()]*\)*/g, "").includes(hymn.title))
-        addFavorite(hymnAll.title.replace(/\s\([^()]*\)*/g, ""));
+      hymnAll = hymnAll.title.replace(/\s\([^()]*\)*/g, "");
+      if (hymnAll.includes(hymn.title) || hymn.title.includes(hymnAll))
+        addFavorite(hymnAll);
     });
   });
 
@@ -117,7 +119,7 @@ function handleMouseMove() {
 
 // skróty klawiszowe
 function globalShortcuts(e, i) {
-  // console.log(e.keyCode); // podgląd wciskanych klawiszy
+  // console.log(e.key, e.keyCode); // podgląd wciskanych klawiszy
 
   // nawigacja pokazem slajdów
   if (document.querySelector(".slides").style.display === "flex")
@@ -166,12 +168,12 @@ function globalShortcuts(e, i) {
           return nextHymn();
         case 70: // F
           return showMenu(), favoriteMenu();
+        case 80: // P
+          if (hymn) return runSlideshow();
         case 82: // R
           return randomHymn();
         case 83: // S
           return showMenu(), themeMenu();
-        case 80: // P
-          if (hymn) return runSlideshow();
       }
   }
 
@@ -203,12 +205,6 @@ function leftSideMenu() {
   if (!LSbuttons.style.display || LSbuttons.style.display === "none")
     menu.classList.toggle("active");
   else menu.classList.remove("active");
-}
-
-// zmiana śpiewnika
-function changeHymnBook() {
-  hymnBook.blur();
-  clearSearchBox();
 }
 
 // mechanizm szukania pieśni
@@ -246,14 +242,13 @@ function search(e) {
   if (e.target.value == "2137") {
     console.log("Jeszcze jak!");
 
-    hymnBook.value = "cegielki";
-    list = map.get(hymnBook.value);
+    list = map.get((hymnBook.value = "cegielki"));
     selectHymn(6);
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
-  // kliknięcie Enter
-  if (e.key === "Enter") {
+  // Enter
+  if (e.keyCode === 13) {
     try {
       selectHymn(searchResults.firstElementChild.id);
     } catch {
@@ -304,8 +299,7 @@ async function selectHymn(id) {
   const arrowLeft = document.getElementById("arrowLeft");
   const arrowRight = document.getElementById("arrowRight");
 
-  searchBox.blur();
-  clearSearchBox();
+  searchBox.blur(), clearSearchBox();
 
   title.innerHTML = "";
   lyrics.innerHTML = "";
@@ -329,18 +323,18 @@ async function selectHymn(id) {
   if (array.includes(hymn.title)) star.src = star_filled;
   else star.src = star_empty;
 
-  // const textBox = document.querySelector(".textBox");
-  // if (
-  //   window.screen.height - document.querySelector(".textBox").offsetHeight <=
-  //     200 &&
-  //   window.screen.width <= 768
-  // ) {
-  //   textBox.style.marginBottom = "-16%";
-  //   textBox.style.paddingBottom = "6rem";
-  // } else {
-  //   textBox.style.marginBottom = "";
-  //   textBox.style.paddingBottom = "";
-  // }
+  const textBox = document.querySelector(".textBox");
+  if (
+    window.screen.height - document.querySelector(".textBox").offsetHeight <=
+      200 &&
+    window.screen.width <= 768
+  ) {
+    textBox.style.marginBottom = "-16%";
+    textBox.style.paddingBottom = "6rem";
+  } else {
+    textBox.style.marginBottom = "";
+    textBox.style.paddingBottom = "";
+  }
 
   loader.style.display = "none";
   titleHolder.style.display = "flex";
@@ -349,8 +343,8 @@ async function selectHymn(id) {
   randomButton.style.display = "flex";
   arrowRight.style.display = "flex";
 
-  Array.from(document.querySelectorAll(".onHymn")).forEach((el) =>
-    el.classList.remove("onHymn")
+  Array.from(document.querySelectorAll(".onHymn")).forEach((e) =>
+    e.classList.remove("onHymn")
   );
 }
 
@@ -385,7 +379,10 @@ function addFavorite(param) {
 
   if (array.includes(param)) {
     array = array.filter((x) => x !== param);
-    if (hymn) if (param.includes(hymn.title)) star.src = star_empty;
+    if (hymn) {
+      if (param.includes(hymn.title) || hymn.title.includes(param))
+        star.src = star_empty;
+    }
   } else {
     star.src = star_filled;
     array.push(param);

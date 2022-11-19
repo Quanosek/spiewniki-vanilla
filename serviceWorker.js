@@ -44,12 +44,6 @@ const assets = [
   "/files/icons/star_empty.svg",
   "/files/icons/star_filled.svg",
   "/files/icons/text.svg",
-
-  // pdf-y
-  "/files/Piesni Brzasku Tysiaclecia.pdf",
-  "/files/Spiewajcie Panu Piesn Nowa.pdf",
-  "/files/Spiewniczek Mlodziezowy Epifanii.pdf",
-  // "/files/Uwielbiajmy Pana.pdf",
 ];
 
 // wszystkie teksty pieśni z plików JSON (raw github)

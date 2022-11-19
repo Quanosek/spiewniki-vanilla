@@ -8,19 +8,19 @@ function menuHTML() {
         <p>Motyw kolorów:</p>
         <form class="themeSelector no_select">
           <label class="black" for="black">
-            <img class="invert" src="/files/icons/text.svg" draggable="false" />
+            <img class="invert" alt="przykładowy tekst" src="/files/icons/text.svg" draggable="false" />
             <input type="radio" name="theme" id="black" value="black" />
           </label>
           <label class="dark" for="dark">
-            <img class="invert" src="/files/icons/text.svg" draggable="false" />
+            <img class="invert" alt="przykładowy tekst" src="/files/icons/text.svg" draggable="false" />
             <input type="radio" name="theme" id="dark" value="dark" />
           </label>
           <label class="light" for="light">
-            <img src="/files/icons/text.svg" draggable="false" />
+            <img alt="przykładowy tekst" src="/files/icons/text.svg" draggable="false" />
             <input type="radio" name="theme" id="light" value="light" />
           </label>
           <label class="reading" for="reading">
-            <img src="/files/icons/text.svg" draggable="false" />
+            <img alt="przykładowy tekst" src="/files/icons/text.svg" draggable="false" />
             <input type="radio" name="theme" id="reading" value="reading" />
           </label>
         </form>
