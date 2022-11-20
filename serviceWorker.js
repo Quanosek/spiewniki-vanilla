@@ -1,5 +1,4 @@
-const version = 6;
-const cacheName = `piesni-${version}`;
+const cacheName = "v2.0.0";
 
 const assets = [
   // główny plik HTML

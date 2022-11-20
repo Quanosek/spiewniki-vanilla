@@ -44,7 +44,7 @@ async function menuHTML() {
       <p>Drukuj</p>
     </div> -->
     <div id="themeMenu" class="mobileShortcut" title="Kliknij, lub użyj klawisza S">
-      <img alt="ustawienia" src="/files/icons/settings.svg" draggable="false" />
+      <img alt="koło zębate" src="/files/icons/settings.svg" draggable="false" />
       <p>Ustawienia</p>
     </div>
     <div id="randomButton2" class="mobileShortcut" title="Kliknij, lub użyj klawisza R">

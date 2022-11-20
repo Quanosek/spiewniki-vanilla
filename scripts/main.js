@@ -52,7 +52,9 @@ function eventsListener() {
   let i = -1;
 
   document.addEventListener("keyup", (e) => {
-    i = globalShortcuts(e, i);
+    if (document.querySelector(".slides").style.display === "flex")
+      i = keyControls(e, i);
+    else globalShortcuts(e);
   });
 
   const LSarrow = document.querySelector(".LSarrow");
@@ -108,93 +110,37 @@ function eventsListener() {
   });
 }
 
-// poruszanie myszką przy pokazie slajdów
-function handleMouseMove() {
-  const slidesStyle = document.querySelector(".slides").style;
-  slidesStyle.cursor = "default";
-  setTimeout(() => {
-    slidesStyle.cursor = "none";
-  }, 2000);
-}
-
 // skróty klawiszowe
-function globalShortcuts(e, i) {
+function globalShortcuts(e) {
   // console.log(e.key, e.keyCode); // podgląd wciskanych klawiszy
 
-  // nawigacja pokazem slajdów
-  if (document.querySelector(".slides").style.display === "flex")
+  switch (e.keyCode) {
+    case 27: // Esc
+      hymnBook.blur(), searchBox.blur();
+      clearSearchBox();
+      document.querySelector(".leftSide").classList.remove("active");
+      hideMenu();
+      break;
+  }
+
+  if (
+    document.activeElement !== searchBox &&
+    document.querySelector(".menuHolder").style.visibility !== "visible"
+  )
     switch (e.keyCode) {
       case 37: // strzałka w lewo
-        if (i >= 0) {
-          i--;
-          if (hymn.presentation) printVerse(hymn.presentation[i]);
-          else printVerse(i);
-        }
-        break;
+        return prevHymn();
       case 39: // strzałka w prawo
-        if (hymn.presentation) {
-          if (i < hymn.presentation.length) {
-            i++;
-            printVerse(hymn.presentation[i]);
-          }
-        } else {
-          if (i < hymn.verses.length) {
-            i++;
-            printVerse(i);
-          }
-        }
-        break;
+        return nextHymn();
+      case 70: // F
+        return showMenu(), favoriteMenu();
+      case 80: // P
+        if (hymn) return runSlideshow();
+      case 82: // R
+        return randomHymn();
+      case 83: // S
+        return showMenu(), themeMenu();
     }
-  else {
-    // globalne skróty klawiszowe
-
-    switch (e.keyCode) {
-      case 27: // Esc
-        hymnBook.blur(), searchBox.blur();
-        clearSearchBox();
-        document.querySelector(".leftSide").classList.remove("active");
-        hideMenu();
-        break;
-    }
-
-    if (
-      document.activeElement !== searchBox &&
-      document.querySelector(".menuHolder").style.visibility !== "visible"
-    )
-      switch (e.keyCode) {
-        case 37: // strzałka w lewo
-          return prevHymn();
-        case 39: // strzałka w prawo
-          return nextHymn();
-        case 70: // F
-          return showMenu(), favoriteMenu();
-        case 80: // P
-          if (hymn) return runSlideshow();
-        case 82: // R
-          return randomHymn();
-        case 83: // S
-          return showMenu(), themeMenu();
-      }
-  }
-
-  return i;
-}
-
-// szukanie wersów tekstu pieśni
-function printVerse(i) {
-  const sTitle = document.getElementById("sTitle");
-  const sVerse = document.getElementById("sVerse");
-
-  if (hymn.getVerse(i)) {
-    sTitle.classList.add("top");
-    sVerse.innerHTML = hymn.getVerse(i);
-    document.getElementById("sTitle").innerHTML = hymn.title;
-  } else {
-    sTitle.classList.remove("top");
-    sVerse.innerHTML = "";
-
-    if (i !== -1) sTitle.innerHTML = "";
-  }
 }
 
 // boczny panel opcji
@@ -456,4 +402,63 @@ export function randomHymn() {
   const random = Math.floor(Math.random() * (max - min)) + min;
   selectHymn(parseInt(random));
   window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+// sterowanie pokazem slajdów
+function keyControls(e, i) {
+  if (document.querySelector(".slides").style.display === "flex") {
+    switch (e.keyCode) {
+      case 37: // strzałka w lewo
+        if (i >= 0) {
+          i--;
+          if (hymn.presentation) printVerse(hymn.presentation[i]);
+          else printVerse(i);
+        }
+        break;
+      case 39: // strzałka w prawo
+        if (hymn.presentation) {
+          if (i < hymn.presentation.length) {
+            i++;
+            printVerse(hymn.presentation[i]);
+          }
+        } else {
+          if (i < hymn.verses.length) {
+            i++;
+            printVerse(i);
+          }
+        }
+        break;
+    }
+    return i;
+  }
+}
+
+// szukanie wersów tekstu pieśni
+function printVerse(i) {
+  const sTitle = document.getElementById("sTitle");
+  const sAuthor = document.getElementById("sAuthor");
+  const sVerse = document.getElementById("sVerse");
+
+  if (hymn.getVerse(i)) {
+    sTitle.classList.add("top");
+    sVerse.innerHTML = hymn.getVerse(i);
+
+    sTitle.innerHTML = hymn.title;
+    sAuthor.innerHTML = hymn.author;
+  } else {
+    sTitle.classList.remove("top");
+    sAuthor.innerHTML = "";
+    sVerse.innerHTML = "";
+
+    if (i !== -1) sTitle.innerHTML = "";
+  }
+}
+
+// poruszanie myszką przy pokazie slajdów
+function handleMouseMove() {
+  const slidesStyle = document.querySelector(".slides").style;
+  slidesStyle.cursor = "default";
+  setTimeout(() => {
+    slidesStyle.cursor = "none";
+  }, 2000);
 }

@@ -106,13 +106,17 @@ function clearCache() {
   const retVal = confirm(
     "Czy na pewno chcesz wyczyścić całą stronę?\nKonieczne jest połączenie z internetem."
   );
+
   if (retVal == true) {
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker
         .register("/serviceWorker.js", { scope: "/" })
-        .then((registration) =>
-          registration.unregister().then(() => window.location.reload())
-        );
+        .then((registration) => {
+          caches.keys().then(function (names) {
+            for (let name of names) caches.delete(name);
+          });
+          registration.unregister().then(() => window.location.reload());
+        });
     }
   }
 }
