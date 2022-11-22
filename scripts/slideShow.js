@@ -1,9 +1,15 @@
 import { globalShortcuts } from "/scripts/main.js";
 
-export default (hymn) => {
-  // operator kolejności slajdów
-  let slideNumber = -1;
+let hymn;
+let slideNumber = -1;
 
+// parametry wybranej pieśni
+export function hymnParam(param) {
+  hymn = param;
+}
+
+// wszystkie eventy pokazu slajdów
+export function slideEvents() {
   // nawigacja między slajdami
   const navigationEvents = ["wheel", "keyup"];
   navigationEvents.forEach((event) => {
@@ -13,11 +19,29 @@ export default (hymn) => {
     });
   });
 
+  // gesty dotykowe ekranu
+  let startPosition;
+  document.addEventListener("touchstart", (e) => {
+    if (document.fullscreenElement) startPosition = e.touches[0].clientX;
+  });
+  document.addEventListener("touchend", (e) => {
+    document.getElementById("slideHandler").style.backgroundColor = "";
+    document.getElementById("PGbar").style.display = "flex";
+    document.getElementById("PGfulfill").style.width = "";
+
+    if (document.fullscreenElement) {
+      const endPosition = e.changedTouches[0].clientX - startPosition;
+      if (endPosition < 0) slideNumber = prevSlide(slideNumber);
+      else slideNumber = nextSlide(slideNumber);
+    }
+  });
+
   // zmiana pełnego ekranu
   document.addEventListener("fullscreenchange", () => {
     if (document.fullscreenElement) {
       document.getElementById("slideHandler").style.backgroundColor = "";
-      slideNumber = touchGestures(slideNumber);
+      document.getElementById("PGbar").style.display = "flex";
+      document.getElementById("PGfulfill").style.width = "";
 
       document.removeEventListener("keyup", globalShortcuts);
       document.addEventListener("mousemove", handleMouseMove);
@@ -28,103 +52,106 @@ export default (hymn) => {
       document.removeEventListener("mousemove", handleMouseMove);
     }
   });
+}
 
-  // sterowanie pokazem slajdów
-  function SlidesControls(e, slideNumber) {
-    document.getElementById("slideHandler").style.backgroundColor = "";
+// sterowanie pokazem slajdów (komputer)
+function SlidesControls(e, slideNumber) {
+  document.getElementById("slideHandler").style.backgroundColor = "";
+  document.getElementById("PGbar").style.display = "flex";
+  document.getElementById("PGfulfill").style.width = "";
 
-    // strzałki w lewo i w górę, oraz scroll w górę
-    if ([37, 38].includes(e.keyCode) || e.deltaY < 0)
-      slideNumber = prevSlide(slideNumber);
+  // strzałki w lewo i w górę, oraz scroll w górę
+  if ([37, 38].includes(e.keyCode) || e.deltaY < 0)
+    slideNumber = prevSlide(slideNumber);
 
-    // spacja, strzałki w prawo i w dół, oraz scroll w dół
-    if ([32, 39, 40].includes(e.keyCode) || e.deltaY > 0)
-      slideNumber = nextSlide(slideNumber);
+  // spacja, strzałki w prawo i w dół, oraz scroll w dół
+  if ([32, 39, 40].includes(e.keyCode) || e.deltaY > 0)
+    slideNumber = nextSlide(slideNumber);
 
-    return slideNumber;
-  }
+  return slideNumber;
+}
 
-  // gesty dla ekranów dotykowych na pokazie slajdów
-  function touchGestures(slideNumber) {
-    let startPosition;
+// poprzedni slajd
+function prevSlide(slideNumber) {
+  let fulfill = 0;
 
-    document.addEventListener("touchstart", (e) => {
-      if (document.fullscreenElement) startPosition = e.touches[0].clientX;
-    });
-    document.addEventListener("touchend", (e) => {
-      if (document.fullscreenElement) {
-        const endPosition = e.changedTouches[0].clientX - startPosition;
-        if (endPosition < 0) slideNumber = prevSlide(slideNumber);
-        else slideNumber = nextSlide(slideNumber);
-      }
-    });
-
-    return slideNumber;
-  }
-
-  // poprzedni slajd
-  function prevSlide(slideNumber) {
-    if (slideNumber >= 0) {
-      slideNumber--;
-      if (hymn.presentation) {
-        printVerse(hymn.presentation[slideNumber]);
-        if (slideNumber === -1)
-          document.getElementById("sTitle").innerHTML = hymn.title;
-      } else printVerse(slideNumber);
-    }
-    return slideNumber;
-  }
-
-  // następny slajd
-  function nextSlide(slideNumber) {
+  if (slideNumber >= 0) {
+    slideNumber--;
     if (hymn.presentation) {
-      if (slideNumber < hymn.presentation.length + 1) {
-        slideNumber++;
-        printVerse(hymn.presentation[slideNumber]);
-        lastSlides(slideNumber, hymn.presentation.length);
-      }
+      fulfill = (100 / hymn.presentation.length) * (slideNumber + 1);
+      printVerse(hymn.presentation[slideNumber]);
+      if (slideNumber === -1)
+        document.getElementById("sTitle").innerHTML = hymn.title;
     } else {
-      if (slideNumber < hymn.verses.length + 1) {
-        slideNumber++;
-        printVerse(slideNumber);
-        lastSlides(slideNumber, hymn.verses.length);
-      }
-    }
-    return slideNumber;
-  }
-
-  // inne zachowanie 2 ostatnich slajdów
-  function lastSlides(slideNumber, param) {
-    if (slideNumber >= param)
-      document.getElementById("slideHandler").style.backgroundColor = "#000000";
-    if (slideNumber === param + 1) document.exitFullscreen();
-  }
-
-  // szukanie wersów tekstu pieśni
-  function printVerse(verseNumber) {
-    const sTitle = document.getElementById("sTitle");
-    const sAuthor = document.getElementById("sAuthor");
-    const sVerse = document.getElementById("sVerse");
-
-    if (hymn.getVerse(verseNumber)) {
-      sTitle.classList.add("top");
-      sTitle.innerHTML = hymn.title;
-      sAuthor.innerHTML = hymn.author;
-      sVerse.innerHTML = hymn.getVerse(verseNumber);
-    } else {
-      sTitle.classList.remove("top");
-      sAuthor.innerHTML = "";
-      sVerse.innerHTML = "";
-      if (verseNumber !== -1) sTitle.innerHTML = "";
+      fulfill = (100 / hymn.verses.length) * (slideNumber + 1);
+      printVerse(slideNumber);
     }
   }
 
-  // poruszanie myszką przy pokazie slajdów
-  function handleMouseMove() {
-    const slidesStyle = document.querySelector(".slides").style;
-    slidesStyle.cursor = "default";
-    setTimeout(() => {
-      slidesStyle.cursor = "none";
-    }, 2000);
+  document.getElementById("PGfulfill").style.width = `${fulfill}%`;
+  return slideNumber;
+}
+
+// następny slajd
+function nextSlide(slideNumber) {
+  let fulfill = 0;
+
+  if (hymn.presentation) {
+    if (slideNumber < hymn.presentation.length + 1) {
+      slideNumber++;
+      fulfill = (100 / hymn.presentation.length) * (slideNumber + 1);
+      printVerse(hymn.presentation[slideNumber]);
+      lastSlides(slideNumber, hymn.presentation.length);
+    }
+  } else {
+    if (slideNumber < hymn.verses.length + 1) {
+      slideNumber++;
+      fulfill = (100 / hymn.verses.length) * (slideNumber + 1);
+      printVerse(slideNumber);
+      lastSlides(slideNumber, hymn.verses.length);
+    }
   }
-};
+
+  document.getElementById("PGfulfill").style.width = `${fulfill}%`;
+  return slideNumber;
+}
+
+// inne zachowanie 2 ostatnich slajdów
+function lastSlides(slideNumber, param) {
+  if (slideNumber >= param) {
+    document.getElementById("PGbar").style.display = "none";
+    document.getElementById("PGfulfill").style.width = "";
+    document.getElementById("slideHandler").style.backgroundColor = "#000000";
+  }
+  if (slideNumber === param + 1) {
+    document.exitFullscreen();
+  }
+}
+
+// szukanie wersów tekstu pieśni
+function printVerse(verseNumber) {
+  const sTitle = document.getElementById("sTitle");
+  const sAuthor = document.getElementById("sAuthor");
+  const sVerse = document.getElementById("sVerse");
+
+  if (hymn.getVerse(verseNumber)) {
+    sTitle.classList.add("top");
+    sTitle.innerHTML = hymn.title;
+    sAuthor.innerHTML = hymn.author;
+    sVerse.innerHTML = hymn.getVerse(verseNumber);
+  } else {
+    sTitle.classList.remove("top");
+    sAuthor.innerHTML = "";
+    sVerse.innerHTML = "";
+    if (verseNumber !== -1) sTitle.innerHTML = "";
+  }
+}
+
+// poruszanie myszką przy pokazie slajdów
+function handleMouseMove() {
+  const slidesStyle = document.querySelector(".slides").style;
+  slidesStyle.cursor = "default";
+  setTimeout(() => {
+    slidesStyle.cursor = "none";
+  }, 2000);
+}

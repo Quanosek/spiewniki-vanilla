@@ -1,7 +1,7 @@
 import { menuInit, showMenu, hideMenu, runSlideshow } from "/scripts/menu.js";
 import favoriteMenu, { favList } from "/scripts/favoriteMenu.js";
+import { slideEvents, hymnParam } from "/scripts/slideShow.js";
 import themeMenu from "/scripts/themeMenu.js";
-import slideShow from "/scripts/slideShow.js";
 import Hymn from "/scripts/hymn.js";
 
 let map, list, hymn;
@@ -21,6 +21,7 @@ let map, list, hymn;
   // główne funkcje
   map = await getJSON();
   eventsListener();
+  slideEvents();
 })();
 
 // fetch spisu pieśni json
@@ -246,7 +247,7 @@ async function selectHymn(id) {
   arrowRight.style.display = "none";
 
   hymn = await getHymn(id);
-  slideShow(hymn);
+  hymnParam(hymn);
 
   title.innerHTML = hymn.title;
   lyrics.innerHTML = hymn.getLyrics();

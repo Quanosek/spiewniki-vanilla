@@ -536,3 +536,14 @@ input.specialButton {
   margin-top: 2.6vw;
   font-size: 4vw;
 }
+
+.progressBar {
+  position: absolute;
+  bottom: 0;
+  height: 1.2vh;
+  width: 100%;
+  background-color: #303030;
+}
+.progressFulfill {
+  background-color: var(--darkBlue);
+}
