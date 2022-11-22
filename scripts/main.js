@@ -1,6 +1,7 @@
 import { menuInit, showMenu, hideMenu, runSlideshow } from "/scripts/menu.js";
 import favoriteMenu, { favList } from "/scripts/favoriteMenu.js";
 import themeMenu from "/scripts/themeMenu.js";
+import slideShow from "/scripts/slideShow.js";
 import Hymn from "/scripts/hymn.js";
 
 let map, list, hymn;
@@ -20,7 +21,6 @@ let map, list, hymn;
   // główne funkcje
   map = await getJSON();
   eventsListener();
-  slidesEvents();
 })();
 
 // fetch spisu pieśni json
@@ -99,7 +99,7 @@ function eventsListener() {
 }
 
 // skróty klawiszowe
-function globalShortcuts(e) {
+export function globalShortcuts(e) {
   // console.log(e.key, e.keyCode); // podgląd wciskanych klawiszy
 
   switch (e.keyCode) {
@@ -246,6 +246,7 @@ async function selectHymn(id) {
   arrowRight.style.display = "none";
 
   hymn = await getHymn(id);
+  slideShow(hymn);
 
   title.innerHTML = hymn.title;
   lyrics.innerHTML = hymn.getLyrics();
@@ -391,94 +392,4 @@ export function randomHymn() {
   const random = Math.floor(Math.random() * (max - min)) + min;
   selectHymn(parseInt(random));
   window.scrollTo({ top: 0, behavior: "smooth" });
-}
-
-// eventy pokazu slajdów
-function slidesEvents() {
-  let slideNumber = -1;
-
-  // nawigacja między slajdami
-  const navigationEvents = ["wheel", "keyup"];
-  navigationEvents.forEach((event) => {
-    document.addEventListener(event, (e) => {
-      if (document.fullscreenElement)
-        slideNumber = SlidesControls(e, slideNumber);
-    });
-  });
-
-  document.addEventListener("fullscreenchange", () => {
-    if (document.fullscreenElement) {
-      document.removeEventListener("keyup", globalShortcuts);
-      document.addEventListener("mousemove", handleMouseMove);
-      document.getElementById("sTitle").innerHTML = hymn.title;
-      printVerse((slideNumber = -1));
-    } else {
-      document.addEventListener("keyup", globalShortcuts);
-      document.removeEventListener("mousemove", handleMouseMove);
-    }
-  });
-}
-
-// sterowanie pokazem slajdów
-function SlidesControls(e, slideNumber) {
-  // poprzedni slajd
-  // strzałki w lewo i w górę, oraz scroll w górę
-  if ([37, 38].includes(e.keyCode) || e.deltaY < 0) {
-    if (slideNumber >= 0) {
-      slideNumber--;
-      if (hymn.presentation) {
-        printVerse(hymn.presentation[slideNumber]);
-        if (slideNumber === -1)
-          document.getElementById("sTitle").innerHTML = hymn.title;
-      } else printVerse(slideNumber);
-    }
-  }
-  // następny slajd
-  // spacja, strzałki w prawo i w dół, oraz scroll w dół
-  if ([32, 39, 40].includes(e.keyCode) || e.deltaY > 0) {
-    if (hymn.presentation) {
-      if (slideNumber < hymn.presentation.length + 1) {
-        slideNumber++;
-        printVerse(hymn.presentation[slideNumber]);
-        if (slideNumber === hymn.presentation.length + 1)
-          document.exitFullscreen();
-      }
-    } else {
-      if (slideNumber < hymn.verses.length + 1) {
-        slideNumber++;
-        printVerse(slideNumber);
-        if (slideNumber === hymn.verses.length + 1) document.exitFullscreen();
-      }
-    }
-  }
-
-  return slideNumber;
-}
-
-// szukanie wersów tekstu pieśni
-function printVerse(verseNumber) {
-  const sTitle = document.getElementById("sTitle");
-  const sAuthor = document.getElementById("sAuthor");
-  const sVerse = document.getElementById("sVerse");
-
-  if (hymn.getVerse(verseNumber)) {
-    sTitle.classList.add("top");
-    sTitle.innerHTML = hymn.title;
-    sAuthor.innerHTML = hymn.author;
-    sVerse.innerHTML = hymn.getVerse(verseNumber);
-  } else {
-    sTitle.classList.remove("top");
-    sAuthor.innerHTML = "";
-    sVerse.innerHTML = "";
-    if (verseNumber !== -1) sTitle.innerHTML = "";
-  }
-}
-
-// poruszanie myszką przy pokazie slajdów
-function handleMouseMove() {
-  const slidesStyle = document.querySelector(".slides").style;
-  slidesStyle.cursor = "default";
-  setTimeout(() => {
-    slidesStyle.cursor = "none";
-  }, 2000);
 }

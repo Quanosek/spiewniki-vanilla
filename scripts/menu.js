@@ -123,9 +123,9 @@ export function runSlideshow() {
   // ukryciE prezentacji
   document.addEventListener("fullscreenchange", () => {
     if (!document.fullscreenElement) {
-      slideHandler.style.display = "none";
-      document.documentElement.style.overflowY = "scroll";
-      document.querySelector("main").style.height = "auto";
+      slideHandler.style.display = "";
+      document.documentElement.style.overflowY = "";
+      document.querySelector("main").style.height = "";
     }
   });
 }
