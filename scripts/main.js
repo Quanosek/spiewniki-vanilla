@@ -5,18 +5,22 @@ import Hymn from "/scripts/hymn.js";
 
 let map, list, hymn;
 
-// główna funkcja
+// start aplikacji
 (async () => {
+  // główne skrypty HTML
   await menuInit();
 
+  // instalacja PWA
   if ("serviceWorker" in navigator)
     navigator.serviceWorker.register("/serviceWorker.js");
 
+  // pamięć lokalna ulubionych pieśni
+  if (!localStorage.getItem("favorite")) localStorage.setItem("favorite", "[]");
+
+  // główne funkcje
   map = await getJSON();
   eventsListener();
-
-  // tworzenie lokalnej tablicy ulubionych pieśni
-  if (!localStorage.getItem("favorite")) localStorage.setItem("favorite", "[]");
+  slidesEvents();
 })();
 
 // fetch spisu pieśni json
@@ -47,28 +51,28 @@ async function getJSON() {
   return map;
 }
 
-// słuchanie eventów strony
+// główne eventy aplikacji
 function eventsListener() {
-  let i = -1;
-
-  document.addEventListener("keyup", (e) => {
-    if (document.querySelector(".slides").style.display === "flex")
-      i = keyControls(e, i);
-    else globalShortcuts(e);
-  });
+  document.addEventListener("keyup", globalShortcuts);
 
   const LSarrow = document.querySelector(".LSarrow");
   const hymnBook = document.getElementById("hymnBook");
+
   const searchBox = document.getElementById("searchBox");
+  const actionButtons = document.querySelector(".actionButtons");
+  const mobileMenu = document.querySelector(".mobileMenu");
+
   const favorite = document.getElementById("addFavorite");
+
   const arrowLeft = document.getElementById("arrowLeft");
   const arrowRight = document.getElementById("arrowRight");
   const clearButton = document.getElementById("clearButton");
   const randomButton = document.getElementById("randomButton");
 
-  const actionButtons = document.querySelector(".actionButtons");
-  const mobileMenu = document.querySelector(".mobileMenu");
+  LSarrow.addEventListener("click", leftSideMenu);
+  hymnBook.addEventListener("change", () => hymnBook.blur(), clearSearchBox());
 
+  searchBox.addEventListener("keyup", search);
   searchBox.addEventListener("focus", () => {
     if (window.screen.width <= 768) {
       actionButtons.style.display = "none";
@@ -79,11 +83,6 @@ function eventsListener() {
     actionButtons.style.display = "";
     mobileMenu.style.display = "";
   });
-
-  searchBox.addEventListener("keyup", search);
-  LSarrow.addEventListener("click", leftSideMenu);
-
-  hymnBook.addEventListener("change", () => hymnBook.blur(), clearSearchBox());
 
   favorite.addEventListener("click", () => {
     map.get("all").find((hymnAll) => {
@@ -97,17 +96,6 @@ function eventsListener() {
   arrowRight.addEventListener("click", nextHymn);
   clearButton.addEventListener("click", clearSearchBox);
   randomButton.addEventListener("click", randomHymn);
-
-  document.addEventListener("fullscreenchange", () => {
-    if (document.fullscreenElement) {
-      document.addEventListener("mousemove", handleMouseMove);
-      i = -1;
-      document.getElementById("sTitle").innerHTML = hymn.title;
-      printVerse(i);
-    } else {
-      document.removeEventListener("mousemove", handleMouseMove);
-    }
-  });
 }
 
 // skróty klawiszowe
@@ -135,7 +123,8 @@ function globalShortcuts(e) {
       case 70: // F
         return showMenu(), favoriteMenu();
       case 80: // P
-        if (hymn) return runSlideshow();
+        if (hymn) runSlideshow();
+        break;
       case 82: // R
         return randomHymn();
       case 83: // S
@@ -215,15 +204,15 @@ function search(e) {
 function textFormat(text) {
   return text
     .toLowerCase()
-    .replaceAll("ę", "e")
-    .replaceAll("ó", "o")
     .replaceAll("ą", "a")
-    .replaceAll("ś", "s")
+    .replaceAll("ć", "c")
+    .replaceAll("ę", "e")
     .replaceAll("ł", "l")
+    .replaceAll("ń", "n")
+    .replaceAll("ó", "o")
+    .replaceAll("ś", "s")
     .replaceAll("ż", "z")
     .replaceAll("ź", "z")
-    .replaceAll("ć", "c")
-    .replaceAll("ń", "n")
     .replace(/[^\w\s]/gi, "");
 }
 
@@ -404,53 +393,84 @@ export function randomHymn() {
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-// sterowanie pokazem slajdów
-function keyControls(e, i) {
-  if (document.querySelector(".slides").style.display === "flex") {
-    switch (e.keyCode) {
-      case 37: // strzałka w lewo
-        if (i >= 0) {
-          i--;
-          if (hymn.presentation) printVerse(hymn.presentation[i]);
-          else printVerse(i);
-        }
-        break;
-      case 39: // strzałka w prawo
-        if (hymn.presentation) {
-          if (i < hymn.presentation.length) {
-            i++;
-            printVerse(hymn.presentation[i]);
-          }
-        } else {
-          if (i < hymn.verses.length) {
-            i++;
-            printVerse(i);
-          }
-        }
-        break;
+// eventy pokazu slajdów
+function slidesEvents() {
+  let slideNumber = -1;
+
+  // nawigacja między slajdami
+  const navigationEvents = ["wheel", "keyup"];
+  navigationEvents.forEach((event) => {
+    document.addEventListener(event, (e) => {
+      if (document.fullscreenElement)
+        slideNumber = SlidesControls(e, slideNumber);
+    });
+  });
+
+  document.addEventListener("fullscreenchange", () => {
+    if (document.fullscreenElement) {
+      document.removeEventListener("keyup", globalShortcuts);
+      document.addEventListener("mousemove", handleMouseMove);
+      document.getElementById("sTitle").innerHTML = hymn.title;
+      printVerse((slideNumber = -1));
+    } else {
+      document.addEventListener("keyup", globalShortcuts);
+      document.removeEventListener("mousemove", handleMouseMove);
     }
-    return i;
+  });
+}
+
+// sterowanie pokazem slajdów
+function SlidesControls(e, slideNumber) {
+  // poprzedni slajd
+  // strzałki w lewo i w górę, oraz scroll w górę
+  if ([37, 38].includes(e.keyCode) || e.deltaY < 0) {
+    if (slideNumber >= 0) {
+      slideNumber--;
+      if (hymn.presentation) {
+        printVerse(hymn.presentation[slideNumber]);
+        if (slideNumber === -1)
+          document.getElementById("sTitle").innerHTML = hymn.title;
+      } else printVerse(slideNumber);
+    }
   }
+  // następny slajd
+  // spacja, strzałki w prawo i w dół, oraz scroll w dół
+  if ([32, 39, 40].includes(e.keyCode) || e.deltaY > 0) {
+    if (hymn.presentation) {
+      if (slideNumber < hymn.presentation.length + 1) {
+        slideNumber++;
+        printVerse(hymn.presentation[slideNumber]);
+        if (slideNumber === hymn.presentation.length + 1)
+          document.exitFullscreen();
+      }
+    } else {
+      if (slideNumber < hymn.verses.length + 1) {
+        slideNumber++;
+        printVerse(slideNumber);
+        if (slideNumber === hymn.verses.length + 1) document.exitFullscreen();
+      }
+    }
+  }
+
+  return slideNumber;
 }
 
 // szukanie wersów tekstu pieśni
-function printVerse(i) {
+function printVerse(verseNumber) {
   const sTitle = document.getElementById("sTitle");
   const sAuthor = document.getElementById("sAuthor");
   const sVerse = document.getElementById("sVerse");
 
-  if (hymn.getVerse(i)) {
+  if (hymn.getVerse(verseNumber)) {
     sTitle.classList.add("top");
-    sVerse.innerHTML = hymn.getVerse(i);
-
     sTitle.innerHTML = hymn.title;
     sAuthor.innerHTML = hymn.author;
+    sVerse.innerHTML = hymn.getVerse(verseNumber);
   } else {
     sTitle.classList.remove("top");
     sAuthor.innerHTML = "";
     sVerse.innerHTML = "";
-
-    if (i !== -1) sTitle.innerHTML = "";
+    if (verseNumber !== -1) sTitle.innerHTML = "";
   }
 }
 

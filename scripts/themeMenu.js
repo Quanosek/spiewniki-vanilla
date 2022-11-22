@@ -112,7 +112,7 @@ function clearCache() {
       navigator.serviceWorker
         .register("/serviceWorker.js", { scope: "/" })
         .then((registration) => {
-          caches.keys().then(function (names) {
+          caches.keys().then((names) => {
             for (let name of names) caches.delete(name);
           });
           registration.unregister().then(() => window.location.reload());
