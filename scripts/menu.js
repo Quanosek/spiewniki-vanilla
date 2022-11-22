@@ -88,13 +88,12 @@ export async function menuInit() {
   document.querySelector(".darkBackground").addEventListener("click", hideMenu);
 
   multipleButton("#themeMenu", () => {
-    document.querySelector(".leftSide").classList.remove("active");
     themeMenu(), showMenu();
   });
   multipleButton("#favoriteMenu", () => {
-    document.querySelector(".leftSide").classList.remove("active");
     favoriteMenu(), showMenu();
   });
+
   // multipleButton("#openPDF", openPDF);
   // multipleButton("#playSong", playSong);
   // multipleButton("#printText", printText);
@@ -109,6 +108,8 @@ export async function menuInit() {
 
 // uruchomienie prezentacji
 export function runSlideshow() {
+  document.querySelector(".leftSide").classList.remove("active");
+
   const elem = document.documentElement;
   if (elem.requestFullscreen) elem.requestFullscreen();
   else if (elem.webkitRequestFullscreen) elem.webkitRequestFullscreen();

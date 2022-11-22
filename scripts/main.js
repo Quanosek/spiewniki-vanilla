@@ -20,7 +20,7 @@ let map, list, hymn;
 
   // główne funkcje
   map = await getJSON();
-  eventsListener();
+  appInit();
   slideEvents();
 })();
 
@@ -53,25 +53,18 @@ async function getJSON() {
 }
 
 // główne eventy aplikacji
-function eventsListener() {
+function appInit() {
+  // globalne skróty klawiszowe
   document.addEventListener("keyup", globalShortcuts);
 
-  const LSarrow = document.querySelector(".LSarrow");
+  // zmiana wybranego śpiewnika
   const hymnBook = document.getElementById("hymnBook");
+  hymnBook.addEventListener("change", () => hymnBook.blur(), clearSearchBox());
 
+  // pole wyszukiwania pieśni
   const searchBox = document.getElementById("searchBox");
   const actionButtons = document.querySelector(".actionButtons");
   const mobileMenu = document.querySelector(".mobileMenu");
-
-  const favorite = document.getElementById("addFavorite");
-
-  const arrowLeft = document.getElementById("arrowLeft");
-  const arrowRight = document.getElementById("arrowRight");
-  const clearButton = document.getElementById("clearButton");
-  const randomButton = document.getElementById("randomButton");
-
-  LSarrow.addEventListener("click", leftSideMenu);
-  hymnBook.addEventListener("change", () => hymnBook.blur(), clearSearchBox());
 
   searchBox.addEventListener("keyup", search);
   searchBox.addEventListener("focus", () => {
@@ -85,21 +78,40 @@ function eventsListener() {
     mobileMenu.style.display = "";
   });
 
+  // zarządzanie ulubionymi
+  const favorite = document.getElementById("addFavorite");
+
   favorite.addEventListener("click", () => {
     map.get("all").find((hymnAll) => {
-      hymnAll = hymnAll.title.replace(/\s\([^()]*\)*/g, "");
+      hymnAll = textFormat2(hymnAll.title);
       if (hymnAll.includes(hymn.title) || hymn.title.includes(hymnAll))
         addFavorite(hymnAll);
     });
   });
 
+  // przyciski funkcyjne
+  const arrowLeft = document.getElementById("arrowLeft");
+  const arrowRight = document.getElementById("arrowRight");
+  const clearButton = document.getElementById("clearButton");
+  const randomButton = document.getElementById("randomButton");
+
   arrowLeft.addEventListener("click", prevHymn);
   arrowRight.addEventListener("click", nextHymn);
   clearButton.addEventListener("click", clearSearchBox);
   randomButton.addEventListener("click", randomHymn);
+
+  // ukryte mnu boczne dla mniejszych ekranów
+  const arrow = document.querySelector(".LSarrow");
+  const menu = document.querySelector(".leftSide");
+
+  window.addEventListener("click", (e) => {
+    if (arrow.contains(e.target)) menu.classList.toggle("active");
+    else if (!document.querySelector(".LSbuttons").contains(e.target))
+      menu.classList.remove("active");
+  });
 }
 
-// skróty klawiszowe
+// globalne skróty klawiszowe
 export function globalShortcuts(e) {
   // console.log(e.key, e.keyCode); // podgląd wciskanych klawiszy
 
@@ -131,16 +143,6 @@ export function globalShortcuts(e) {
       case 83: // S
         return showMenu(), themeMenu();
     }
-}
-
-// boczny panel opcji
-function leftSideMenu() {
-  const menu = document.querySelector(".leftSide");
-  const LSbuttons = document.querySelector(".LSbuttons");
-
-  if (!LSbuttons.style.display || LSbuttons.style.display === "none")
-    menu.classList.toggle("active");
-  else menu.classList.remove("active");
 }
 
 // mechanizm szukania pieśni
@@ -331,10 +333,10 @@ function addFavorite(param) {
 // szukanie pieśni po tytule i wyświetlenie w liście
 export function searchFavorite(param) {
   list = map.get("all");
+
   list.forEach((hymn, index) => {
-    // usunięcie znaków specjalnych
-    const title = hymn.title.replace(/\s\([^()]*\)*/g, "");
-    param = param.replace(/\s\([^()]*\)*/g, "");
+    const title = textFormat2(hymn.title);
+    param = textFormat2(param);
 
     if (title.includes(param)) {
       // elementy HTML
@@ -364,6 +366,11 @@ export function searchFavorite(param) {
       });
     }
   });
+}
+
+// usunięcie informacji między nawiasami w tekście
+function textFormat2(text) {
+  return text.replace(/\s\([^()]*\)*/g, "");
 }
 
 // wyświetlanie poprzedniej pieśni

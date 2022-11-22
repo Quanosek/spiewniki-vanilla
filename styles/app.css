@@ -437,7 +437,7 @@ input.specialButton {
   }
   .LSbuttons,
   .LSarrow {
-    display: none;
+    display: none !important;
   }
   .textBox {
     padding: 2rem 1.4rem;
