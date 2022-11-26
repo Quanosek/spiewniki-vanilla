@@ -41,7 +41,7 @@ export function slideEvents() {
     if (document.fullscreenElement) {
       document.getElementById("slideHandler").style.backgroundColor = "";
       document.getElementById("PGbar").style.display = "flex";
-      document.getElementById("PGfulfill").style.width = "";
+      document.getElementById("PGfulfill").style.width = "0%";
 
       document.removeEventListener("keyup", globalShortcuts);
       document.addEventListener("mousemove", handleMouseMove);
