@@ -11,7 +11,7 @@ function menuHTML() {
         </div>
         <div id="favoriteList" class="favoriteList"></div>
       </div>
-      <div class="menuButtons no_select">
+      <div class="menuButtons no-selection">
         <button id="clearFavorite">Wyczyść listę</button>
         <button id="closeMenu">Zamknij</button>
       </div>
@@ -52,8 +52,7 @@ export function favList() {
   else translation = "pieśni";
 
   let paragraph = document.getElementById("favLength");
-  if (length > 0) paragraph.innerHTML = `dodano ${length} ${translation}`;
-  else paragraph.innerHTML = "";
+  paragraph.innerHTML = `dodano ${length} ${translation}`;
 
   // usuwanie ostatniego <hr> w wyszukiwarce
   if (favoriteList.hasChildNodes()) favoriteList.lastChild.remove();
@@ -62,7 +61,7 @@ export function favList() {
   if (favoriteList.innerHTML == "") {
     const div = document.createElement("div");
     div.setAttribute("class", "favoriteNoResults");
-    div.innerHTML = `Wyszukaj swoją ulubioną pieśń i kliknij w ikonkę gwiazdki!`;
+    div.innerHTML = `Dodaj pierwszą ulubioną pieśń!`;
     favoriteList.appendChild(div);
   }
 }

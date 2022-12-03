@@ -262,19 +262,6 @@ async function selectHymn(id) {
   if (array.includes(hymn.title)) star.src = star_filled;
   else star.src = star_empty;
 
-  const textBox = document.querySelector(".textBox");
-  if (
-    window.screen.height - document.querySelector(".textBox").offsetHeight <=
-      200 &&
-    window.screen.width <= 768
-  ) {
-    textBox.style.marginBottom = "-16%";
-    textBox.style.paddingBottom = "6rem";
-  } else {
-    textBox.style.marginBottom = "";
-    textBox.style.paddingBottom = "";
-  }
-
   loader.style.display = "none";
   titleHolder.style.display = "flex";
   addFavorite.style.display = "flex";
@@ -349,6 +336,7 @@ export function searchFavorite(param) {
       handler.appendChild(song);
 
       const del = document.createElement("img");
+      del.title = "Kliknij, aby usunąć z ulubionych.";
       del.src = "/files/icons/close.svg";
       del.addEventListener("dragstart", (e) => e.preventDefault());
       handler.appendChild(del);

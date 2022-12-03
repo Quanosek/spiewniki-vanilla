@@ -76,7 +76,7 @@ function multipleButton(name, func) {
 
 // pokazanie menu
 export function showMenu() {
-  window.scrollTo({ top: 0, behavior: "smooth" });
+  document.getElementsByTagName("html")[0].style.overflowY = "hidden";
   const menuHolder = document.querySelector(".menuHolder");
   menuHolder.style.visibility = "visible";
   menuHolder.style.opacity = "1";
@@ -149,6 +149,8 @@ export function runSlideshow() {
 
 // ukrycie menu
 export function hideMenu() {
+  document.getElementsByTagName("html")[0].style.overflowY = "scroll";
+
   const menuHolder = document.querySelector(".menuHolder");
   menuHolder.style.visibility = "hidden";
   menuHolder.style.opacity = "0";

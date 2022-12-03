@@ -6,7 +6,7 @@ function menuHTML() {
       <h2>Ustawienia aplikacji</h2>
       <div>
         <p>Motyw kolorów:</p>
-        <form class="themeSelector no_select">
+        <form class="themeSelector no-selection">
           <label class="black" for="black">
             <img class="invert" alt="przykładowy tekst" src="/files/icons/text.svg" draggable="false" />
             <input type="radio" name="theme" id="black" value="black" />
@@ -27,17 +27,17 @@ function menuHTML() {
       </div>
       <div class="fontSize">
         <p>Wielkość tekstu:</p>
-        <div class="fontSlideBar no_select">
+        <div class="fontSlideBar no-selection">
           <div class="smaller">A</div>
           <input type="range" id="fontSlideBar" min="14" max="28" step="0.5" />
           <div class="bigger">A</div>
         </div>
       </div>
-      <div class="menuButtons no_select">
-        <button id="saveButton">Zapisz</button>
+      <div class="menuButtons no-selection">
         <button id="cancelButton">Resetuj</button>
+        <button id="saveButton">Zapisz</button>
       </div>
-      <button id="clearCache" class="menuButtons alert no_select">Wyczyść aplikację</button>
+      <button id="clearCache" class="menuButtons alert no-selection">Wyczyść aplikację</button>
     </div>
 
     <div class="credits">

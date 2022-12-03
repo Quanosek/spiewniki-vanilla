@@ -39,7 +39,7 @@
     <!-- elementy strony -->
     <main>
       <h1
-        class="titleText no_select"
+        class="titleText no-selection"
         onclick="window.location.reload()"
         title="Kliknij, aby wrócić do strony głównej"
       >
@@ -47,7 +47,7 @@
       </h1>
 
       <form class="searchForm" onsubmit="return false">
-        <div class="formHolder">
+        <div class="formHolder no-selection">
           <select
             id="hymnBook"
             class="specialButton"
@@ -62,23 +62,23 @@
             <option value="epifania">Śpiewniczek Młodzieżowy Epifanii</option>
             <option value="inne">Inne pieśni</option>
           </select>
-          <div class="formIcon arrowButton no_select"></div>
+          <div class="formIcon arrowButton"></div>
         </div>
 
-        <div class="formHolder">
+        <div class="formHolder no-selection">
           <input
             type="text"
             placeholder="Wpisz tytuł lub numer pieśni"
             id="searchBox"
-            class="specialButton"
+            class="specialButton no-selection"
             autocomplete="off"
             onclick="this.select()"
           />
-          <div id="clearButton" class="formIcon clearButton no_select"></div>
+          <div id="clearButton" class="formIcon clearButton"></div>
         </div>
       </form>
 
-      <div id="searchResults" class="searchResults"></div>
+      <div id="searchResults" class="searchResults no-selection"></div>
 
       <div class="textBox">
         <div class="loader"></div>
@@ -86,7 +86,7 @@
           <h1 id="title">Oznaczenia numeracji pieśni:</h1>
           <button
             id="addFavorite"
-            class="favorite no_select"
+            class="favorite no-selection"
             title="Dodaj do ulubionych"
           >
             <img
@@ -145,7 +145,7 @@
           </div>
         </div>
 
-        <div class="leftSide">
+        <div class="leftSide no-selection">
           <div class="LSbuttons"></div>
           <div class="LSarrow" title="Pokaż opcje">
             <img
@@ -158,13 +158,13 @@
         </div>
       </div>
 
-      <div class="actionButtons">
+      <div class="actionButtons no-selection">
         <button
           id="arrowLeft"
           class="prevArrow"
           title="Kliknij, lub użyj strzałki w lewo"
         >
-          <img src="/files/icons/arrow.svg" alt="<" />
+          <img src="/files/icons/arrow.svg" alt="<" draggable="false" />
           <p>poprzednie</p>
         </button>
         <button id="randomButton" title="Kliknij, lub użyj klawisza R">
@@ -176,11 +176,11 @@
           title="Kliknij, lub użyj strzałki w prawo"
         >
           <p>następne</p>
-          <img src="/files/icons/arrow.svg" alt=">" />
+          <img src="/files/icons/arrow.svg" alt=">" draggable="false" />
         </button>
       </div>
 
-      <div class="mobileMenu no_select"></div>
+      <div class="mobileMenu no-selection"></div>
 
       <div class="menuHolder">
         <div class="darkBackground"></div>
@@ -188,7 +188,7 @@
       </div>
     </main>
 
-    <div id="slideHandler" class="slides">
+    <div id="slideHandler" class="slides no-selection">
       <div id="sTitle" class="sTitle"></div>
       <div id="sAuthor" class="sAuthor"></div>
       <div id="sVerse" class="sVerse"></div>

@@ -11,7 +11,7 @@
   --blackBG: #000000;
   --darkBG: #212121;
   --lightBG: #ffffff;
-  --readingBG: #fdf9f2;
+  --readingBG: #fbf9f6;
 }
 
 /* default/black theme */
@@ -21,8 +21,8 @@
   --background: var(--blackBG);
   --text: #ededed;
   --boxes: #1d1d1d;
-  --buttons: #303030;
-  --buttonsHover: #444444;
+  --buttons: #282828;
+  --buttonsHover: #3a3a3a;
   --mobileMenu: #171717;
   --iconsFilter: invert();
 }
@@ -56,9 +56,9 @@
   --textSelection: var(--lightBlue);
   --background: var(--readingBG);
   --text: #23221e;
-  --boxes: #f9f4ea;
-  --buttons: #e5e2d8;
-  --buttonsHover: #dbd8d1;
+  --boxes: #f5f0ea;
+  --buttons: #e7e4da;
+  --buttonsHover: #e1dcd1;
   --mobileMenu: #fffbf2;
   --iconsFilter: none;
 }
