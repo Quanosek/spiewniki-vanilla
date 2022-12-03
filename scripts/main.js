@@ -336,7 +336,7 @@ export function searchFavorite(param) {
       handler.appendChild(song);
 
       const del = document.createElement("img");
-      del.title = "Kliknij, aby usunąć z ulubionych.";
+      del.title = "Kliknij, aby usunąć z ulubionych";
       del.src = "/files/icons/close.svg";
       del.addEventListener("dragstart", (e) => e.preventDefault());
       handler.appendChild(del);

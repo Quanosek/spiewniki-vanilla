@@ -45,17 +45,19 @@ const assets = [
   "/files/icons/text.svg",
 ];
 
-// wszystkie teksty pieśni z plików JSON (raw github)
 let hymnsArray = [];
-async function cacheHymnBook(hymnBooks) {
-  for (let i = 0; i < hymnBooks.length; i++) {
-    await fetch(`/json/${hymnBooks[i]}.json`)
+
+// wszystkie teksty pieśni z plików JSON (raw github)
+function cacheHymnBook(hymnsBooks) {
+  hymnsBooks.forEach((hymnsBook) => {
+    fetch(`/json/${hymnsBook}.json`)
       .then((response) => response.json())
       .then((hymnsBook) => {
-        for (let j = 0; j < hymnsBook.length; j++)
-          hymnsArray.push(hymnsBook[j].link);
+        hymnsBook.forEach((hymn) => {
+          hymnsArray.push(hymn.link);
+        });
       });
-  }
+  });
 }
 
 // instalacja nowego sw
@@ -63,10 +65,9 @@ self.addEventListener("install", (e) => {
   self.skipWaiting();
   e.waitUntil(
     (async () => {
-      await cacheHymnBook(["brzask", "cegielki", "nowe", "epifania", "inne"]);
+      cacheHymnBook(["brzask", "cegielki", "nowe", "epifania", "inne"]);
 
       const contentToCache = assets.concat(hymnsArray);
-
       const cache = await caches.open(cacheName);
       await cache.addAll(contentToCache);
     })()
@@ -91,6 +92,7 @@ self.addEventListener("fetch", (e) => {
       const response = await fetch(e.request);
       const cache = await caches.open(cacheName);
       cache.put(e.request, response.clone());
+
       return response;
     })()
   );

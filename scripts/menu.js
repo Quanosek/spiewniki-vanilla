@@ -6,31 +6,31 @@ async function menuHTML() {
   document.querySelector(".LSbuttons").innerHTML = `
     <div id="themeMenu" title="Kliknij, lub użyj klawisza S">
       <img alt="koło zębate" src="/files/icons/settings.svg" draggable="false" />
-      | Ustawienia
+      Ustawienia
     </div>
     <div id="favoriteMenu" title="Kliknij, lub użyj klawisza F">
       <img alt="gwizdka" src="/files/icons/star_empty.svg" draggable="false" />
-      | Ulubione
+      Ulubione
     </div>
     <div id="Slideshow" class="onHymn" title="Kliknij, lub użyj klawisza P">
       <img alt="monitor" src="/files/icons/monitor.svg" draggable="false" />
-      | Pokaz slajdów
+      Pokaz slajdów
     </div>
     <!-- <div id="openPDF" class="onHymn" title="Kliknij, lub użyj klawisza N">
       <img alt="plik" src="/files/icons/file.svg" draggable="false" />
-      | Otwórz PDF
+      Otwórz PDF
     </div>
     <div id="playSong" class="onHymn" title="Kliknij, lub użyj klawisza M">
       <img alt="nuty" src="/files/icons/music.svg" draggable="false" />
-      | Odtwórz melodię
+      Odtwórz melodię
     </div>
     <div id="printText" class="onHymn">
       <img alt="drukarka" src="/files/icons/printer.svg" draggable="false" />
-      | Wydrukuj tekst
+      Wydrukuj tekst
     </div>
     <div id="shareButton" class="onHymn">
       <img alt="link" src="/files/icons/link.svg" draggable="false" />
-      | Udostępnij pieśń
+      Udostępnij pieśń
     </div> -->
   `;
 
