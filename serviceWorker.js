@@ -48,7 +48,7 @@ const assets = [
 let hymnsArray = [];
 
 // wszystkie teksty pieśni z plików JSON (raw github)
-function cacheHymnBook(hymnsBooks) {
+async function cacheHymnBook(hymnsBooks) {
   hymnsBooks.forEach((hymnsBook) => {
     fetch(`/json/${hymnsBook}.json`)
       .then((response) => response.json())
@@ -65,7 +65,7 @@ self.addEventListener("install", (e) => {
   self.skipWaiting();
   e.waitUntil(
     (async () => {
-      cacheHymnBook(["brzask", "cegielki", "nowe", "epifania", "inne"]);
+      await cacheHymnBook(["brzask", "cegielki", "nowe", "epifania", "inne"]);
 
       const contentToCache = assets.concat(hymnsArray);
       const cache = await caches.open(cacheName);
