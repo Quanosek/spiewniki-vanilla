@@ -144,6 +144,7 @@ function printVerse(verseNumber) {
     verse.forEach((line) => {
       const text = document.createElement("p");
       if (!line.startsWith(".")) {
+        if (line.startsWith(" ")) line = line.slice(1);
         text.innerHTML = line;
         sVerse.appendChild(text);
       }

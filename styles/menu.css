@@ -184,11 +184,13 @@ input:checked + .slider:before {
   margin-bottom: -2.2rem;
   padding: 0.2rem 0.4rem;
   position: relative;
-  bottom: 3.5rem;
-  left: 11rem;
+  bottom: 2.7rem;
+  left: 4.3rem;
   color: #985713;
   background-color: #ffcf6a;
   border-radius: var(--rounded);
+  user-select: none;
+  cursor: default;
 }
 
 /* favorite list */
@@ -316,5 +318,9 @@ button.menuButtons,
   .favoriteHandler img {
     opacity: 0.8;
     scale: 0.8;
+  }
+  .beta {
+    scale: 0.8;
+    bottom: 2.6rem;
   }
 }

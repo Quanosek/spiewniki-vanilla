@@ -43,7 +43,7 @@ function menuHTML() {
             <input id="chordsSwitcher" type="checkbox">
             <span class="slider"></span>
           </label>
-          <div class="beta">WERSJA BETA</div>
+          <div class="beta">BETA</div>
         </div>
       </div>
 

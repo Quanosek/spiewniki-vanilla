@@ -553,6 +553,7 @@ input.specialButton {
   align-items: center;
   margin-top: 2.6vw;
   font-size: 4vw;
+  white-space: break-spaces;
 }
 
 .progressBar {
