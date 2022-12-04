@@ -48,16 +48,16 @@ const assets = [
 let hymnsArray = [];
 
 // wszystkie teksty pieśni z plików JSON (raw github)
-async function cacheHymnBook(hymnsBooks) {
-  hymnsBooks.forEach((hymnsBook) => {
-    fetch(`/json/${hymnsBook}.json`)
+async function cacheHymnBook(hymnBooks) {
+  for (let i = 0; i < hymnBooks.length; i++) {
+    await fetch(`/json/${hymnBooks[i]}.json`)
       .then((response) => response.json())
-      .then((hymnsBook) => {
-        hymnsBook.forEach((hymn) => {
+      .then((hymnBook) => {
+        hymnBook.forEach((hymn) => {
           hymnsArray.push(hymn.link);
         });
       });
-  });
+  }
 }
 
 // instalacja nowego sw
