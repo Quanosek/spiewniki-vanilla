@@ -48,6 +48,10 @@
   font-size: 0.9rem;
 }
 
+.menuContent h2 {
+  margin-bottom: 1.4rem;
+}
+
 .menuContent .element {
   margin-top: 0.4rem;
   background-color: var(--buttons);
@@ -175,7 +179,23 @@ input:checked + .slider:before {
   transform: translateX(26px);
 }
 
+/* beta info */
+.beta {
+  margin-bottom: -2.2rem;
+  padding: 0.2rem 0.4rem;
+  position: relative;
+  bottom: 3.5rem;
+  left: 11rem;
+  color: #985713;
+  background-color: #ffcf6a;
+  border-radius: var(--rounded);
+}
+
 /* favorite list */
+#favLength {
+  margin-top: -1.2rem;
+}
+
 .favoriteList {
   margin-top: 1.2rem;
   width: 80vw;

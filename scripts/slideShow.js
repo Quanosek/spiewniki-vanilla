@@ -134,11 +134,20 @@ function printVerse(verseNumber) {
   const sAuthor = document.getElementById("sAuthor");
   const sVerse = document.getElementById("sVerse");
 
-  if (hymn.getVerse(verseNumber)) {
+  const verse = hymn.getVerse(verseNumber);
+  if (verse) {
     sTitle.classList.add("top");
     sTitle.innerHTML = hymn.title;
     sAuthor.innerHTML = hymn.author;
-    sVerse.innerHTML = hymn.getVerse(verseNumber);
+    sVerse.innerHTML = "";
+
+    verse.forEach((line) => {
+      const text = document.createElement("p");
+      if (!line.startsWith(".")) {
+        text.innerHTML = line;
+        sVerse.appendChild(text);
+      }
+    });
   } else {
     sTitle.classList.remove("top");
     sAuthor.innerHTML = "";

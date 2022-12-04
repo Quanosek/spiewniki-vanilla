@@ -5,7 +5,7 @@ function menuHTML() {
   document.querySelector(".menu").innerHTML = `
     <div class="menuContent">
       <div>
-        <div>
+        <div class="favTitle">
           <h2>Lista ulubionych</h2>
           <p id="favLength"></p>
         </div>

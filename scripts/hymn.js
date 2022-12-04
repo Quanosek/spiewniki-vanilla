@@ -27,13 +27,13 @@ export default class Hymn {
   }
 
   getLyrics() {
-    let verses = [];
+    let lyrics = [];
 
     this.verses.forEach((verse) => {
-      verses.push(verse);
+      lyrics.push(verse);
     });
 
-    return verses;
+    return lyrics;
   }
 
   getVerse(index) {
