@@ -19,6 +19,7 @@
 :root.black {
   --textSelection: var(--darkBlue);
   --background: var(--blackBG);
+  --accentColor: var(--lightBlue);
   --text: #ededed;
   --boxes: #1d1d1d;
   --buttons: #282828;
@@ -31,6 +32,7 @@
 :root.dark {
   --textSelection: var(--darkBlue);
   --background: var(--darkBG);
+  --accentColor: var(--lightBlue);
   --text: #ffffff;
   --boxes: #313131;
   --buttons: #414141;
@@ -43,6 +45,7 @@
 :root.light {
   --textSelection: var(--lightBlue);
   --background: var(--lightBG);
+  --accentColor: var(--darkBlue);
   --text: #000000;
   --boxes: #f4f4f4;
   --buttons: #e6e6e6;
@@ -55,6 +58,7 @@
 :root.reading {
   --textSelection: var(--lightBlue);
   --background: var(--readingBG);
+  --accentColor: var(--darkBlue);
   --text: #23221e;
   --boxes: #f5f0ea;
   --buttons: #e7e4da;

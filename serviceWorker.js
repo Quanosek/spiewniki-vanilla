@@ -80,7 +80,7 @@ self.addEventListener("fetch", (e) => {
   if (
     url.startsWith("chrome-extension") ||
     url.includes("extension") ||
-    !(url.indexOf("http") === 0)
+    url.indexOf("http") !== 0
   )
     return;
 

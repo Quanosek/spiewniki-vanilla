@@ -9,11 +9,15 @@ function menuHTML() {
           <h2>Lista ulubionych</h2>
           <p id="favLength"></p>
         </div>
+
         <div id="favoriteList" class="favoriteList"></div>
       </div>
+
       <div class="menuButtons no-selection">
-        <button id="clearFavorite">Wyczyść listę</button>
-        <button id="closeMenu">Zamknij</button>
+        <div>
+          <button id="clearFavorite">Wyczyść listę</button>
+          <button id="closeMenu">Zamknij</button>
+        </div>
       </div>
     </div>
 

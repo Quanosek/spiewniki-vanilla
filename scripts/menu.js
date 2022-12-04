@@ -155,11 +155,12 @@ export function hideMenu() {
   menuHolder.style.visibility = "hidden";
   menuHolder.style.opacity = "0";
 
-  const myElement = document.querySelector(".menu");
-  for (const child of myElement.children) {
+  const menu = document.querySelector(".menu");
+  setTimeout(() => (menu.scrollTop = 0), "100");
+
+  for (const child of menu.children)
     if (child.id === "changeTheme") {
       localStorage.setItem("theme", document.documentElement.className);
       localStorage.setItem("fontSize", fontSlideBar.value);
     }
-  }
 }

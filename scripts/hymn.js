@@ -7,7 +7,7 @@ export default class Hymn {
     let separator = /\s*\[\w*\]\s*/;
     let verses = lyrics.split(separator).slice(1);
     verses.forEach((element, index) => {
-      verses[index] = element.replace(/\n/g, "<br/>");
+      verses[index] = element.split(/\n/g).slice(0);
     });
     this.verses = verses;
 
@@ -21,19 +21,19 @@ export default class Hymn {
       presentation.forEach((element, index) => {
         presentation[index] = map.get(element);
       });
-      this.presentation = presentation;
-    } else {
-      this.presentation = presentation;
     }
+
+    this.presentation = presentation;
   }
 
   getLyrics() {
-    let lyrics = "";
-    for (let index = 0; index < this.verses.length - 1; index++) {
-      lyrics += `${this.verses[index]}<br/><br/>`;
-    }
-    lyrics += `${this.verses[this.verses.length - 1]}`;
-    return lyrics;
+    let verses = [];
+
+    this.verses.forEach((verse) => {
+      verses.push(verse);
+    });
+
+    return verses;
   }
 
   getVerse(index) {

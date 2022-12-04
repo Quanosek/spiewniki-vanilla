@@ -252,7 +252,26 @@ async function selectHymn(id) {
   hymnParam(hymn);
 
   title.innerHTML = hymn.title;
-  lyrics.innerHTML = hymn.getLyrics();
+  hymn.getLyrics().forEach((verse) => {
+    const div = document.createElement("div");
+    verse.forEach((line) => {
+      const text = document.createElement("p");
+      if (line.startsWith(" ")) line = line.slice(1);
+      if (line.startsWith(".")) {
+        line = line.slice(1);
+        text.className = "chord";
+      }
+
+      text.innerHTML = line;
+      div.appendChild(text);
+    });
+    document.getElementById("lyrics").appendChild(div);
+  });
+
+  if (localStorage.getItem("chordsEnabled"))
+    document
+      .querySelectorAll(".chord")
+      .forEach((line) => (line.style.display = "block"));
 
   const star = document.getElementById("star");
   const star_empty = "/files/icons/star_empty.svg";

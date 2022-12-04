@@ -3,41 +3,56 @@ import { hideMenu } from "/scripts/menu.js";
 function menuHTML() {
   document.querySelector(".menu").innerHTML = `
     <div id="changeTheme" class="menuContent">
-      <h2>Ustawienia aplikacji</h2>
       <div>
-        <p>Motyw kolorów:</p>
-        <form class="themeSelector no-selection">
-          <label class="black" for="black">
-            <img class="invert" alt="przykładowy tekst" src="/files/icons/text.svg" draggable="false" />
-            <input type="radio" name="theme" id="black" value="black" />
+        <h2>Ustawienia aplikacji</h2>
+        
+        <div class="element">
+          <p>Motyw kolorów:</p>
+          <form class="themeSelector no-selection">
+            <label class="black" for="black">
+              <img class="invert" alt="przykładowy tekst" src="/files/icons/text.svg" draggable="false" />
+              <input type="radio" name="theme" id="black" value="black" />
+            </label>
+            <label class="dark" for="dark">
+              <img class="invert" alt="przykładowy tekst" src="/files/icons/text.svg" draggable="false" />
+              <input type="radio" name="theme" id="dark" value="dark" />
+            </label>
+            <label class="light" for="light">
+              <img alt="przykładowy tekst" src="/files/icons/text.svg" draggable="false" />
+              <input type="radio" name="theme" id="light" value="light" />
+            </label>
+            <label class="reading" for="reading">
+              <img alt="przykładowy tekst" src="/files/icons/text.svg" draggable="false" />
+              <input type="radio" name="theme" id="reading" value="reading" />
+            </label>
+          </form>
+        </div>
+
+        <div class="element">
+          <p>Wielkość tekstu:</p>
+          <div class="fontSlideBar no-selection">
+            <div class="smaller">A</div>
+            <input type="range" id="fontSlideBar" min="14" max="28" step="0.5" />
+            <div class="bigger">A</div>
+          </div>
+        </div>
+
+        <div class="element">
+          <p>Wyświetlanie akordów:</p>
+          <label  class="switch">
+            <input id="chordsSwitcher" type="checkbox">
+            <span class="slider"></span>
           </label>
-          <label class="dark" for="dark">
-            <img class="invert" alt="przykładowy tekst" src="/files/icons/text.svg" draggable="false" />
-            <input type="radio" name="theme" id="dark" value="dark" />
-          </label>
-          <label class="light" for="light">
-            <img alt="przykładowy tekst" src="/files/icons/text.svg" draggable="false" />
-            <input type="radio" name="theme" id="light" value="light" />
-          </label>
-          <label class="reading" for="reading">
-            <img alt="przykładowy tekst" src="/files/icons/text.svg" draggable="false" />
-            <input type="radio" name="theme" id="reading" value="reading" />
-          </label>
-        </form>
-      </div>
-      <div class="fontSize">
-        <p>Wielkość tekstu:</p>
-        <div class="fontSlideBar no-selection">
-          <div class="smaller">A</div>
-          <input type="range" id="fontSlideBar" min="14" max="28" step="0.5" />
-          <div class="bigger">A</div>
         </div>
       </div>
+
       <div class="menuButtons no-selection">
-        <button id="cancelButton">Resetuj</button>
-        <button id="saveButton">Zapisz</button>
+        <div>
+          <button id="cancelButton">Resetuj</button>
+          <button id="saveButton">Zapisz</button>
+        </div>
+        <button id="clearCache" class="menuButtons alert no-selection">Wyczyść aplikację</button>
       </div>
-      <button id="clearCache" class="menuButtons alert no-selection">Wyczyść aplikację</button>
     </div>
 
     <div class="credits">
@@ -60,6 +75,7 @@ export default function init() {
   const radios = document.querySelectorAll('input[type="radio"][name="theme"]');
   const fontSlideBar = document.getElementById("fontSlideBar");
   const fontSize = localStorage.getItem("fontSize");
+  const chordsEnabled = localStorage.getItem("chordsEnabled");
 
   radios.forEach((selection) => {
     if (!theme && selection.value === "black") selection.checked = "true";
@@ -70,6 +86,8 @@ export default function init() {
 
   fontSlideBar.value = fontSize;
   fontSizeChange(fontSlideBar.value);
+
+  if (chordsEnabled) chordsSwitcher.checked = true;
 
   // działanie funkcji
   eventsListener(theme, radios);
@@ -89,6 +107,20 @@ function eventsListener(theme, radios) {
   fontSlideBar.addEventListener("change", () =>
     fontSizeChange(fontSlideBar.value)
   );
+
+  chordsSwitcher.addEventListener("change", () => {
+    if (chordsSwitcher.checked) {
+      localStorage.setItem("chordsEnabled", true);
+      document
+        .querySelectorAll(".chord")
+        .forEach((line) => (line.style.display = "block"));
+    } else {
+      localStorage.removeItem("chordsEnabled");
+      document
+        .querySelectorAll(".chord")
+        .forEach((line) => (line.style.display = ""));
+    }
+  });
 
   clearCacheButton.addEventListener("click", clearCache);
   saveButton.addEventListener("click", hideMenu);

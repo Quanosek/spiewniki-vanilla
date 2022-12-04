@@ -196,12 +196,6 @@ input.specialButton {
 }
 
 /* guide (default content) format */
-.guide {
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-}
-
 .download_link {
   color: var(--lightBlue);
   font-size: 0.85rem;
@@ -218,7 +212,28 @@ input.specialButton {
 }
 
 .lyrics {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
   font-size: 19px;
+}
+
+.lyrics div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  white-space: break-spaces;
+}
+
+.guide {
+  gap: 0.8rem !important;
+  white-space: normal !important;
+}
+.chord {
+  display: none;
+  margin: 8px 0 -3px;
+  opacity: 90%;
+  color: var(--accentColor);
 }
 
 /* left side buttons */
