@@ -10,10 +10,7 @@ let map, list, hymn;
 (async () => {
   // główne skrypty HTML
   await menuInit();
-
-  // instalacja PWA
-  if ("serviceWorker" in navigator)
-    navigator.serviceWorker.register("/serviceWorker.js");
+  installPWA();
 
   // pamięć lokalna ulubionych pieśni
   if (!localStorage.getItem("favorite")) localStorage.setItem("favorite", "[]");
@@ -23,6 +20,29 @@ let map, list, hymn;
   appInit();
   slideEvents();
 })();
+
+// instalacja PWA
+function installPWA() {
+  let updated = false;
+  let activated = false;
+
+  navigator.serviceWorker.register("/serviceWorker.js").then((registration) => {
+    registration.addEventListener("updatefound", () => {
+      const worker = registration.installing;
+      worker.addEventListener("statechange", () => {
+        if (worker.state === "activated") {
+          activated = true;
+          if (activated && updated) window.location.reload();
+        }
+      });
+    });
+  });
+
+  navigator.serviceWorker.addEventListener("controllerchange", () => {
+    updated = true;
+    if (activated && updated) window.location.reload();
+  });
+}
 
 // fetch spisu pieśni json
 async function getJSON() {
@@ -300,7 +320,7 @@ async function getHymn(id) {
   const xml = await fetch(list[id].link)
     .then((res) => res.text())
     .then((xml) => parser.parseFromString(xml, "text/xml"))
-    .catch((err) => console.error(err));
+    .catch((err) => console.log(err));
 
   const title = xml.querySelector("title").innerHTML;
   const lyrics = xml.querySelector("lyrics").innerHTML;

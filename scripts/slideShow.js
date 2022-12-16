@@ -158,10 +158,16 @@ function printVerse(verseNumber) {
 }
 
 // poruszanie myszką przy pokazie slajdów
+let idleTimer = null;
+let idleState = false;
+const slidesStyle = document.querySelector(".slides").style;
+
 function handleMouseMove() {
-  const slidesStyle = document.querySelector(".slides").style;
-  slidesStyle.cursor = "default";
-  setTimeout(() => {
+  clearTimeout(idleTimer);
+  if (idleState == true) slidesStyle.cursor = "default";
+  idleState = false;
+  idleTimer = setTimeout(() => {
     slidesStyle.cursor = "none";
+    idleState = true;
   }, 2000);
 }
