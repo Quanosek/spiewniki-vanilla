@@ -63,8 +63,8 @@ main_url = "https://github.com/Quanosek/Piesni-OpenSong/tree/main/%C5%9Apiewnicz
 raw_url = "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/%C5%9Apiewniczek%20M%C5%82odzie%C5%BCowy%20Epifanii"
 generuj(main_url, raw_url, "epifania", re.compile(r'([E.]|[aE.])'))
 
-main_url = "https://github.com/Quanosek/Piesni-OpenSong/tree/main/Inne"
-raw_url = "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Inne"
+main_url = "https://github.com/Quanosek/Piesni-OpenSong/tree/main/Inne%20pie%C5%9Bni"
+raw_url = "https://raw.githubusercontent.com/Quanosek/Piesni-OpenSong/main/Inne%20pie%C5%9Bni"
 generuj(main_url, raw_url, "inne", NULL)
 
 print("Gotowe.")
