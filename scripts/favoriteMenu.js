@@ -27,7 +27,7 @@ function menuHTML() {
         Autorzy&nbsp;strony: <a href="https://github.com/Krist0f0l0s">Krzysztof&nbsp;Olszewski</a> i<a href="https://github.com/Quanosek">&nbsp;Jakub&nbsp;Kłało</a>
       </h3>
       <p>
-        Wszelkie prawa zastrzeżone ©&nbsp;2022 | domena&nbsp;<a href="https://www.klalo.pl" target="_blank">klalo.pl</a>
+        Wszelkie prawa zastrzeżone ©&nbsp;2022-2023 | domena&nbsp;<a href="https://www.klalo.pl" target="_blank">klalo.pl</a>
       </p>
     </div>
   `;

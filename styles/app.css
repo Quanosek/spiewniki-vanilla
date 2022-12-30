@@ -235,6 +235,7 @@ input.specialButton {
   margin: 0.6rem 0 -0.5rem;
   opacity: 90%;
   color: var(--accentColor);
+  user-select: none;
 }
 
 /* left side buttons */
@@ -552,6 +553,7 @@ input.specialButton {
   justify-content: center;
   align-items: center;
   font-size: 4vw;
+  white-space: normal;
 }
 
 .progressBar {
