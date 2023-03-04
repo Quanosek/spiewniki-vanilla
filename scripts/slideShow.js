@@ -1,11 +1,13 @@
 import { globalShortcuts } from "/scripts/main.js";
+import bookNames from "/scripts/bookNames.js";
 
-let hymn;
+let book, hymn;
 let slideNumber = -1;
 
 // parametry wybranej pieśni
-export function hymnParam(param) {
-  hymn = param;
+export function hymnParam(paramBook, paramHymn) {
+  book = paramBook;
+  hymn = paramHymn;
 }
 
 // wszystkie eventy pokazu slajdów
@@ -131,14 +133,17 @@ function lastSlides(slideNumber, param) {
 // szukanie wersów tekstu pieśni
 function printVerse(verseNumber) {
   const sTitle = document.getElementById("sTitle");
-  const sAuthor = document.getElementById("sAuthor");
+  const sBook = document.getElementById("sBook");
   const sVerse = document.getElementById("sVerse");
+
+  sBook.innerHTML = bookNames(book);
 
   const verse = hymn.getVerse(verseNumber);
   if (verse) {
     sTitle.classList.add("top");
     sTitle.innerHTML = hymn.title;
-    sAuthor.innerHTML = hymn.author;
+    sBook.style.position = "absolute";
+    sBook.style.scale = "";
     sVerse.innerHTML = "";
 
     verse.forEach((line) => {
@@ -151,9 +156,14 @@ function printVerse(verseNumber) {
     });
   } else {
     sTitle.classList.remove("top");
-    sAuthor.innerHTML = "";
+    sBook.style.position = "";
+    sBook.style.scale = 2;
     sVerse.innerHTML = "";
-    if (verseNumber !== -1) sTitle.innerHTML = "";
+
+    if (slideNumber > 0) {
+      sTitle.innerHTML = "";
+      sBook.innerHTML = "";
+    }
   }
 }
 

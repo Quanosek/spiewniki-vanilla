@@ -71,11 +71,10 @@
             <option value="all">Wszystkie śpiewniki</option>
             <option value="brzask">Pieśni Brzasku Tysiąclecia</option>
             <option value="cegielki">Uwielbiajmy Pana (Cegiełki)</option>
-            <option value="nowe">
-              Śpiewajmy Panu Pieśń Nową (Nowe Pieśni)
-            </option>
+            <option value="nowe">Śpiewajcie Panu Pieśń Nową</option>
             <option value="epifania">Śpiewniczek Młodzieżowy Epifanii</option>
-            <option value="inne">Inne pieśni</option>
+            <option value="syloe">Pieśni Chóru Syloe</option>
+            <option value="inne">Różne pieśni</option>
           </select>
           <div class="formIcon arrowButton"></div>
         </div>
@@ -113,6 +112,8 @@
           </button>
         </div>
 
+        <h2 id="bookName" class="bookName"></h2>
+
         <div id="lyrics" class="lyrics">
           <div class="guide">
             <p>
@@ -136,7 +137,7 @@
               </a> -->
             </p>
             <p>
-              <b>N</b> - "Śpiewajcie Panu Pieśń Nową" ("Nowe&nbsp;Pieśni")
+              <b>N</b> - "Śpiewajcie Panu Pieśń Nową"
               <a
                 href="/files/Spiewajcie Panu Piesn Nowa.pdf"
                 target="_blank"
@@ -157,7 +158,13 @@
                 (pobierz&nbsp;PDF)
               </a>
             </p>
+            <p><b>S</b> - Pieśni Chóru Syloe</p>
           </div>
+        </div>
+
+        <div id="hymnCredits" class="hymnCredits">
+          <p id="copyright"></p>
+          <p id="author"></p>
         </div>
 
         <div class="leftSide no-selection">
@@ -205,7 +212,7 @@
 
     <div id="slideHandler" class="slides no-selection">
       <div id="sTitle" class="sTitle"></div>
-      <div id="sAuthor" class="sAuthor"></div>
+      <div id="sBook" class="sBook"></div>
       <div id="sVerse" class="sVerse"></div>
       <div id="PGbar" class="progressBar">
         <div id="PGfulfill" class="progressFulfill"></div>

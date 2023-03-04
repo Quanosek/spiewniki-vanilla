@@ -131,6 +131,7 @@ function eventsListener(theme, radios) {
 // suwak do zmiany wielkości czcionki
 function fontSizeChange(param) {
   title.style.fontSize = parseInt(param) * 1.4 + "px";
+  bookName.style.fontSize = parseInt(param) * 0.8 + "px";
   lyrics.style.fontSize = param * 1.1 + "px";
 }
 

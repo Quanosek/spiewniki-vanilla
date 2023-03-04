@@ -1,8 +1,9 @@
 export default class Hymn {
-  constructor(id, title, lyrics, author, presentation) {
+  constructor(id, title, lyrics, author, copyright, presentation) {
     this.id = id;
     this.title = title;
     this.author = author;
+    this.copyright = copyright;
 
     let separator = /\s*\[\w*\]\s*/;
     let verses = lyrics.split(separator).slice(1);

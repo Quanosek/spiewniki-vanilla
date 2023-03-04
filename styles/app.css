@@ -211,6 +211,12 @@ input.specialButton {
   font-size: 26.6px;
 }
 
+.bookName {
+  margin: -0.8rem 0 1.5rem 6px;
+  opacity: 0.75;
+  font-weight: normal;
+}
+
 .lyrics {
   display: flex;
   flex-direction: column;
@@ -226,6 +232,7 @@ input.specialButton {
 }
 
 .guide {
+  margin-top: -1.2rem;
   gap: 0.8rem !important;
   white-space: normal !important;
 }
@@ -236,6 +243,13 @@ input.specialButton {
   opacity: 90%;
   color: var(--accentColor);
   user-select: none;
+}
+
+.hymnCredits {
+  display: none;
+  justify-content: space-between;
+  margin: 1.5rem 0 -0.5rem;
+  opacity: 80%;
 }
 
 /* left side buttons */
@@ -521,7 +535,7 @@ input.specialButton {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 3vw;
+  gap: 1.5vw;
   padding: 0 3%;
   width: 100%;
   height: 100%;
@@ -529,6 +543,7 @@ input.specialButton {
   color: var(--text);
   text-align: center;
 }
+
 .sTitle {
   font-size: 5vw;
 }
@@ -540,9 +555,8 @@ input.specialButton {
   opacity: 0.6;
 }
 
-.sAuthor {
-  font-size: 1.4vw;
-  position: absolute;
+.sBook {
+  font-size: 1.25vw;
   top: 5vw;
   opacity: 0.6;
 }

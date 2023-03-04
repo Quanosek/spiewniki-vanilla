@@ -1,6 +1,7 @@
 import { menuInit, showMenu, hideMenu, runSlideshow } from "/scripts/menu.js";
 import favoriteMenu, { favList } from "/scripts/favoriteMenu.js";
 import { slideEvents, hymnParam } from "/scripts/slideShow.js";
+import bookNames from "/scripts/bookNames.js";
 import themeMenu from "/scripts/themeMenu.js";
 import Hymn from "/scripts/hymn.js";
 
@@ -58,17 +59,22 @@ async function getJSON() {
   const epifania = await fetch(`/json/epifania.json`).then((response) => {
     return response.json();
   });
+  const syloe = await fetch(`/json/syloe.json`).then((response) => {
+    return response.json();
+  });
   const inne = await fetch(`/json/inne.json`).then((response) => {
     return response.json();
   });
 
   let map = new Map();
-  map.set("all", brzask.concat(cegielki, nowe, epifania, inne));
+  map.set("all", brzask.concat(cegielki, nowe, epifania, syloe, inne));
   map.set("brzask", brzask);
   map.set("cegielki", cegielki);
   map.set("nowe", nowe);
   map.set("epifania", epifania);
+  map.set("syloe", syloe);
   map.set("inne", inne);
+
   return map;
 }
 
@@ -249,29 +255,42 @@ function clearSearchBox() {
 
 // mechanizm wyświetlania pieśni
 async function selectHymn(id) {
-  const title = document.getElementById("title");
-  const lyrics = document.getElementById("lyrics");
   const loader = document.querySelector(".loader");
+
   const titleHolder = document.querySelector(".titleHolder");
+  const title = document.getElementById("title");
   const addFavorite = document.getElementById("addFavorite");
+
+  const bookName = document.getElementById("bookName");
+  const lyrics = document.getElementById("lyrics");
+
+  const hymnCredits = document.getElementById("hymnCredits");
+  const copyright = document.getElementById("copyright");
+  const author = document.getElementById("author");
+
   const arrowLeft = document.getElementById("arrowLeft");
   const arrowRight = document.getElementById("arrowRight");
 
   searchBox.blur(), clearSearchBox();
 
-  title.innerHTML = "";
-  lyrics.innerHTML = "";
-
   loader.style.display = "block";
   titleHolder.style.display = "none";
+
+  title.innerHTML = "";
+  bookName.innerHTML = "";
+  lyrics.innerHTML = "";
+  copyright.innerHTML = "";
+  author.innerHTML = "";
+
   arrowLeft.style.display = "none";
   randomButton.style.display = "none";
   arrowRight.style.display = "none";
 
-  hymn = await getHymn(id);
-  hymnParam(hymn);
+  const { book, hymn } = await getHymn(id);
+  hymnParam(book, hymn);
 
   title.innerHTML = hymn.title;
+  bookName.innerHTML = bookNames(book);
   hymn.getLyrics().forEach((verse) => {
     const div = document.createElement("div");
     verse.forEach((line) => {
@@ -287,6 +306,10 @@ async function selectHymn(id) {
     });
     document.getElementById("lyrics").appendChild(div);
   });
+
+  if (hymn.author || hymn.copyright) hymnCredits.style.display = "flex";
+  if (hymn.copyright) copyright.innerHTML = hymn.copyright;
+  if (hymn.author) author.innerHTML = hymn.author;
 
   if (localStorage.getItem("chordsEnabled"))
     document
@@ -317,6 +340,7 @@ async function selectHymn(id) {
 async function getHymn(id) {
   const parser = new DOMParser();
 
+  const book = list[id].book;
   const xml = await fetch(list[id].link)
     .then((res) => res.text())
     .then((xml) => parser.parseFromString(xml, "text/xml"))
@@ -325,12 +349,13 @@ async function getHymn(id) {
   const title = xml.querySelector("title").innerHTML;
   const lyrics = xml.querySelector("lyrics").innerHTML;
   const author = xml.querySelector("author").innerHTML;
+  const copyright = xml.querySelector("copyright").innerHTML;
   const presentation = xml.querySelector("presentation").innerHTML
     ? xml.querySelector("presentation").innerHTML
     : null;
 
-  hymn = new Hymn(id, title, lyrics, author, presentation);
-  return hymn;
+  hymn = new Hymn(id, title, lyrics, author, copyright, presentation);
+  return { book, hymn };
 }
 
 // dodawanie/usuwanie ulubionych pieśni

@@ -1,4 +1,4 @@
-const cacheName = "v2.2.4";
+const cacheName = "v2.3.0";
 
 const assets = [
   // główny plik HTML
@@ -65,7 +65,14 @@ self.addEventListener("install", (e) => {
   self.skipWaiting();
   e.waitUntil(
     (async () => {
-      await cacheHymnBook(["brzask", "cegielki", "nowe", "epifania", "inne"]);
+      await cacheHymnBook([
+        "brzask",
+        "cegielki",
+        "nowe",
+        "epifania",
+        "syloe",
+        "inne",
+      ]);
 
       const contentToCache = assets.concat(hymnsArray);
       const cache = await caches.open(cacheName);
