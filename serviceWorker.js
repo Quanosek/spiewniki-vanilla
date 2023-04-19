@@ -1,4 +1,4 @@
-const cacheName = "v2.3.1";
+const cacheName = "v2.3.2";
 
 const assets = [
   // główny plik HTML
