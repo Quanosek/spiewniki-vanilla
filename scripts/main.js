@@ -110,8 +110,10 @@ function appInit() {
   favorite.addEventListener("click", () => {
     map.get("all").find((hymnAll) => {
       hymnAll = textFormat2(hymnAll.title);
-      if (hymnAll.includes(hymn.title) || hymn.title.includes(hymnAll))
+
+      if (hymnAll.includes(hymn.title) || hymn.title.includes(hymnAll)) {
         addFavorite(hymnAll);
+      }
     });
   });
 
@@ -132,15 +134,14 @@ function appInit() {
 
   window.addEventListener("click", (e) => {
     if (arrow.contains(e.target)) menu.classList.toggle("active");
-    else if (!document.querySelector(".LSbuttons").contains(e.target))
+    else if (!document.querySelector(".LSbuttons").contains(e.target)) {
       menu.classList.remove("active");
+    }
   });
 }
 
 // globalne skróty klawiszowe
 export function globalShortcuts(e) {
-  // console.log(e.key, e.keyCode); // podgląd wciskanych klawiszy
-
   switch (e.keyCode) {
     case 27: // Esc
       hymnBook.blur(), searchBox.blur();
@@ -168,6 +169,8 @@ export function globalShortcuts(e) {
         return randomHymn();
       case 83: // S
         return showMenu(), themeMenu();
+      case 191: // /
+        return searchBox.focus();
     }
 }
 
@@ -311,10 +314,11 @@ async function selectHymn(id) {
   if (hymn.copyright) copyright.innerHTML = hymn.copyright;
   if (hymn.author) author.innerHTML = hymn.author;
 
-  if (localStorage.getItem("chordsEnabled"))
+  if (localStorage.getItem("chordsEnabled")) {
     document
       .querySelectorAll(".chord")
       .forEach((line) => (line.style.display = "block"));
+  }
 
   const star = document.getElementById("star");
   const star_empty = "/files/icons/star_empty.svg";
@@ -427,20 +431,22 @@ function textFormat2(text) {
 
 // wyświetlanie poprzedniej pieśni
 function prevHymn() {
-  if (hymn)
+  if (hymn) {
     if (hymn.id > 0) {
       selectHymn(parseInt(hymn.id) - 1);
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
+  }
 }
 
 // wyświetlanie następnej pieśni
 function nextHymn() {
-  if (hymn)
+  if (hymn) {
     if (hymn.id <= list.length - 2) {
       selectHymn(parseInt(hymn.id) + 1);
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
+  }
 }
 
 // wyszukanie losowej pieśni z wybranego śpiewnika

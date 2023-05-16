@@ -125,6 +125,7 @@ function lastSlides(slideNumber, param) {
     document.getElementById("PGfulfill").style.width = "";
     document.getElementById("slideHandler").style.backgroundColor = "#000000";
   }
+
   if (slideNumber === param + 1) {
     document.exitFullscreen();
   }
@@ -137,8 +138,8 @@ function printVerse(verseNumber) {
   const sVerse = document.getElementById("sVerse");
 
   sBook.innerHTML = bookNames(book);
-
   const verse = hymn.getVerse(verseNumber);
+
   if (verse) {
     sTitle.classList.add("top");
     sTitle.innerHTML = hymn.title;

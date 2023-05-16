@@ -82,6 +82,7 @@ export default function init() {
     if (!theme && selection.value === "black") selection.checked = "true";
     else if (theme === selection.value) selection.checked = "true";
   });
+
   if (!theme) document.documentElement.className = "black";
   else document.documentElement.className = theme;
 

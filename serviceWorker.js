@@ -1,4 +1,4 @@
-const cacheName = "v2.3.4";
+const cacheName = "v2.3.5";
 
 const assets = [
   // główny plik HTML
@@ -34,11 +34,7 @@ const assets = [
   "/files/icons/arrow.svg",
   "/files/icons/close.svg",
   "/files/icons/dice.svg",
-  // "/files/icons/file.svg",
-  // "/files/icons/link.svg",
   "/files/icons/monitor.svg",
-  // "/files/icons/music.svg",
-  // "/files/icons/printer.svg",
   "/files/icons/settings.svg",
   "/files/icons/star_empty.svg",
   "/files/icons/star_filled.svg",

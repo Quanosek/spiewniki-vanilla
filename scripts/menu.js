@@ -16,33 +16,9 @@ async function menuHTML() {
       <img alt="monitor" src="/files/icons/monitor.svg" draggable="false" />
       Pokaz slajdów
     </div>
-    <!-- <div id="openPDF" class="onHymn" title="Kliknij, lub użyj klawisza N">
-      <img alt="plik" src="/files/icons/file.svg" draggable="false" />
-      Otwórz PDF
-    </div>
-    <div id="playSong" class="onHymn" title="Kliknij, lub użyj klawisza M">
-      <img alt="nuty" src="/files/icons/music.svg" draggable="false" />
-      Odtwórz melodię
-    </div>
-    <div id="printText" class="onHymn">
-      <img alt="drukarka" src="/files/icons/printer.svg" draggable="false" />
-      Wydrukuj tekst
-    </div>
-    <div id="shareButton" class="onHymn">
-      <img alt="link" src="/files/icons/link.svg" draggable="false" />
-      Udostępnij pieśń
-    </div> -->
   `;
 
   document.querySelector(".mobileMenu").innerHTML = `
-    <!-- <div id="shareButton" class="mobileShortcut onHymn">
-      <img alt="link" src="/files/icons/link.svg" draggable="false" />
-      <p>Udostępnij</p>
-    </div>
-    <div id="printText" class="mobileShortcut onHymn">
-      <img alt="drukarka" src="/files/icons/printer.svg" draggable="false" />
-      <p>Drukuj</p>
-    </div> -->
     <div id="themeMenu" class="mobileShortcut" title="Kliknij, lub użyj klawisza S">
       <img alt="koło zębate" src="/files/icons/settings.svg" draggable="false" />
       <p>Ustawienia</p>
@@ -55,14 +31,6 @@ async function menuHTML() {
       <img alt="gwiazdka" src="/files/icons/star_empty.svg" draggable="false" />
       <p>Ulubione</p>
     </div>
-    <!-- <div id="openPDF" class="mobileShortcut onHymn" title="Kliknij, lub użyj klawisza N">
-      <img alt="plik" src="/files/icons/file.svg" draggable="false" />
-      <p>PDF</p>
-    </div>
-    <div id="playSong" class="mobileShortcut onHymn" title="Kliknij, lub użyj klawisza M">
-      <img alt="nuty" src="/files/icons/music.svg" draggable="false" />
-      <p>Melodia</p>
-    </div> -->
   `;
 }
 
@@ -93,11 +61,6 @@ export async function menuInit() {
   multipleButton("#favoriteMenu", () => {
     favoriteMenu(), showMenu();
   });
-
-  // multipleButton("#openPDF", openPDF);
-  // multipleButton("#playSong", playSong);
-  // multipleButton("#printText", printText);
-  // multipleButton("#shareButton", shareButton);
 
   const SlideShow = document.getElementById("Slideshow");
   SlideShow.addEventListener("click", runSlideshow);
@@ -130,22 +93,6 @@ export function runSlideshow() {
     }
   });
 }
-
-// function openPDF() {
-//   console.log("openPDF");
-// }
-
-// function playSong() {
-//   console.log("playSong");
-// }
-
-// function printText() {
-//   console.log("printText");
-// }
-
-// function shareButton() {
-//   console.log("shareButton");
-// }
 
 // ukrycie menu
 export function hideMenu() {
