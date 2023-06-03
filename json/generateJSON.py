@@ -55,7 +55,7 @@ def generuj(name, hymnbook):
 generuj("brzask", "1.%20Pie%C5%9Bni%20Brzasku%20Tysi%C4%85clecia")
 generuj("cegielki", "2.%20Uwielbiajmy%20Pana%20%28Cegie%C5%82ki%29")
 generuj("nowe", "3.%20%C5%9Apiewajcie%20Panu%20Pie%C5%9B%C5%84%20Now%C4%85")
-generuj("epifania", "4.%20%C5%9Apiewniczek%20M%C5%82odzie%C5%BCowy%20Epifanii")
+generuj("epifania", "4.%20%C5%9Apiewniczek%20M%C5%82odzie%C5%BCowy")
 generuj("syloe", "5.%20Pie%C5%9Bni%20Ch%C3%B3ru%20Syloe")
 generuj("inne", "6.%20R%C3%B3%C5%BCne%20pie%C5%9Bni")
 
