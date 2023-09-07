@@ -1,5 +1,5 @@
-import { globalShortcuts } from "/scripts/main.js";
 import bookNames from "/scripts/bookNames.js";
+import { globalShortcuts } from "/scripts/main.js";
 
 let book, hymn;
 let slideNumber = -1;

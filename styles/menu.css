@@ -1,8 +1,6 @@
-/* default style of menu pop-out */
+/* DEFAULT MENU HOLDER */
 .menuHolder {
   z-index: 100;
-  visibility: hidden;
-  opacity: 0;
   display: flex;
   justify-content: center;
   align-content: center;
@@ -30,12 +28,11 @@
   width: 92vw;
   max-height: 90vh;
   background-color: var(--boxes);
-  border-radius: var(--rounded);
+  border-radius: 0.6rem;
   overflow-y: auto;
   overflow-x: hidden;
 }
 
-/* default context box */
 .menuContent {
   text-align: center;
   display: flex;
@@ -63,137 +60,31 @@
   gap: 0.8rem;
 }
 
-/* change theme */
-.themeSelector {
-  display: flex;
-  gap: 1.2rem;
-}
-
-.themeSelector label {
-  width: 3rem;
-  height: 4.5rem;
+/* BOTTOM BUTTONS */
+.menuButtons {
+  margin-top: 1rem;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  border-radius: var(--rounded);
-  cursor: pointer;
+  font-size: 0.85rem;
 }
 
-.themeSelector input {
-  scale: 1.2 !important;
-  margin: -0.5rem 0 0.5rem 0 !important;
-  all: revert;
-  cursor: pointer;
-}
-
-.themeSelector img {
-  width: 2.8rem;
-  scale: 0.9;
-}
-
-.themeSelector .black {
-  background-color: var(--blackBG);
-}
-
-.themeSelector .dark {
-  background-color: var(--darkBG);
-}
-
-.themeSelector .light {
-  background-color: var(--lightBG);
-}
-
-.themeSelector .reading {
-  background-color: var(--readingBG);
-}
-
-/* change font size */
-.fontSlideBar {
+.menuButtons div {
   display: flex;
-  align-items: center;
+  gap: 2rem;
 }
 
-.fontSlideBar .smaller {
-  font-size: 0.8rem;
+button.menuButtons,
+.menuButtons button {
+  padding: 0.55rem 1.4rem;
 }
 
-.fontSlideBar input {
-  margin: 0 0.6rem !important;
-  max-width: 20rem !important;
-  width: 62vw !important;
-  all: revert;
-  cursor: pointer;
+.menuButtons.alert {
+  padding: 0.55rem 2.6rem;
+  background-color: var(--darkRed);
+  color: var(--white);
 }
 
-.fontSlideBar .bigger {
-  font-size: 1.6rem;
-}
-
-/* toggle switch */
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 60px;
-  height: 34px;
-}
-
-.slider {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  -webkit-transition: 0.2s;
-  transition: 0.2s;
-  cursor: pointer;
-  border-radius: 34px;
-}
-
-.slider:before {
-  content: "";
-  position: absolute;
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
-  background-color: var(--white);
-  -webkit-transition: 0.2s;
-  transition: 0.2s;
-  border-radius: 50%;
-}
-
-input:checked + .slider {
-  background-color: var(--darkBlue);
-}
-
-input:focus + .slider {
-  box-shadow: 0 0 1px var(--darkBlue);
-}
-
-input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
-}
-
-/* beta info */
-.beta {
-  margin-bottom: -2.2rem;
-  padding: 0.2rem 0.4rem;
-  position: relative;
-  bottom: 2.7rem;
-  left: 4.3rem;
-  color: #985713;
-  background-color: #ffcf6a;
-  border-radius: var(--rounded);
-  user-select: none;
-  cursor: default;
-}
-
-/* favorite list */
+/* FAVORITE MENU */
 #favLength {
   margin-top: -1.2rem;
 }
@@ -257,31 +148,190 @@ input:checked + .slider:before {
   cursor: default;
 }
 
-/* action buttons */
-.menuButtons {
-  margin-top: 1rem;
+/* SETTINGS MENU */
+.themeSelector {
+  display: flex;
+  gap: 1.2rem;
+}
+
+.themeSelector label {
+  width: 3rem;
+  height: 4.5rem;
   display: flex;
   flex-direction: column;
-  font-size: 0.85rem;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: var(--rounded);
+  cursor: pointer;
 }
 
-.menuButtons div {
+.themeSelector input {
+  scale: 1.2 !important;
+  margin: -0.5rem 0 0.5rem 0 !important;
+  all: revert;
+  cursor: pointer;
+}
+
+.themeSelector img {
+  width: 2.8rem;
+  scale: 0.9;
+}
+
+.themeSelector .black {
+  background-color: var(--blackBG);
+}
+
+.themeSelector .dark {
+  background-color: var(--darkBG);
+}
+
+.themeSelector .light {
+  background-color: var(--lightBG);
+}
+
+.themeSelector .reading {
+  background-color: var(--readingBG);
+}
+
+.fontSlideBar {
   display: flex;
-  gap: 2rem;
+  align-items: center;
 }
 
-button.menuButtons,
-.menuButtons button {
-  padding: 0.55rem 1.4rem;
+.fontSlideBar .smaller {
+  font-size: 0.8rem;
 }
 
-.menuButtons.alert {
-  padding: 0.55rem 2.6rem;
-  background-color: var(--darkRed);
-  color: var(--white);
+.fontSlideBar input {
+  margin: 0 0.6rem !important;
+  max-width: 20rem !important;
+  width: 62vw !important;
+  all: revert;
+  cursor: pointer;
 }
 
-/* footer of menu with useful links */
+.fontSlideBar .bigger {
+  font-size: 1.6rem;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+  cursor: pointer;
+  border-radius: 34px;
+}
+
+.slider:before {
+  content: "";
+  position: absolute;
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: var(--white);
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: var(--darkBlue);
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px var(--darkBlue);
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+.beta {
+  margin-bottom: -2.2rem;
+  padding: 0.2rem 0.4rem;
+  position: relative;
+  bottom: 2.7rem;
+  left: 4.3rem;
+  color: #985713;
+  background-color: #ffcf6a;
+  border-radius: var(--rounded);
+  user-select: none;
+  cursor: default;
+}
+
+/* REDIRECT MENU */
+.redirect {
+  padding: 0 1rem;
+}
+
+.redirectTitle h2 {
+  margin-bottom: 0.8rem;
+}
+
+.redirectTitle a {
+  opacity: 80%;
+  text-decoration: underline;
+}
+
+.redirectTitle a:hover {
+  opacity: 95%;
+}
+
+.redirectLink {
+  margin: 0.2rem 0 -0.35rem;
+  padding: 0.5rem;
+}
+
+.redirectLink img {
+  border-radius: 0.6rem;
+  transition: 0.15s transform ease-out;
+  box-shadow: -1px 3px 10px #000000;
+}
+
+.redirectLink:hover img {
+  transform: scale(1.01) translateY(-1px);
+}
+
+.snipped a {
+  color: #5496e7;
+}
+
+@media (max-width: 425px) {
+  .redirect {
+    padding: 0 0.5rem;
+  }
+
+  .redirectTitle h2 {
+    margin-bottom: 0.55rem;
+  }
+
+  .redirectLink {
+    margin: 0.5rem 0 0;
+    padding: 0;
+  }
+
+  .redirectLink img {
+    box-shadow: 0 2px 12px -2px #000000;
+  }
+}
+
+/* CREDITS */
 .credits {
   margin-top: 2rem;
   font-size: 0.6rem;
@@ -300,7 +350,7 @@ button.menuButtons,
   background-color: var(--text);
 }
 
-/* only desktop */
+/* DESKTOP-ONLY */
 @media (min-width: 768px) {
   .favoriteHandler:hover {
     background-color: var(--buttonsHover);

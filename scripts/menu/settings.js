@@ -1,6 +1,6 @@
 import { hideMenu } from "/scripts/menu.js";
 
-function menuHTML() {
+export default function Settings() {
   document.querySelector(".menu").innerHTML = `
     <div id="changeTheme" class="menuContent">
       <div>
@@ -66,10 +66,6 @@ function menuHTML() {
       </p>
     </div>
   `;
-}
-
-export default function init() {
-  menuHTML();
 
   // wczytywanie danych z pamięci podręcznej
   const theme = localStorage.getItem("theme");
@@ -173,4 +169,5 @@ function resetSettings(theme, radios) {
   }
 }
 
-init();
+// wywołanie funkcji, aby wczytać lokalne ustawienia
+Settings();

@@ -1,4 +1,4 @@
-const cacheName = "v2.3.6";
+const cacheName = "v2.4.0";
 
 const assets = [
   // główny plik HTML
@@ -13,24 +13,28 @@ const assets = [
   "/styles/reset.css",
 
   // skrypty
-  "/scripts/favoriteMenu.js",
+  "/scripts/menu/favorites.js",
+  "/scripts/menu/redirect.js",
+  "/scripts/menu/settings.js",
+
+  "/scripts/bookNames.js",
   "/scripts/hymn.js",
   "/scripts/main.js",
   "/scripts/menu.js",
-  "/scripts/themeMenu.js",
+  "/scripts/slideShow.js",
 
-  // bazy danych json
+  // baza danych
   "/json/brzask.json",
   "/json/cegielki.json",
-  "/json/nowe.json",
   "/json/epifania.json",
   "/json/inne.json",
+  "/json/nowe.json",
+  "/json/syloe.json",
 
-  // czcionki
+  // pliki
   "/files/fonts/Brutal Type Medium.ttf",
   "/files/fonts/Gill Sans MT.ttf",
 
-  // ikonki
   "/files/icons/arrow.svg",
   "/files/icons/close.svg",
   "/files/icons/dice.svg",
@@ -39,11 +43,14 @@ const assets = [
   "/files/icons/star_empty.svg",
   "/files/icons/star_filled.svg",
   "/files/icons/text.svg",
+  "/files/icons/update.svg",
+
+  "/files/images/spiewniki.webp",
 ];
 
 let hymnsArray = [];
 
-// wszystkie teksty pieśni z plików JSON (raw github)
+// odczyt zdefiniowanych plików .json
 async function cacheHymnBook(hymnBooks) {
   for (let i = 0; i < hymnBooks.length; i++) {
     await fetch(`/json/${hymnBooks[i]}.json`)
@@ -56,30 +63,10 @@ async function cacheHymnBook(hymnBooks) {
   }
 }
 
-// instalacja nowego sw
-self.addEventListener("install", (e) => {
-  self.skipWaiting();
-  e.waitUntil(
-    (async () => {
-      await cacheHymnBook([
-        "brzask",
-        "cegielki",
-        "nowe",
-        "epifania",
-        "syloe",
-        "inne",
-      ]);
-
-      const contentToCache = assets.concat(hymnsArray);
-      const cache = await caches.open(cacheName);
-      await cache.addAll(contentToCache);
-    })()
-  );
-});
-
-// zapisanie i odczyt plików
+// odczyt i zapis nowych plików
 self.addEventListener("fetch", (e) => {
   url = e.request.url;
+
   if (
     url.startsWith("chrome-extension") ||
     url.includes("extension") ||
@@ -101,13 +88,34 @@ self.addEventListener("fetch", (e) => {
   );
 });
 
-// aktywacja nowego sw
+// instalacja nowego sw
+self.addEventListener("install", (e) => {
+  self.skipWaiting();
+
+  e.waitUntil(
+    (async () => {
+      await cacheHymnBook([
+        "brzask",
+        "cegielki",
+        "nowe",
+        "epifania",
+        "syloe",
+        "inne",
+      ]);
+
+      const contentToCache = assets.concat(hymnsArray);
+      const cache = await caches.open(cacheName);
+      await cache.addAll(contentToCache);
+    })()
+  );
+});
+
+// usunięcie starego sw
 self.addEventListener("activate", (e) => {
   e.waitUntil(
-    caches.keys().then((keyList) => {
+    caches.keys().then((keysList) => {
       return Promise.all(
-        keyList.map((key) => {
-          if (key === cacheName) return;
+        keysList.map((key) => {
           return caches.delete(key);
         })
       );

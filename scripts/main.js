@@ -1,26 +1,23 @@
-import { menuInit, showMenu, hideMenu, runSlideshow } from "/scripts/menu.js";
-import favoriteMenu, { favList } from "/scripts/favoriteMenu.js";
-import { slideEvents, hymnParam } from "/scripts/slideShow.js";
 import bookNames from "/scripts/bookNames.js";
-import themeMenu from "/scripts/themeMenu.js";
 import Hymn from "/scripts/hymn.js";
+import { menuInit, showMenu, hideMenu, runSlideshow } from "/scripts/menu.js";
+import { slideEvents, hymnParam } from "/scripts/slideShow.js";
 
-let map, list, hymn;
+import Favorites, { favList } from "/scripts/menu/favorites.js";
+import Redirect from "/scripts/menu/redirect.js";
+import Settings from "/scripts/menu/settings.js";
 
 // start aplikacji
-(async () => {
-  // główne skrypty HTML
-  await menuInit();
-  installPWA();
+installPWA();
 
-  // pamięć lokalna ulubionych pieśni
-  if (!localStorage.getItem("favorite")) localStorage.setItem("favorite", "[]");
+Redirect(), menuInit();
+if (!localStorage.getItem("favorite")) localStorage.setItem("favorite", "[]");
 
-  // główne funkcje
-  map = await getJSON();
-  appInit();
-  slideEvents();
-})();
+let map = await getJSON();
+appInit();
+slideEvents();
+
+let list, hymn;
 
 // instalacja PWA
 function installPWA() {
@@ -161,14 +158,14 @@ export function globalShortcuts(e) {
       case 39: // strzałka w prawo
         return nextHymn();
       case 70: // F
-        return showMenu(), favoriteMenu();
+        return showMenu(), Favorites();
       case 80: // P
         if (hymn) runSlideshow();
         break;
       case 82: // R
         return randomHymn();
       case 83: // S
-        return showMenu(), themeMenu();
+        return showMenu(), Settings();
       case 191: // /
         return searchBox.focus();
     }
@@ -207,8 +204,6 @@ function search(e) {
 
   // easter egg
   if (e.target.value == "2137") {
-    console.log("Jeszcze jak!");
-
     list = map.get((hymnBook.value = "cegielki"));
     selectHymn(6);
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -348,7 +343,7 @@ async function getHymn(id) {
   const xml = await fetch(list[id].link)
     .then((res) => res.text())
     .then((xml) => parser.parseFromString(xml, "text/xml"))
-    .catch((err) => console.log(err));
+    .catch((err) => console.error(err));
 
   const title = xml.querySelector("title").innerHTML;
   const lyrics = xml.querySelector("lyrics").innerHTML;

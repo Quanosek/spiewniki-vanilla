@@ -103,7 +103,7 @@ button {
 
 /* custom values */
 :root {
-  --rounded: 0.35rem;
+  --rounded: 0.4rem;
 }
 
 ::placeholder {

@@ -1,11 +1,11 @@
 import { searchFavorite } from "/scripts/main.js";
 import { hideMenu } from "/scripts/menu.js";
 
-function menuHTML() {
+export default function Favorites() {
   document.querySelector(".menu").innerHTML = `
     <div class="menuContent">
       <div>
-        <div class="favTitle">
+        <div class="snippedTitle">
           <h2>Lista ulubionych</h2>
           <p id="favLength"></p>
         </div>
@@ -31,12 +31,28 @@ function menuHTML() {
       </p>
     </div>
   `;
-}
 
-export default () => {
-  menuHTML(), favList();
-  eventsListener();
-};
+  const clearFavArray = () => {
+    let data = JSON.parse(localStorage.getItem("favorite"));
+    if (data.length < 1) window.alert("Brak ulubionych pieśni!");
+    else {
+      const retVal = confirm("Czy na pewno chcesz wyczyścić listę ulubionych?");
+      if (retVal == true) {
+        localStorage.setItem("favorite", "[]");
+        star.src = "/files/icons/star_empty.svg";
+        favList();
+      }
+    }
+  };
+
+  const clear = document.getElementById("clearFavorite");
+  const close = document.getElementById("closeMenu");
+
+  clear.addEventListener("click", clearFavArray);
+  close.addEventListener("click", hideMenu);
+
+  favList();
+}
 
 // interaktywna lista ulubionych
 export function favList() {
@@ -67,26 +83,5 @@ export function favList() {
     div.setAttribute("class", "favoriteNoResults");
     div.innerHTML = `Dodaj pierwszą ulubioną pieśń!`;
     favoriteList.appendChild(div);
-  }
-}
-
-function eventsListener() {
-  const clear = document.getElementById("clearFavorite");
-  const close = document.getElementById("closeMenu");
-
-  clear.addEventListener("click", clearFavArray);
-  close.addEventListener("click", hideMenu);
-}
-
-function clearFavArray() {
-  let data = JSON.parse(localStorage.getItem("favorite"));
-  if (data.length < 1) window.alert("Brak ulubionych pieśni!");
-  else {
-    const retVal = confirm("Czy na pewno chcesz wyczyścić listę ulubionych?");
-    if (retVal == true) {
-      localStorage.setItem("favorite", "[]");
-      star.src = "/files/icons/star_empty.svg";
-      favList();
-    }
   }
 }
